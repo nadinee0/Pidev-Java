@@ -26,19 +26,14 @@ public class UserService implements UService<User> {
             String req = "INSERT INTO `user` (`email`, `first_name`, `last_name`, `phone_number`) VALUES ('" + u.getEmail()+ "', '" + u.getFirstName()+ "', '" + u.getLastName()+ "', '" + u.getPhoneNumber()+ "')";
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
-            System.out.println("User created !");
     }
     
-    public void ajouter2(User u) {
-        try {
+    public void ajouter2(User u) throws SQLException{
             String req = "INSERT INTO `user` (`email`, `password`) VALUES (?,?)";
             PreparedStatement ps = cnx.getCnx().prepareStatement(req);
             ps.setString(2, u.getEmail());
             ps.setString(1, u.getPassword());
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
     @Override
@@ -46,7 +41,6 @@ public class UserService implements UService<User> {
             String req = "DELETE FROM `User` WHERE id = " + id;
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
-            System.out.println("User deleted !");
     }
 
     @Override
@@ -54,7 +48,6 @@ public class UserService implements UService<User> {
             String req = "UPDATE `user` SET `nom` = '" + u.getLastName()+ "', `prenom` = '" + u.getFirstName()+ "' WHERE `user`.`id` = " + u.getId();
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
-            System.out.println("user updated !");
     }
 
     @Override
