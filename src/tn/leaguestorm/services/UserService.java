@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Bellalouna Iheb
  */
-public class UserService implements UService<User> {
+public class UserService implements IService<User> {
     private MyConnection cnx = MyConnection.getInstance();
 
     @Override
