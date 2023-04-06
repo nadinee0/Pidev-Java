@@ -22,55 +22,61 @@ import tn.leaguestorm.utils.MyConnection;
  *
  * @author Nadine
  */
-public class ServiceCategory implements IService<Category>{
+public class ServiceCategory implements IService<Category> {
 
-        private MyConnection ds = MyConnection.getInstance();
-    
+    private MyConnection ds = MyConnection.getInstance();
+
     @Override
     public void ajouter(Category c) throws SQLException {
- String req = "INSERT INTO `category` (`nom`, `img`) VALUES ('"+c.getNom()+"', '"+c.getImg()+"')";
+        String req = "INSERT INTO `category` (`nom`, `img`) VALUES ('" + c.getNom() + "', '" + c.getImg() + "')";
         Statement st = ds.getCnx().createStatement();
-        st.executeUpdate(req);   
+        st.executeUpdate(req);
     }
 
-       public void ajouter2(Category c) throws SQLException{
+    public void ajouter2(Category c) throws SQLException {
         String req = "INSERT INTO `category` (`nom`, `img`) VALUES (?,?)";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, c.getNom());
         st.setString(2, c.getImg());
-       
+
         st.executeUpdate();
-    } 
-    
+    }
+
     @Override
     public void modifier(Category c) throws SQLException {
-  String req = "UPDATE `category` SET `nom` = '"+c.getNom()+"', `img` = '"+c.getImg()+"' WHERE `category`.`id` = "+c.getId();
+        String req = "UPDATE `category` SET `nom` = '" + c.getNom() + "', `img` = '" + c.getImg() + "' WHERE `category`.`id` = " + c.getId();
         Statement st = ds.getCnx().createStatement();
-        st.executeUpdate(req); 
+        st.executeUpdate(req);
     }
 
     @Override
     public void supprimer(int id) throws SQLException {
-     String req = "DELETE FROM `category` WHERE id ="+id;
+        String req = "DELETE FROM `category` WHERE id =" + id;
         Statement st = ds.getCnx().createStatement();
-        st.executeUpdate(req); 
+        st.executeUpdate(req);
+    }
+
+    public void deleteCategory(Category c) throws SQLException {
+        String req = "DELETE FROM category WHERE id = ?";
+        PreparedStatement st = ds.getCnx().prepareStatement(req);
+        st.setInt(1, c.getId());
+        st.executeUpdate(req);
+
     }
 
     @Override
     public List<Category> getAll() throws SQLException {
-    List<Category> list = new ArrayList<>();
-        
+        List<Category> list = new ArrayList<>();
+
         String req = "Select * from category";
         Statement st = ds.getCnx().createStatement();
         ResultSet rs = st.executeQuery(req);
-        while(rs.next()){
+        while (rs.next()) {
             Category c = new Category(rs.getInt("id"), rs.getString(2), rs.getString(3));
             list.add(c);
         }
-        
-        return list;   
+
+        return list;
     }
-    
-    
-    
+
 }

@@ -29,7 +29,7 @@ public class MainClass {
             ServiceArticle sa = new ServiceArticle();
       
             //-----Categ----
-           Category c1 = new Category("catg", "ghfgfh");
+           Category c1 = new Category("hkkl", "ghfgfh");
            Category c2 = new Category(32,"hammer", "llllllooooo");
 
             sc.ajouter(c1);
