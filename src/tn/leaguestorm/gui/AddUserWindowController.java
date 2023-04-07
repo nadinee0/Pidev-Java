@@ -32,7 +32,7 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class AddUserWindowController implements Initializable {
 
-    ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION","EQUIPE");
+    ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION","EQUIPE","JOUEUR");
     @FXML
     private TextField tfEmail;
     @FXML
@@ -70,6 +70,22 @@ public class AddUserWindowController implements Initializable {
         alert.showAndWait();
         return;
     }
+    
+    if (firstName.isEmpty() || !firstName.matches("[a-zA-Z]+")) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Prénom invalide!");
+        alert.setContentText("Veuillez entrer un prénom valide (lettres uniquement)!");
+        alert.showAndWait();
+        return;    
+    }
+    
+    if (!isValidPasswordFormat(password)) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Mot de passe invalide!");
+        alert.setContentText("Veuillez entrer un mot de passe valide (1ère lettre en majuscule, lettres et chiffres, et au moins un caractère spécial)!");
+        alert.showAndWait();
+        return;
+    }
 
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
@@ -78,6 +94,7 @@ public class AddUserWindowController implements Initializable {
     us.ajouter3(u);
 
     labelOnSubmit.setText("Utilisateur ajouté avec succès!");
+    
     }
     
     private boolean isValidEmail(String email) {
@@ -86,5 +103,13 @@ public class AddUserWindowController implements Initializable {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+    
+    private boolean isValidPasswordFormat(String password) {
+        String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        Pattern pattern = Pattern.compile(passwordRegex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+    
     
 }
