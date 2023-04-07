@@ -13,7 +13,7 @@ import java.util.List;
  * @author Bellalouna Iheb
  */
 interface IService<T> {
-   public void ajouter(T a) throws SQLException;
+    public void ajouter(T a) throws SQLException;
     public void modifier(T a) throws SQLException;
     public void supprimer(int id) throws SQLException;
     public List<T> getAll() throws SQLException;  

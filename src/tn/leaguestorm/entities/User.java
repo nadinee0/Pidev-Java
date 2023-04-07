@@ -10,7 +10,7 @@ package tn.leaguestorm.entities;
  * @author Bellalouna Iheb
  */
 public class User {
-    private int id, phoneNumber;
+    private int id, phoneNumber, isVerified;
     private String email, roles, password, firstName, lastName, country;
 
     public User(int phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
@@ -23,23 +23,33 @@ public class User {
         this.country = country;
     }
     
-    public User(String email, String firstName, String lastName, String country, int phoneNumber) {
+    public User(String email, String firstName, String lastName, int phoneNumber) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.country = country;
         this.phoneNumber = phoneNumber;
     }
 
-    public User(String email, String roles, String password) {
+//    public User(String email, String roles, String password) {
+//        this.email = email;
+//        this.roles = roles;
+//        this.password = password;
+//    }
+
+    public User(String email, String roles, String password,  int isVerified, String firstName) {
         this.email = email;
-        this.roles = roles;
         this.password = password;
+        this.roles = roles;
+        this.firstName = firstName;
+        this.isVerified = isVerified;
     }
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public int getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(int isVerified) {
+        this.isVerified = isVerified;
     }
 
     public int getId() {

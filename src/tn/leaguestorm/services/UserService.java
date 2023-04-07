@@ -6,6 +6,9 @@
 package tn.leaguestorm.services;
 
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.utils.MyConnection;
 import java.sql.PreparedStatement;
@@ -32,14 +35,21 @@ public class UserService implements IService<User> {
     public void ajouter2(User u) throws SQLException{
             String req = "INSERT INTO `user` (`email`, `password`) VALUES (?,?)";
             PreparedStatement ps = cnx.getCnx().prepareStatement(req);
-            ps.setString(2, u.getEmail());
-            ps.setString(1, u.getPassword());
+            ps.setString(1, u.getEmail());
+            ps.setString(2, u.getPassword());
             ps.executeUpdate();
     }
 
+    public void ajouter3(User u) throws SQLException{
+            String req = "INSERT INTO `user` (`email`, `roles`, `password`, `is_verified`, `first_name`) VALUES ('" + u.getEmail()+ "', '" + u.getRoles()+ "', '" + u.getPassword()+ "', '" + u.getIsVerified()+ "', '" + u.getFirstName()+ "')";
+            Statement st = cnx.getCnx().createStatement();
+            st.executeUpdate(req);
+    }
+    
+    
     @Override
     public void supprimer(int id) throws SQLException{
-            String req = "DELETE FROM `User` WHERE id = " + id;
+            String req = "DELETE FROM `user` WHERE id = " + id;
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
     }
@@ -58,10 +68,27 @@ public class UserService implements IService<User> {
             Statement st = cnx.getCnx().createStatement();
             ResultSet rs = st.executeQuery(req);
             while(rs.next()){
-                User u = new User(rs.getString("email"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("country"), rs.getInt("phone_number"));
+                User u = new User(rs.getString("email"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("phone_number"));
                 list.add(u);
             }
         return list;
     }
-
+    
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
