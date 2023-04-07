@@ -11,11 +11,11 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Bellalouna Iheb
+ * @author dell
  */
 public class MyConnection {
     
-    private final String URL="jdbc:mysql://localhost:3306/leaguestorm";
+    private final String URL="jdbc:mysql://localhost:3306/techStorm_3A39";
     private final String LOGIN="root";
     private final String PWD="";
     

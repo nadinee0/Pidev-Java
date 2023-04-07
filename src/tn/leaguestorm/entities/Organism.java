@@ -7,13 +7,13 @@ package tn.leaguestorm.entities;
 
 /**
  *
- * @author Bellalouna Iheb
+ * @author dell
  */
 public class Organism {
     private String nom_commercial, nom_juridique, email_organisation, image, more;
     private int id, phone_organisation;
 
-    public Organism(String nom_commercial, String nom_juridique, String email_organisation, String image, String more, int id, int phone_organisation) {
+    public Organism(int id, String nom_commercial, String nom_juridique, int phone_organisation, String email_organisation, String image, String more ) {
         this.nom_commercial = nom_commercial;
         this.nom_juridique = nom_juridique;
         this.email_organisation = email_organisation;
@@ -23,7 +23,7 @@ public class Organism {
         this.phone_organisation = phone_organisation;
     }
     
-    public Organism(String nom_commercial, String nom_juridique, String email_organisation, String image, String more, int phone_organisation) {
+    public Organism(String nom_commercial, String nom_juridique, int phone_organisation, String email_organisation, String image, String more) {
         this.nom_commercial = nom_commercial;
         this.nom_juridique = nom_juridique;
         this.email_organisation = email_organisation;

@@ -9,7 +9,7 @@ import tn.leaguestorm.utils.MyConnection;
 
 /**
  *
- * @author Bellalouna Iheb
+ * @author dell
  */
 public class MainClass {
     public static void main(String[] args) {

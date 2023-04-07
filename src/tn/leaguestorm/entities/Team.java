@@ -7,13 +7,13 @@ package tn.leaguestorm.entities;
 
 /**
  *
- * @author Bellalouna Iheb
+ * @author dell
  */
 public class Team {
     private String nom_team, description_team, color, logo_team;
     private int id, wins_team, losses_team;
 
-    public Team(String nom_team, String description_team, String color, String logo_team, int id, int wins_team, int losses_team, float rate_team) {
+    public Team( int id,String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team) {
         this.nom_team = nom_team;
         this.description_team = description_team;
         this.color = color;
@@ -25,7 +25,7 @@ public class Team {
     }
     private float rate_team;
 
-    public Team(String nom_team, String description_team, String color, String logo_team, int wins_team, int losses_team, float rate_team) {
+    public Team(String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team) {
         this.nom_team = nom_team;
         this.description_team = description_team;
         this.color = color;
