@@ -8,13 +8,18 @@ package tn.leaguestorm.gui;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
@@ -27,7 +32,6 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class AddUserWindowController implements Initializable {
 
-    @FXML
     ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION","EQUIPE");
     @FXML
     private TextField tfEmail;
@@ -39,7 +43,8 @@ public class AddUserWindowController implements Initializable {
     private Button btnValider;
     @FXML 
     private ComboBox rolesBox;
-
+    @FXML
+    private Label labelOnSubmit;
 
     /**
      * Initializes the controller class.
@@ -51,17 +56,35 @@ public class AddUserWindowController implements Initializable {
 
     @FXML
     private void saveUser(ActionEvent event) throws SQLException {
-         String email = tfEmail.getText();
-        String password = tfPassword.getText();
-        String roles = rolesBox.getValue().toString();
-        String firstName = tfFirstName.getText();
-        int isVerified = 0;
-        
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        
-        User u = new User(email, roles, hashedPassword, isVerified, firstName);
-        UserService us = new UserService();
-        us.ajouter3(u);
+    String email = tfEmail.getText();
+    String password = tfPassword.getText();
+    String roles = rolesBox.getValue().toString();
+    String firstName = tfFirstName.getText();
+    int isVerified = 0;
+
+    // Check if email is valid
+    if (!isValidEmail(email)) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Adresse email invalide!");
+        alert.setContentText("Veuillez entrez une adresse email valide!");
+        alert.showAndWait();
+        return;
+    }
+
+    String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+    User u = new User(email, roles, hashedPassword, isVerified, firstName);
+    UserService us = new UserService();
+    us.ajouter3(u);
+
+    labelOnSubmit.setText("Utilisateur ajouté avec succès!");
+    }
+    
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
     
 }

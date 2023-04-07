@@ -5,18 +5,34 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="tn.leaguestorm.gui.AddUserWindowController">
+<AnchorPane id="AnchorPane" prefHeight="436.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.AddUserWindowController">
    <children>
-      <Label layoutX="42.0" layoutY="58.0" text="email" />
-      <Label layoutX="42.0" layoutY="126.0" text="password" />
-      <Label layoutX="42.0" layoutY="200.0" text="first name" />
-      <Label layoutX="42.0" layoutY="274.0" text="role" />
-      <ComboBox fx:id="rolesBox" layoutX="256.0" layoutY="270.0" prefWidth="150.0" />
-      <TextField fx:id="tfEmail" layoutX="257.0" layoutY="54.0" />
-      <TextField fx:id="tfPassword" layoutX="258.0" layoutY="122.0" />
-      <TextField fx:id="tfFirstName" layoutX="259.0" layoutY="196.0" />
-      <Button fx:id="btnValider" layoutX="259.0" layoutY="361.0" mnemonicParsing="false" onAction="#saveUser" text="Valider" />
+      <Label layoutX="42.0" layoutY="58.0" text="email">
+         <font>
+            <Font name="Consolas Bold Italic" size="23.0" />
+         </font></Label>
+      <Label layoutX="42.0" layoutY="126.0" text="password">
+         <font>
+            <Font name="Consolas Bold Italic" size="23.0" />
+         </font></Label>
+      <Label layoutX="42.0" layoutY="200.0" text="first name">
+         <font>
+            <Font name="Consolas Bold Italic" size="23.0" />
+         </font></Label>
+      <Label layoutX="46.0" layoutY="265.0" text="role">
+         <font>
+            <Font name="Consolas Bold Italic" size="23.0" />
+         </font></Label>
+      <ComboBox fx:id="rolesBox" layoutX="326.0" layoutY="266.0" prefHeight="26.0" prefWidth="219.0" />
+      <TextField fx:id="tfEmail" layoutX="326.0" layoutY="59.0" prefHeight="26.0" prefWidth="219.0" />
+      <TextField fx:id="tfPassword" layoutX="326.0" layoutY="127.0" prefHeight="26.0" prefWidth="219.0" />
+      <TextField fx:id="tfFirstName" layoutX="326.0" layoutY="201.0" prefHeight="26.0" prefWidth="219.0" />
+      <Button fx:id="btnValider" layoutX="283.0" layoutY="375.0" mnemonicParsing="false" onAction="#saveUser" prefHeight="26.0" prefWidth="112.0" text="Create Account">
+         <font>
+            <Font name="Consolas Bold" size="12.0" />
+         </font></Button>
+      <Label fx:id="labelOnSubmit" layoutX="172.0" layoutY="323.0" prefHeight="18.0" prefWidth="336.0" />
    </children>
 </AnchorPane>
