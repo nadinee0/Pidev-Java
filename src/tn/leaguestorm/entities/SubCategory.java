@@ -5,15 +5,19 @@
  */
 package tn.leaguestorm.entities;
 
+import java.util.List;
+
 /**
  *
  * @author Nadine
  */
 public class SubCategory {
-  
-    private int id;
+
+ private int id;
     private String nomSubCategory;
     //relation category article
+    private List<Article> articles;
+    private Category category;
 
     public SubCategory() {
     }
@@ -27,6 +31,20 @@ public class SubCategory {
         this.nomSubCategory = nomSubCategory;
     }
 
+    public SubCategory( Category category,String nomSubCategory) {
+        this.nomSubCategory = nomSubCategory;
+        this.articles = articles;
+        this.category = category;
+    }
+
+    public SubCategory(int id, Category category, String nomSubCategory) {
+        this.id = id;
+        this.nomSubCategory = nomSubCategory;
+        this.articles = articles;
+        this.category = category;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -35,6 +53,22 @@ public class SubCategory {
         return nomSubCategory;
     }
 
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -43,9 +77,15 @@ public class SubCategory {
         this.nomSubCategory = nomSubCategory;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "SubCategory{" + " nomSubCategory=" + nomSubCategory + '}';
+    }
+*/
+    
+    @Override
+    public String toString() {
+        return "SubCategory{" + "id=" + id + ", nomSubCategory=" + nomSubCategory + ", category=" + category + '}';
     }
 
     @Override

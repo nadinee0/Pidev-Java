@@ -12,12 +12,14 @@ import java.util.Date;
  * @author Nadine
  */
 public class Location {
-    
-    private int id;
+   private int id;
     private Date dateD, dateF, date_retour;
     private String statut;
     private float fraisRetard;
     //relation article user 
+    private Article articles;
+  //  private User user;
+
 
     public Location() {
     }
@@ -38,6 +40,32 @@ public class Location {
         this.date_retour = date_retour;
         this.fraisRetard = fraisRetard;
     }
+
+    /*
+    public Location(Date dateD, Date dateF, Date date_retour, String statut, float fraisRetard, Article articles, User user) {
+        this.dateD = dateD;
+        this.dateF = dateF;
+        this.date_retour = date_retour;
+        this.statut = statut;
+        this.fraisRetard = fraisRetard;
+        this.articles = articles;
+        this.user = user;
+    }
+
+    
+    
+    public Location(int id, Date dateD, Date dateF, Date date_retour, String statut, float fraisRetard, Article articles, User user) {
+        this.id = id;
+        this.dateD = dateD;
+        this.dateF = dateF;
+        this.date_retour = date_retour;
+        this.statut = statut;
+        this.fraisRetard = fraisRetard;
+        this.articles = articles;
+        this.user = user;
+    }
+    
+    */
 
     public int getId() {
         return id;
@@ -64,6 +92,23 @@ public class Location {
         return fraisRetard;
     }
 
+    public Article getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Article articles) {
+        this.articles = articles;
+    }
+
+    /*public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }    
+*/
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -118,6 +163,7 @@ public class Location {
         }
         return true;
     }
+    
     
     
     

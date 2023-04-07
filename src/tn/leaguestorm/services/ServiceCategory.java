@@ -58,8 +58,7 @@ public class ServiceCategory implements IService<Category> {
 
     public void deleteCategory(Category c) throws SQLException {
         String req = "DELETE FROM category WHERE id = ?";
-        PreparedStatement st = ds.getCnx().prepareStatement(req);
-        st.setInt(1, c.getId());
+        Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
 
     }

@@ -5,6 +5,8 @@
  */
 package tn.leaguestorm.entities;
 
+import java.util.List;
+
 /**
  *
  * @author Nadine
@@ -14,8 +16,16 @@ public class Article {
     private int id, stock;
     private String titre, image, description,type;
     private float prix;
-   // relation category ,subcatg ratings locatioin ratings users 
+   // relation category ,subcatg ratings locatioin users 
+    private Category category;
+    private SubCategory subcategory;
+    private List<Location> location;
+    private List<Rating> rating;
+   // private List<User> user;
 
+    
+
+    
     public Article() {
     }
 
@@ -38,6 +48,18 @@ public class Article {
         this.type = type;
     }
 
+      public Article(int id, int stock, String titre, String image, String description, String type, float prix, Category category, SubCategory subcategory) {
+        this.id = id;
+        this.stock = stock;
+        this.titre = titre;
+        this.image = image;
+        this.description = description;
+        this.type = type;
+        this.prix = prix;
+        this.category = category;
+        this.subcategory = subcategory;
+    }
+    
     public int getId() {
         return id;
     }
@@ -65,6 +87,26 @@ public class Article {
     public String getType() {
         return type;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public SubCategory getSubcategory() {
+        return subcategory;
+    }
+
+    public List<Location> getLocation() {
+        return location;
+    }
+
+    public List<Rating> getRating() {
+        return rating;
+    }
+
+   /* public List<User> getUser() {
+        return user;
+    }*/
 
     public void setId(int id) {
         this.id = id;
@@ -94,9 +136,38 @@ public class Article {
         this.type = type;
     }
 
-    @Override
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setSubcategory(SubCategory subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public void setLocation(List<Location> location) {
+        this.location = location;
+    }
+
+    public void setRating(List<Rating> rating) {
+        this.rating = rating;
+    }
+
+  /*  public void setUser(List<User> user) {
+        this.user = user;
+    }*/
+
+     
+     
+    /*@Override
     public String toString() {
         return "Article{" + "stock=" + stock + ", titre=" + titre + ", image=" + image + ", description=" + description + ", prix=" + prix +  ", type=" + type + '}';
+    }
+*/
+    
+    
+    @Override
+    public String toString() {
+        return "Article{" + "id=" + id + ", stock=" + stock + ", titre=" + titre + ", image=" + image + ", description=" + description + ", type=" + type + ", prix=" + prix + ", category=" + category + ", subcategory=" + subcategory + '}';
     }
 
     @Override
@@ -122,7 +193,5 @@ public class Article {
         }
         return true;
     }
-    
-    
     
 }

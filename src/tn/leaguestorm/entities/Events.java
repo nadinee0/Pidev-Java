@@ -17,7 +17,7 @@ public class Events {
     private String title,description,image,location,url;
     private Date start_date,end_date;
     
-    private List<Tickets> tickets;
+    ///private List<Tickets> tickets;
 
     public Events() {
     }

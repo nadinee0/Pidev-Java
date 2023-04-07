@@ -8,6 +8,7 @@ package tn.leaguestorm.tests;
 import java.sql.SQLException;
 import tn.leaguestorm.entities.Article;
 import tn.leaguestorm.entities.Category;
+import tn.leaguestorm.entities.SubCategory;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.services.ServiceCategory;
 import tn.leaguestorm.services.ServiceSubcategory;
@@ -40,7 +41,9 @@ public class MainClass {
            
             //-----SubCateg---- 
             
-            
+            SubCategory subc1 = new SubCategory("ghfgfh");
+
+            ss.ajouter(subc1);
             
             //----------Article----------
             

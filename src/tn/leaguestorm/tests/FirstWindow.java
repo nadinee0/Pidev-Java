@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.leaguestorm.gui;
+package tn.leaguestorm.tests;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,8 +28,8 @@ public class FirstWindow extends Application {
     public void start(Stage primaryStage) {
        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("AddCategory.fxml"));
-            
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
+
             
             Scene scene = new Scene(root);
             

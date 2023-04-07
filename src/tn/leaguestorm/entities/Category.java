@@ -5,14 +5,19 @@
  */
 package tn.leaguestorm.entities;
 
+import java.util.List;
+
 /**
  *
  * @author Nadine
  */
 public class Category {
     
-    private int id;
+     private int id;
     private String nom, img;
+    private List<Article> articles;
+    private List<SubCategory> subcategory;
+
 
     public Category() {
     }
@@ -40,6 +45,14 @@ public class Category {
         return img;
     }
 
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public List<SubCategory> getSubcategory() {
+        return subcategory;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -51,6 +64,15 @@ public class Category {
     public void setImg(String img) {
         this.img = img;
     }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public void setSubcategory(List<SubCategory> subcategory) {
+        this.subcategory = subcategory;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -76,10 +98,10 @@ public class Category {
         return true;
     }
 
-    @Override
+   @Override
     public String toString() {
         return "Category{" + "nom=" + nom + ", img=" + img + '}';
     }
-    
+     
     
 }
