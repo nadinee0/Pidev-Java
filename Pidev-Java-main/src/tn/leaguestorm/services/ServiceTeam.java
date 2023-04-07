@@ -22,13 +22,21 @@ public class ServiceTeam implements IService<Team>{
     private MyConnection ds = MyConnection.getInstance();
 
     @Override
-    public void ajouter(Team t) throws SQLException{
+    public void ajouter(Team t) {
+        try{
         String req = "INSERT INTO `team` (`nom`, `description`,`wins`,`losses`,`rate`,`color`,`logo`) VALUES ('"+t.getNom_team()+"', '"+t.getDescription_team()+"',,'"+t.getWins_team()+"','"+t.getLosses_team()+"','"+t.getRate_team()+"','"+t.getColor()+"','"+t.getLogo_team()+"' )"; 
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
+        System.out.println("Team ajouté!");
+        }
+        catch (SQLException ex){
+        
+        System.out.println(ex.getMessage());
+        }
     }
     
-public void ajouter2(Team t) throws SQLException {
+public void ajouter2(Team t) {
+    try{
     String req = "INSERT INTO `team` ( `nom`, `description`, `wins`, `losses`, `rate`, `color`, `logo`) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
     PreparedStatement st = ds.getCnx().prepareStatement(req);
    
@@ -41,29 +49,45 @@ public void ajouter2(Team t) throws SQLException {
     st.setString(8, t.getLogo_team());
    
     st.executeUpdate();
+    }
+    catch(SQLException ex){
+        
+        System.out.println(ex.getMessage());
+    }
 }
 
 
 
 
     @Override
-    public void modifier(Team t) throws SQLException{
+    public void modifier(Team t) {
+        try {
         String req = "UPDATE `team` SET `nom` = '"+t.getNom_team()+"', `description` = '"+t.getDescription_team()+"', `wins`= '"+t.getWins_team()+"',`Losses` = '"+t.getLosses_team()+"',`rate` = '"+t.getRate_team()+"',,`Color` ='"+t.getColor()+"',`logo` = '"+t.getLogo_team()+"' WHERE `team`.`id` = "+t.getId();
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
+        System.out.println("Team modifié!");}
+        catch (SQLException ex){
+        
+        System.out.println(ex.getMessage());
+        }
     }
 
     @Override
-    public void supprimer(int id) throws SQLException{
+    public void supprimer(int id) {
+        try {
         String req = "DELETE FROM `team` WHERE id ="+id;
         Statement st = ds.getCnx().createStatement();
-        st.executeUpdate(req);
+        st.executeUpdate(req); System.out.println("Team supprimé!");}
+        catch (SQLException ex){
+        
+        System.out.println(ex.getMessage());
+        }
     }
 
 @Override
 public List<Team> getAll() throws SQLException{
     List<Team> list = new ArrayList<>();
-    
+    try{
     String req = "SELECT * FROM team";
     PreparedStatement st = ds.getCnx().prepareStatement(req);
     ResultSet rs = st.executeQuery();
@@ -71,6 +95,10 @@ public List<Team> getAll() throws SQLException{
         Team t = new Team(rs.getInt("id"), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getFloat(6), rs.getString(7) , rs.getString(8));
         list.add(t);
     }
+    } catch (SQLException ex){
+        
+        System.out.println(ex.getMessage());
+        }
     
     return list;
 }
