@@ -5,6 +5,7 @@
  */
 package tn.leaguestorm.services;
 
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -56,12 +57,13 @@ public class ServiceCategory implements IService<Category> {
         st.executeUpdate(req);
     }
 
-    public void deleteCategory(Category c) throws SQLException {
-        String req = "DELETE FROM category WHERE id = ?";
-        Statement st = ds.getCnx().createStatement();
-        st.executeUpdate(req);
+    public void deleteCategory(Category category) throws SQLException {
+    String sql = "DELETE FROM category WHERE id = ?";
+         PreparedStatement statement = ds.getCnx().prepareStatement(sql);
+        statement.setInt(1, category.getId());
+        statement.executeUpdate();  
+}
 
-    }
 
     @Override
     public List<Category> getAll() throws SQLException {

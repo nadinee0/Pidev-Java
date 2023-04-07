@@ -141,8 +141,8 @@ public class SubCategoryController implements Initializable {
     }
 
     @FXML
-    private void DeleteSubCategory(ActionEvent event) {
-     /*  ServiceSubcategory ss = new ServiceSubcategory();
+    private void DeleteSubCategory(ActionEvent event) throws SQLException {
+      ServiceSubcategory ss = new ServiceSubcategory();
 
         SubCategory s = subcategoryTable.getSelectionModel().getSelectedItem();
         if (s == null) {
@@ -161,12 +161,12 @@ public class SubCategoryController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
-           // ss.deleteCategory(s);
+            ss.deleteSubCategory(s);
             subcategories.remove(s);
             subcategoryTable.refresh();
             tfnom.setText("");
 
-        }*/
+        }
     }
 
 

@@ -52,6 +52,13 @@ String req = "UPDATE `sub_category` SET `nom_sub_category` = '"+s.getNomSubCateg
         String req = "DELETE FROM `sub_category` WHERE id ="+id;
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);     }
+    
+        public void deleteSubCategory(SubCategory subcategory) throws SQLException {
+    String sql = "DELETE FROM sub_category WHERE id = ?";
+         PreparedStatement statement = ds.getCnx().prepareStatement(sql);
+        statement.setInt(1, subcategory.getId());
+        statement.executeUpdate();  
+}
 
     @Override
     public List<SubCategory> getAll() throws SQLException {

@@ -167,9 +167,8 @@ public class CategoryController implements Initializable {
             categories.remove(c);
             categoryTable.refresh();
             tfNom.setText("");
-
-        }
-    }
+            
+    }}
 
     @FXML
     private void categories(SortEvent<Category> event) {
