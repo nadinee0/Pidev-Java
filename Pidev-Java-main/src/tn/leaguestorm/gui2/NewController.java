@@ -39,15 +39,12 @@ public class NewController implements Initializable {
     private TextField Nom;  
     @FXML
     private TextArea Description;
+   private ChoiceBox<Integer> Wins;
     @FXML
-    private ChoiceBox<String> Wins;
-    @FXML
-    private ChoiceBox<String> Losses;
+    private ChoiceBox<Integer> Losses;
     @FXML
     private TextField Rate;
-    @FXML
     private ImageView Logo;
-    @FXML
     private ColorPicker colorPicker;
     @FXML  
     private Button Add;
@@ -60,18 +57,21 @@ public class NewController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    Wins.getItems().addAll(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    Losses.getItems().addAll(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
     @FXML
     private void saveTeam(ActionEvent event) {
         String nom = Nom.getText();
         String description = Description.getText();
-        int wins = Integer.parseInt(Wins.getValue());
-        int losses = Integer.parseInt(Losses.getValue());
+        int wins = Wins.getValue();
+        int losses = Losses.getValue();
         float rate = Float.parseFloat(Rate.getText());
         String color = colorPicker.getValue().toString();
         String logo = Logo.getImage().toString();

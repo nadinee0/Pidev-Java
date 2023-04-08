@@ -26,14 +26,26 @@ public class Organism {
     public Organism(String nom_commercial, String nom_juridique, int phone_organisation, String email_organisation, String image, String more) {
         this.nom_commercial = nom_commercial;
         this.nom_juridique = nom_juridique;
+        this.phone_organisation = phone_organisation;
         this.email_organisation = email_organisation;
         this.image = image;
         this.more = more;
-        this.phone_organisation = phone_organisation;
+        
     }
     
     public Organism() {
     }
+       public Organism(String nom_commercial, String nom_juridique, int phone_organisation, String email_organisation, String image) {
+        this.nom_commercial = nom_commercial;
+        this.nom_juridique = nom_juridique;
+        this.phone_organisation = phone_organisation;
+        this.email_organisation = email_organisation;
+        this.image = image;
+        this.more = more;
+        
+    }
+
+   
     
 
     
