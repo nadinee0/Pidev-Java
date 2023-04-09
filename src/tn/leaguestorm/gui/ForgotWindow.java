@@ -24,17 +24,17 @@ import javafx.stage.StageStyle;
  *
  * @author Bellalouna Iheb
  */
-public class SigninWindow extends Application {
+public class ForgotWindow extends Application {
     
     @Override
     public void start(Stage primaryStage) {
        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Forgot.fxml"));
             
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("Signin");
+            primaryStage.setTitle("Forgot Password");
             primaryStage.setScene(scene);
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();

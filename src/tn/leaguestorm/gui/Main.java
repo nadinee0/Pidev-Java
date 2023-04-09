@@ -16,10 +16,10 @@ public class Main extends Application {
         try {
         Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
         primaryStage.setScene(new Scene(root));
-        //set stage borderless
+
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        //drag it here
+
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();

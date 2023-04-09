@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.input.MouseEvent;
 
 import tn.leaguestorm.utils.MyConnection;
 import org.mindrot.jbcrypt.BCrypt;
@@ -59,6 +60,7 @@ public class SigninController implements Initializable {
                 if (result.next()) {
                     String hashedPassword = result.getString("password");
                     if (BCrypt.checkpw(tfPassword.getText(), hashedPassword)) {
+                            
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");
                         alert.setHeaderText(null);
@@ -109,6 +111,11 @@ public class SigninController implements Initializable {
     private boolean isValidPassword(String password) {
         // Implement password validation logic here
         return true;
+    }
+    
+    @FXML
+    private void handleExitImgAction(MouseEvent event) {
+        System.exit(0);
     }
 
 }

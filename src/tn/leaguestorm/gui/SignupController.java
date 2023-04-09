@@ -21,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
 import org.mindrot.jbcrypt.BCrypt;
@@ -30,7 +32,7 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author Bellalouna Iheb
  */
-public class AddUserWindowController implements Initializable {
+public class SignupController implements Initializable {
 
     ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION","EQUIPE","JOUEUR");
     @FXML
@@ -39,12 +41,13 @@ public class AddUserWindowController implements Initializable {
     private TextField tfPassword;
     @FXML
     private TextField tfFirstName;
-    @FXML
-    private Button btnValider;
     @FXML 
     private ComboBox rolesBox;
-    @FXML
     private Label labelOnSubmit;
+    @FXML
+    private Button btnRegister;
+    @FXML
+    private ImageView exitImg;
 
     /**
      * Initializes the controller class.
@@ -54,7 +57,6 @@ public class AddUserWindowController implements Initializable {
         rolesBox.setItems(rolesBoxList);
     }    
 
-    @FXML
     private void saveUser(ActionEvent event) throws SQLException {
     String email = tfEmail.getText();
     String password = tfPassword.getText();
@@ -104,12 +106,9 @@ public class AddUserWindowController implements Initializable {
         return matcher.matches();
     }
     
-//    private boolean isValidPasswordFormat(String password) {
-//        String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-//        Pattern pattern = Pattern.compile(passwordRegex);
-//        Matcher matcher = pattern.matcher(password);
-//        return matcher.matches();
-//    }
-    
+    @FXML
+    private void handleExitImgAction(MouseEvent event) {
+        System.exit(0);
+    }
     
 }

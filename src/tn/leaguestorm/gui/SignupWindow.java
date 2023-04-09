@@ -17,23 +17,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author Bellalouna Iheb
  */
-public class MainWindow extends Application {
+public class SignupWindow extends Application {
     
     @Override
     public void start(Stage primaryStage) {
        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("AddUserWindow.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Signup.fxml"));
             
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("Inscription");
+            
+            primaryStage.setTitle("Signup");
             primaryStage.setScene(scene);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
