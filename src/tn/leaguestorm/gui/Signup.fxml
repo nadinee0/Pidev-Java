@@ -17,18 +17,18 @@
       <VBox alignment="CENTER" layoutX="333.0" layoutY="62.0" prefHeight="469.0" prefWidth="398.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #ACBB78, #F7F8F8); -fx-background-radius: 10px;">
          <Label style="-fx-font-size: 24pt; -fx-font-weight: bold;" text="SignUp" />
          <Label text="Email" />
-         <TextField fx:id="tfEmail" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="exemple@gmail.com" />
+         <TextField fx:id="tfEmail" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="exemple@gmail.com" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
          <Label text="Password" />
-         <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Enter Password" />
+         <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Enter Password" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
          <Label text="First Name" />
-         <PasswordField fx:id="tfFirstName" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Enter First Name" />
+         <PasswordField fx:id="tfFirstName" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Enter First Name" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
          <Label text="Account Type" />
          <ComboBox fx:id="rolesBox" layoutX="257.0" layoutY="261.0" prefWidth="150.0" />
          <VBox alignment="CENTER" spacing="10.0">
-            <Button fx:id="btnRegister" text="Register" />
+            <Button fx:id="btnRegister" style="-fx-background-color: #ACBB78; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-text-fill: white; -fx-font-size: 14pt;" text="Register" />
             <HBox alignment="CENTER">
-                <Label text="ALREADY HAVE AN ACCOUNT?" />
-                <Hyperlink text="LOGIN" />
+                <Label disable="true" text="ALREADY HAVE AN ACCOUNT?" />
+                <Hyperlink onAction="#handleSigninLinkAction" text="LOGIN" />
             </HBox>
          </VBox>
       </VBox>

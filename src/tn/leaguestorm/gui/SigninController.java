@@ -1,5 +1,6 @@
 package tn.leaguestorm.gui;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 import tn.leaguestorm.utils.MyConnection;
@@ -116,6 +118,24 @@ public class SigninController implements Initializable {
     @FXML
     private void handleExitImgAction(MouseEvent event) {
         System.exit(0);
+    }
+    
+    @FXML
+    private void handleForgotLinkAction(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("Forgot.fxml"));
+    Scene scene = new Scene(root);
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.setScene(scene);
+    stage.show();
+    }
+    
+    @FXML
+    private void handleSignupLinkAction(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("Signup.fxml"));
+    Scene scene = new Scene(root);
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.setScene(scene);
+    stage.show();
     }
 
 }
