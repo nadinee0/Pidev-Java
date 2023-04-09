@@ -76,16 +76,16 @@ public class AddUserWindowController implements Initializable {
         alert.setTitle("Prénom invalide!");
         alert.setContentText("Veuillez entrer un prénom valide (lettres uniquement)!");
         alert.showAndWait();
-        return;    
+        return;     
     }
     
-    if (!isValidPasswordFormat(password)) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Mot de passe invalide!");
-        alert.setContentText("Veuillez entrer un mot de passe valide (1ère lettre en majuscule, lettres et chiffres, et au moins un caractère spécial)!");
-        alert.showAndWait();
-        return;
-    }
+//    if (!isValidPasswordFormat(password)) {
+//        Alert alert = new Alert(AlertType.ERROR);
+//        alert.setTitle("Mot de passe invalide!");
+//        alert.setContentText("Veuillez entrer un mot de passe valide (1ère lettre en majuscule, lettres et chiffres, et au moins un caractère spécial)!");
+//        alert.showAndWait();
+//        return;
+//    }
 
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
@@ -104,12 +104,12 @@ public class AddUserWindowController implements Initializable {
         return matcher.matches();
     }
     
-    private boolean isValidPasswordFormat(String password) {
-        String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        Pattern pattern = Pattern.compile(passwordRegex);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
+//    private boolean isValidPasswordFormat(String password) {
+//        String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+//        Pattern pattern = Pattern.compile(passwordRegex);
+//        Matcher matcher = pattern.matcher(password);
+//        return matcher.matches();
+//    }
     
     
 }
