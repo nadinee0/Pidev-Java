@@ -20,7 +20,6 @@ import tn.leaguestorm.entities.User;
 
 public class HomeController implements Initializable {
 
-    @FXML
     private VBox pnItems = null;
     
     @FXML
@@ -58,9 +57,7 @@ public class HomeController implements Initializable {
     @FXML
     private Button btnProfile;
     
-    @FXML
     private Label lblLastName;
-    @FXML
     private Label lblFirstName;
     @FXML
     private Label lblEmail;
@@ -117,7 +114,7 @@ public class HomeController implements Initializable {
         {
             pnlOrders.setStyle("-fx-background-color : #464F67");
             pnlOrders.toFront();
-        }
+        } 
     }
     
     @FXML
@@ -126,8 +123,8 @@ public class HomeController implements Initializable {
     }
     
     public void initData(User user) {
-    lblFirstName.setText(user.getFirstName());
-    lblLastName.setText(user.getLastName());
+//    lblFirstName.setText(user.getFirstName());
+//    lblLastName.setText(user.getLastName());
     lblEmail.setText(user.getEmail());
 }
 }

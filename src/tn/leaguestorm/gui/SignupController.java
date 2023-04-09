@@ -41,7 +41,6 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class SignupController implements Initializable {
 
-    ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION", "EQUIPE", "JOUEUR");
     ObservableList<String> countriesBoxList = FXCollections.observableArrayList(getCountryList());
     
     
@@ -53,10 +52,10 @@ public class SignupController implements Initializable {
     private TextField tfConfirmPassword;
     @FXML
     private TextField tfFirstName;
-    private ComboBox rolesBox;
+    
     @FXML
     private ComboBox countryBox;
-    private Label labelOnSubmit;
+    
     @FXML
     private Button btnRegister;
     @FXML
@@ -71,7 +70,6 @@ public class SignupController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        rolesBox.setItems(rolesBoxList);
         ObservableList<String> countryList = getCountryList();
         countryBox.setItems(countriesBoxList);
         countryBox.setPromptText("Select a country");
@@ -96,7 +94,6 @@ public class SignupController implements Initializable {
         String email = tfEmail.getText();
         String password = tfPassword.getText();
         String confirmPassword = tfConfirmPassword.getText();
-        String roles = rolesBox.getValue().toString();
         String firstName = tfFirstName.getText();
         String lastName = tfLastName.getText();
         String country = (String) countryBox.getSelectionModel().getSelectedItem();
@@ -151,7 +148,5 @@ public class SignupController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
-    
 
 }
