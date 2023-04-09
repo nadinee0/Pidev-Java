@@ -15,8 +15,10 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.control.Label;
+import tn.leaguestorm.entities.User;
 
-public class Controller implements Initializable {
+public class HomeController implements Initializable {
 
     @FXML
     private VBox pnItems = null;
@@ -27,7 +29,6 @@ public class Controller implements Initializable {
     @FXML
     private Button btnOrders;
 
-    @FXML
     private Button btnCustomers;
 
     @FXML
@@ -53,6 +54,23 @@ public class Controller implements Initializable {
 
     @FXML
     private Pane pnlMenus;
+    
+    @FXML
+    private Button btnProfile;
+    
+    @FXML
+    private Label lblLastName;
+    @FXML
+    private Label lblFirstName;
+    @FXML
+    private Label lblEmail;
+    
+    private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+        initData(user);
+    }
     
 
     @Override
@@ -81,6 +99,7 @@ public class Controller implements Initializable {
     }
 
 
+    @FXML
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnCustomers) {
             pnlCustomer.setStyle("-fx-background-color : #1620A1");
@@ -105,4 +124,10 @@ public class Controller implements Initializable {
     private void handleExitButtonAction(ActionEvent event) {
         System.exit(0);
     }
+    
+    public void initData(User user) {
+    lblFirstName.setText(user.getFirstName());
+    lblLastName.setText(user.getLastName());
+    lblEmail.setText(user.getEmail());
+}
 }

@@ -8,6 +8,7 @@ package tn.leaguestorm.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,20 +41,30 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class SignupController implements Initializable {
 
-    ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION","EQUIPE","JOUEUR");
+    ObservableList<String> rolesBoxList = FXCollections.observableArrayList("ORGANISATION", "EQUIPE", "JOUEUR");
+    ObservableList<String> countriesBoxList = FXCollections.observableArrayList(getCountryList());
+    
+    
     @FXML
     private TextField tfEmail;
     @FXML
     private TextField tfPassword;
     @FXML
+    private TextField tfConfirmPassword;
+    @FXML
     private TextField tfFirstName;
-    @FXML 
     private ComboBox rolesBox;
+    @FXML
+    private ComboBox countryBox;
     private Label labelOnSubmit;
     @FXML
     private Button btnRegister;
     @FXML
     private ImageView exitImg;
+    @FXML
+    private TextField tfLastName;
+    @FXML
+    private TextField tfPhone;
 
     /**
      * Initializes the controller class.
@@ -61,68 +72,86 @@ public class SignupController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         rolesBox.setItems(rolesBoxList);
-    }    
+        ObservableList<String> countryList = getCountryList();
+        countryBox.setItems(countriesBoxList);
+        countryBox.setPromptText("Select a country");
+    }
 
-    private void saveUser(ActionEvent event) throws SQLException {
-    String email = tfEmail.getText();
-    String password = tfPassword.getText();
-    String roles = rolesBox.getValue().toString();
-    String firstName = tfFirstName.getText();
-    int isVerified = 0;
+    private ObservableList<String> getCountryList() {
+        Locale[] locales = Locale.getAvailableLocales();
+        ObservableList<String> countryList = FXCollections.observableArrayList();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (!country.isEmpty() && !countryList.contains(country)) {
+                countryList.add(country);
+            }
+        }
+        FXCollections.sort(countryList);
+        return countryList;
+    }
+    
+    @FXML
+    private void saveUser(ActionEvent event) throws SQLException, IOException {
+        
+        String email = tfEmail.getText();
+        String password = tfPassword.getText();
+        String confirmPassword = tfConfirmPassword.getText();
+        String roles = rolesBox.getValue().toString();
+        String firstName = tfFirstName.getText();
+        String lastName = tfLastName.getText();
+        String country = (String) countryBox.getSelectionModel().getSelectedItem();
+        int phoneNumber = Integer.parseInt(tfPhone.getText());
+        int isVerified = 0;
 
-    // Check if email is valid
-    if (!isValidEmail(email)) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Adresse email invalide!");
-        alert.setContentText("Veuillez entrez une adresse email valide!");
+        if (firstName.isEmpty() || !firstName.matches("[a-zA-Z]+")) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Invalid First Name");
+            alert.setContentText("Please enter a valid First Name");
+            alert.showAndWait();
+            return;
+        }
+        
+        if (!password.equals(confirmPassword)) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Password Mismatch");
+            alert.setContentText("Passwords do not match");
+            alert.showAndWait();
+            return;
+        }
+
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(13));
+
+        User u = new User(email, hashedPassword, isVerified, firstName, lastName, country, phoneNumber);
+        UserService us = new UserService();
+        us.ajouter3(u);
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Created!");
+        alert.setContentText("User created successfully");
         alert.showAndWait();
-        return;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Signin.fxml"));
+        
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
-    
-    if (firstName.isEmpty() || !firstName.matches("[a-zA-Z]+")) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Prénom invalide!");
-        alert.setContentText("Veuillez entrer un prénom valide (lettres uniquement)!");
-        alert.showAndWait();
-        return;     
-    }
-    
-//    if (!isValidPasswordFormat(password)) {
-//        Alert alert = new Alert(AlertType.ERROR);
-//        alert.setTitle("Mot de passe invalide!");
-//        alert.setContentText("Veuillez entrer un mot de passe valide (1ère lettre en majuscule, lettres et chiffres, et au moins un caractère spécial)!");
-//        alert.showAndWait();
-//        return;
-//    }
 
-    String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-    User u = new User(email, roles, hashedPassword, isVerified, firstName);
-    UserService us = new UserService();
-    us.ajouter3(u);
-
-    labelOnSubmit.setText("Utilisateur ajouté avec succès!");
-    
-    }
-    
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-    
     @FXML
     private void handleExitImgAction(MouseEvent event) {
         System.exit(0);
     }
-    
+
     @FXML
     private void handleSigninLinkAction(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
-    Scene scene = new Scene(root);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    stage.setScene(scene);
-    stage.show();
-}
+        Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    
+
 }

@@ -41,7 +41,7 @@ public class UserService implements IService<User> {
     }
 
     public void ajouter3(User u) throws SQLException{
-            String req = "INSERT INTO `user` (`email`, `roles`, `password`, `is_verified`, `first_name`) VALUES ('" + u.getEmail()+ "', '" + u.getRoles()+ "', '" + u.getPassword()+ "', '" + u.getIsVerified()+ "', '" + u.getFirstName()+ "')";
+            String req = "INSERT INTO `user` (`email`, `password`, `is_verified`, `first_name`, `last_name`, `country`, `phone_number`) VALUES ('" + u.getEmail()+ "', '" + u.getRoles()+ "', '" + u.getPassword()+ "', '" + u.getIsVerified()+ "', '" + u.getFirstName()+ "', '" + u.getLastName()+ "', '" + u.getCountry()+ "', '" + u.getPhoneNumber()+ "')";
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
     }

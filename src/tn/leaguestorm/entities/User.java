@@ -44,6 +44,16 @@ public class User {
         this.isVerified = isVerified;
     }
 
+    public User(String email, String roles, String password, int verified, String firstName, String lastName, String country, int phoneNumber) {
+        this.email = email;
+        this.roles = roles;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getIsVerified() {
         return isVerified;
     }

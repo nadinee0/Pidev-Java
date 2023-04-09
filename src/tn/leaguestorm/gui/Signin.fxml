@@ -10,20 +10,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.SigninController">
    <children>
       <VBox alignment="CENTER" layoutX="333.0" layoutY="62.0" prefHeight="469.0" prefWidth="398.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #ACBB78, #F7F8F8); -fx-background-radius: 10px;">
-         <Label style="-fx-font-size: 24pt; -fx-font-weight: bold;" text="Login" />
-         <TextField fx:id="tfEmail" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Email" snapToPixel="false" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
-         <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Password" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
+         <Label style="-fx-font-size: 24pt; -fx-font-weight: bold;" text="Login" textFill="WHITE"></Label>
+         <TextField fx:id="tfEmail" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Email" snapToPixel="false" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;"></TextField>
+         <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Password" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;"></PasswordField>
          <VBox alignment="CENTER" spacing="10.0">
-            <Button fx:id="btnLogin" onAction="#handleLoginButtonAction" prefHeight="40.0" prefWidth="198.0" text="Login" style="-fx-background-color: #ACBB78; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-text-fill: white; -fx-font-size: 14pt;" />
-            <Hyperlink onAction="#handleForgotLinkAction" text="Forgot Password?" />
+            <Button fx:id="btnLogin" onAction="#handleLoginButtonAction" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #ACBB78; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-text-fill: white; -fx-font-size: 14pt;" text="Login"></Button>
+            <Hyperlink onAction="#handleForgotLinkAction" text="Forgot Password?"></Hyperlink>
          </VBox>
          <HBox alignment="CENTER">
-                <Label disable="true" text="NEW?" />
-                <Hyperlink onAction="#handleSignupLinkAction" text="CREATE AN ACCOUNT" />
+                <Label disable="true" text="NEW?">
+               </Label>
+                <Hyperlink onAction="#handleSignupLinkAction" text="CREATE AN ACCOUNT"></Hyperlink>
             </HBox>
       </VBox>
       <ImageView fx:id="exitImg" fitHeight="26.0" fitWidth="29.0" layoutX="1007.0" layoutY="7.0" onMouseClicked="#handleExitImgAction">

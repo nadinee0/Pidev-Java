@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 
 import tn.leaguestorm.utils.MyConnection;
 import org.mindrot.jbcrypt.BCrypt;
+import tn.leaguestorm.entities.User;
 
 
 public class SigninController implements Initializable {
@@ -44,9 +45,10 @@ public class SigninController implements Initializable {
     private Alert alert;
     private ResultSet result;
 
+
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-        String selectData = "SELECT email, password FROM user WHERE email = ?";
+        String selectData = "SELECT * FROM user WHERE email = ?";
         try {
             if (tfEmail.getText().isEmpty() || tfPassword.getText().isEmpty()) {
                 alert = new Alert(AlertType.ERROR);
@@ -62,7 +64,13 @@ public class SigninController implements Initializable {
                 if (result.next()) {
                     String hashedPassword = result.getString("password");
                     if (BCrypt.checkpw(tfPassword.getText(), hashedPassword)) {
-                            
+                        
+                        String email = result.getString("email");
+                        String firstName = result.getString("first_name");
+                        String lastName = result.getString("last_name");
+                        int phoneNumber = result.getInt("phone_number");
+                        User user = new User(email, firstName, lastName, phoneNumber);
+                        
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");
                         alert.setHeaderText(null);
@@ -71,6 +79,9 @@ public class SigninController implements Initializable {
                         
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
                         Parent root = loader.load();
+                        HomeController homeController = loader.getController();
+                        homeController.setUser(user);
+                        
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) btnLogin.getScene().getWindow();
                         stage.setScene(scene);
