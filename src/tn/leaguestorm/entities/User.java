@@ -11,7 +11,7 @@ package tn.leaguestorm.entities;
  */
 public class User {
     private int id, phoneNumber, isVerified;
-    private String email, roles, password, firstName, lastName, country;
+    private String email, roles, password, firstName, lastName, country, profilePictureName;
 
     public User(int phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
         this.phoneNumber = phoneNumber;
@@ -23,12 +23,21 @@ public class User {
         this.country = country;
     }
     
-    public User(String email, String firstName, String lastName, String country, int phoneNumber) {
+    public User(String email, String firstName, String lastName, String country, int phoneNumber, String profilePictureName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
         this.phoneNumber = phoneNumber;
+        this.profilePictureName = profilePictureName;
+    }
+
+    public String getProfilePictureName() {
+        return profilePictureName;
+    }
+
+    public void setProfilePictureName(String profilePictureName) {
+        this.profilePictureName = profilePictureName;
     }
     
     public User(String email, String firstName, String lastName, int phoneNumber) {

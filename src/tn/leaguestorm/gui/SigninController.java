@@ -70,7 +70,8 @@ public class SigninController implements Initializable {
                         String lastName = result.getString("last_name");
                         String country = result.getString("country");
                         int phoneNumber = result.getInt("phone_number");
-                        User user = new User(email, firstName, lastName, country, phoneNumber);
+                        String profilePictureName = result.getString("profile_picture_name");
+                        User user = new User(email, firstName, lastName, country, phoneNumber, profilePictureName);
                         
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");

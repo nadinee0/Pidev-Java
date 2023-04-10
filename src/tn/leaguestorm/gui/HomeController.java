@@ -16,11 +16,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import tn.leaguestorm.entities.User;
 
 public class HomeController implements Initializable {
-
-    private VBox pnItems = null;
     
     @FXML
     private Button btnOverview;
@@ -57,10 +57,17 @@ public class HomeController implements Initializable {
     @FXML
     private Button btnProfile;
     
-    private Label lblLastName;
-    private Label lblFirstName;
+    @FXML
+    private Label lblFullName;
+    
     @FXML
     private Label lblEmail;
+    
+    @FXML
+    private Label lblCountry;
+    
+    @FXML
+    private ImageView userProfilePic;
     
     private User user;
 
@@ -72,30 +79,8 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Node[] nodes = new Node[10];
-        for (int i = 0; i < nodes.length; i++) {
-            try {
-
-                final int j = i;
-                nodes[i] = FXMLLoader.load(getClass().getResource("Item.fxml"));
-
-                //give the items some effect
-
-                nodes[i].setOnMouseEntered(event -> {
-                    nodes[j].setStyle("-fx-background-color : #0A0E3F");
-                });
-                nodes[i].setOnMouseExited(event -> {
-                    nodes[j].setStyle("-fx-background-color : #02030A");
-                });
-                pnItems.getChildren().add(nodes[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
-
-
+    
     @FXML
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnCustomers) {
@@ -123,8 +108,11 @@ public class HomeController implements Initializable {
     }
     
     public void initData(User user) {
-//    lblFirstName.setText(user.getFirstName());
-//    lblLastName.setText(user.getLastName());
-    lblEmail.setText(user.getEmail());
-}
+        lblFullName.setText(user.getFirstName()+" "+user.getLastName());
+        lblEmail.setText(user.getEmail());   
+        lblCountry.setText(user.getCountry());  
+        String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + user.getProfilePictureName();
+        Image userProfilePic = new Image("file:" + userProfilePicPath);
+        this.userProfilePic.setImage(userProfilePic);
+    }
 }
