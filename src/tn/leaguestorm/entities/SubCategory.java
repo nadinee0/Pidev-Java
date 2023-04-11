@@ -44,6 +44,15 @@ public class SubCategory {
         this.category = category;
     }
 
+    public SubCategory(int id, String nomSubCategory, Category category) {
+        this.id = id;
+        this.nomSubCategory = nomSubCategory;
+        this.category=category;
+    }
+
+
+   
+
     
     public int getId() {
         return id;

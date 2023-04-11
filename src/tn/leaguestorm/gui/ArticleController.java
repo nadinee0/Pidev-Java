@@ -13,9 +13,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -45,6 +47,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.ValidationException;
 import tn.leaguestorm.entities.Article;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.entities.SubCategory;
@@ -107,10 +110,11 @@ public class ArticleController implements Initializable {
 
     @FXML
     ImageView imagep = null;
-     @FXML
+    @FXML
     private FontAwesomeIconView photo1;
-    private String i ;
-    byte [] image = null;
+    private String i;
+    byte[] image = null;
+
     /**
      * Initializes the controller class.
      */
@@ -126,7 +130,7 @@ public class ArticleController implements Initializable {
         }
 
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
+        // imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -137,7 +141,7 @@ public class ArticleController implements Initializable {
         articleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 tfTitle.setText(newSelection.getTitre());
-                tfImage.setText(newSelection.getImage());
+//                tfImage.setText(newSelection.getImage());
                 taDescription.setText(newSelection.getDescription());
                 cbType.setValue(newSelection.getType());
                 //  tfStock.setText(newSelection.getStock());
@@ -152,38 +156,36 @@ public class ArticleController implements Initializable {
     @FXML
     private void saveArticle(ActionEvent event) throws SQLException {
         String title = tfTitle.getText();
-        String image = tfImage.getText();
+//        String image = tfImage.getText();
         String description = taDescription.getText();
         String priceS = /*Float.valueOf(tfPrice.getText());*/ tfPrice.getText();
         String type = cbType.getValue();
         String stockS = tfStock.getText();
         // Integer stock = Integer.valueOf(tfStock.getText());
         try {
-            if (title.isEmpty() && image.isEmpty() && description.isEmpty() && priceS.isEmpty() && type.isEmpty() && stockS.isEmpty() /*&& category.isEmpty() && subcategory.isEmpty()*/) {
+            if (title.isEmpty() /*&& image.isEmpty() */|| description.isEmpty() || priceS.isEmpty() || type.isEmpty() || stockS.isEmpty() /*&& category.isEmpty() && subcategory.isEmpty()*/) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Empty Field");
                 alert.setContentText("Please fill the fields !!");
                 alert.showAndWait();
                 return;
             }
-/*
-            if (articles.contains(title)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle(" Exsiting Title ");
-                alert.setContentText("Title Already Exists !!");
-                alert.showAndWait();
-                return;
-            }
-*/
 
-            if (title.length() < 2) {
+            if (title.length() < 2|| title.length() > 20) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Invalid Length");
-                alert.setContentText("title must contain at least 2 caracters !!");
+                alert.setContentText("title must must be between 2 and 50 characters !!");
                 alert.showAndWait();
                 return;
             }
-
+ if (!description.matches("[a-zA-Z0-9\\s'.,-]+")) {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(" Invalid Input");
+                alert.setContentText("Article description can only contain letters, digits, spaces, apostrophes, commas, periods, and hyphens !");
+                alert.showAndWait();
+                return;     
+        }
+            
             if (description.length() < 10 || description.length() > 100) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Invalid Length");
@@ -192,7 +194,7 @@ public class ArticleController implements Initializable {
                 return;
             }
 
-                    float price = Float.parseFloat(priceS);
+            float price = Float.parseFloat(priceS);
             if (price < 0) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Price can't be negative");
@@ -207,30 +209,29 @@ public class ArticleController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-            
+
             int stock = Integer.parseInt(stockS);
             if (stock < 0) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Stock can't be negative");
-                alert.setContentText("Please fill the field with positive value !!");
+                alert.setContentText("Stock must be greater than zero!");
                 alert.showAndWait();
                 return;
             }
-            if (!stockS.matches("[0-9]+(\\.[0-9]+)?")) { // Check if the string contains only numbers and optional decimal point
+            if (!stockS.matches("\\d+")) { // Check if the string contains only digits
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle(" Stock must contains only numbers ");
-                alert.setContentText("Please fill the field with Numbers !!");
+                alert.setTitle("Stock must contain only whole numbers");
+                alert.setContentText("Please fill the field with whole numbers only!");
                 alert.showAndWait();
                 return;
             }
-     
 
-            Article a = new Article(title, image, price, description, stock, type);
+            Article a = new Article(title,/* image,*/ price, description, stock, type);
             ServiceArticle sa = new ServiceArticle();
             sa.ajouter(a);
             articleTable.refresh();
             tfTitle.setText("");
-            tfImage.setText("");
+//            tfImage.setText("");
             taDescription.setText("");
             tfPrice.setText("");
             cbType.setValue("");
@@ -321,11 +322,12 @@ public class ArticleController implements Initializable {
         }
 
     }
-/*            private MyConnection ds = MyConnection.getInstance();*/
+
+    /*            private MyConnection ds = MyConnection.getInstance();*/
 
     @FXML
     private void Import(ActionEvent event) {
-   /*   Article a = null;
+        /*   Article a = null;
         // Create a file chooser
     JFileChooser fileChooser = new JFileChooser();
 
@@ -343,12 +345,12 @@ public class ArticleController implements Initializable {
  PreparedStatement pstmt = ds.getCnx().prepareStatement(sql);
     pstmt.setString(1, a.getImage());
     pstmt.executeUpdate();*/
-  FileChooser fc = new FileChooser();
+        FileChooser fc = new FileChooser();
         fc.setTitle("Ajouter une Image");
         fc.getExtensionFilters().addAll(
-               new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
         File f = fc.showOpenDialog(null);
-       /* String DBPath = "C:\\\\\\\\xampp\\\\\\\\htdocs\\\\\\\\Version-Integre\\\\\\\\public\\\\\\\\uploads\\\\\\\\"+f.getName();
+        /* String DBPath = "C:\\\\\\\\xampp\\\\\\\\htdocs\\\\\\\\Version-Integre\\\\\\\\public\\\\\\\\uploads\\\\\\\\"+f.getName();
         i=f.getName();
         a.setImage(i);
         System.out.println(a.getImage());
@@ -363,6 +365,7 @@ public class ArticleController implements Initializable {
         for (int readNum ;(readNum= fin.read(buf)) != -1 ;){
             bos.write(buf,0,readNum);
          image = bos.toByteArray();}
-        } */}
+        } */
+    }
 
 }

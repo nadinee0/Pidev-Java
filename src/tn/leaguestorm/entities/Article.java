@@ -60,6 +60,13 @@ public class Article {
         this.subcategory = subcategory;
     }
 
+    public Article(String title, float price, String description, int stock, String type) {
+ this.stock = stock;
+        this.titre = titre;
+        this.description = description;
+        this.prix = prix;
+        this.type = type;    }
+
     
     public int getId() {
         return id;

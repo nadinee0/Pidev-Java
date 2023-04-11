@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.utils.MyConnection;
 
@@ -35,12 +36,25 @@ public class ServiceCategory implements IService<Category> {
     }
 
     public void ajouter2(Category c) throws SQLException {
-        String req = "INSERT INTO `category` (`nom`, `img`) VALUES (?,?)";
+        String req = "SELECT id FROM `category` WHERE nom=?";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, c.getNom());
-        st.setString(2, c.getImg());
-
-        st.executeUpdate();
+     ResultSet rs = st.executeQuery();   
+        if (rs.next()) {
+    // Le nom de catégorie existe déjà
+    System.out.println("This Category Already Exists ! ");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(" Exsiting Category ");
+                alert.setContentText(c.getNom()+" Category Already Exists !!");
+                alert.showAndWait();
+                return;
+} else {
+ String req1 = "INSERT INTO `category` (`nom`, `img`) VALUES (?,?)";
+        PreparedStatement insertst = ds.getCnx().prepareStatement(req1);
+        insertst.setString(1, c.getNom());
+        insertst.setString(2, c.getImg());
+        insertst.executeUpdate();
+    }
     }
 
     @Override
@@ -48,6 +62,13 @@ public class ServiceCategory implements IService<Category> {
         String req = "UPDATE `category` SET `nom` = '" + c.getNom() + "', `img` = '" + c.getImg() + "' WHERE `category`.`id` = " + c.getId();
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
+    }
+
+    public void update(Category c) throws SQLException {
+        String req = "UPDATE category SET nom = ?, img =? WHERE id =? ";
+       PreparedStatement st = ds.getCnx().prepareStatement(req);
+        st.setString(1, c.getNom());
+        st.setString(2, c.getImg());
     }
 
     @Override

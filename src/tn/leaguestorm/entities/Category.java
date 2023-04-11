@@ -27,10 +27,25 @@ public class Category {
         this.img = img;
     }
 
+      public Category(int id, String nom) {
+        this.nom = nom;
+        this.id = id;
+    }
+      
     public Category(int id, String nom, String img) {
         this.id = id;
         this.nom = nom;
         this.img = img;
+    }
+
+    public Category(int categoryId) {
+        this.id = categoryId;
+    }
+
+
+
+    public Category(String categoryName) {
+        this.nom = categoryName;
     }
 
     public int getId() {

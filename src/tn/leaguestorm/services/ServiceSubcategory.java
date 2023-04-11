@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.entities.SubCategory;
 import tn.leaguestorm.utils.MyConnection;
 
@@ -45,8 +46,10 @@ public class ServiceSubcategory implements IService<SubCategory>{
     public void modifier(SubCategory s) throws SQLException {
 String req = "UPDATE `sub_category` SET `nom_sub_category` = '"+s.getNomSubCategory()+"' WHERE `sub_category`.`id` = "+s.getId();
         Statement st = ds.getCnx().createStatement();
-        st.executeUpdate(req);     }
+        st.executeUpdate(req);   
+    }
 
+    
     @Override
     public void supprimer(int id) throws SQLException {
         String req = "DELETE FROM `sub_category` WHERE id ="+id;
@@ -64,12 +67,16 @@ String req = "UPDATE `sub_category` SET `nom_sub_category` = '"+s.getNomSubCateg
     public List<SubCategory> getAll() throws SQLException {
  List<SubCategory> list = new ArrayList<>();
         
-        String req = "Select * from sub_category";
-        Statement st = ds.getCnx().createStatement();
-        ResultSet rs = st.executeQuery(req);
-        while(rs.next()){
-            SubCategory c = new SubCategory(rs.getInt("id"), rs.getString(3));
-            list.add(c);
+       String req = "SELECT s.id, s.nom_sub_category, s.category_id, c.nom AS category_name FROM sub_category s JOIN category c ON s.category_id = c.id";
+    Statement st = ds.getCnx().createStatement();
+    ResultSet rs = st.executeQuery(req);
+    while (rs.next()) {
+        int id = rs.getInt("id");
+        String nomSubCategory = rs.getString("nom_sub_category");
+        String categoryName = rs.getString("category_name");
+        Category category = new Category(categoryName);
+        SubCategory sc = new SubCategory(id, category, nomSubCategory);
+        list.add(sc);
         }
         
         return list;  

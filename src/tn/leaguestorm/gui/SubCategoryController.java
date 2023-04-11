@@ -54,7 +54,7 @@ public class SubCategoryController implements Initializable {
     @FXML
     private Button btnDelete;
     @FXML
-    private ComboBox<Category> cbCatg;
+    private ComboBox<String> cbCatg;
 
  
 
@@ -84,6 +84,15 @@ public class SubCategoryController implements Initializable {
         });
     }    
 
+    private CategoryController catgCon;
+    //private ObservableList<Category> catgData;
+    public ObservableList<Category> getCategories() throws SQLException{
+                       ServiceSubcategory ss = new ServiceSubcategory();
+                    subcategories = FXCollections.observableArrayList(ss.getAll());
+        return null;
+
+    }
+    
     @FXML
     private void AddSubCategory(ActionEvent event) throws SQLException {
          String nomSubCategory = tfnom.getText();
@@ -120,7 +129,7 @@ public class SubCategoryController implements Initializable {
     @FXML
     private void UpdateSubCategory(ActionEvent event) throws SQLException {
          String nomSubCategory = tfnom.getText();
-         Category category =cbCatg.getValue();
+    //     Category category =cbCatg.getValue();
         ServiceSubcategory ss = new ServiceSubcategory();
 
        SubCategory s = subcategoryTable.getSelectionModel().getSelectedItem();
@@ -142,7 +151,7 @@ public class SubCategoryController implements Initializable {
         }
 
         s.setNomSubCategory(nomSubCategory);
-        s.setCategory(category);
+     //   s.setCategory(category);
         ss.modifier(s);
         subcategoryTable.refresh();
         tfnom.setText("");
@@ -187,12 +196,12 @@ public class SubCategoryController implements Initializable {
 
     @FXML
     private void subcategories(SortEvent<SubCategory> event) throws SQLException {
-    ServiceSubcategory ss = new  ServiceSubcategory();
+  /*  ServiceSubcategory ss = new  ServiceSubcategory();
         List<SubCategory> subcategories = ss.getAll();
         System.out.println("All subcategories:");
         for (SubCategory s : subcategories) {
             System.out.println(s.getNomSubCategory() + " - " + s.getCategory().getNom());
-        }
+        }*/
     }
     
 }

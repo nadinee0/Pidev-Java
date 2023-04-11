@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -35,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
+import javax.swing.JOptionPane;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.services.ServiceCategory;
 import tn.leaguestorm.utils.MyConnection;
@@ -113,14 +115,6 @@ public class CategoryController implements Initializable {
     private void saveCategory(ActionEvent event) throws SQLException {
         String nom = tfNom.getText();
         String image = tfImage.getText();
-
-        /* if (nom.isEmpty() && image.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Empty Field");
-            alert.setContentText("Please fill the fields !!");
-            alert.showAndWait();
-            return;
-        }*/
         try {
             // code that might throw an exception
             if (nom.isEmpty() && image.isEmpty()) {
@@ -129,7 +123,26 @@ public class CategoryController implements Initializable {
                 alert.setContentText("Please fill the fields !!");
                 alert.showAndWait();
                 return;
+
             }
+// Vérifier si le nom de catégorie commence par une majuscule
+            if (!nom.matches("^[A-Z].*")) {
+                System.out.println("Le nom de catégorie est invalide !");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Invalid Name");
+                alert.setContentText("Category Name Must Start With Majuscule !!");
+                alert.showAndWait();
+                return;
+            }
+
+            if (nom.length() < 2 || nom.length() > 10) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(" Invalid Length");
+                alert.setContentText("Category Name must be between 2 and 10  !!");
+                alert.showAndWait();
+                return;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -154,9 +167,9 @@ public class CategoryController implements Initializable {
         String image = tfImage.getText();
         ServiceCategory sc = new ServiceCategory();
 
-    //    Category c = categoryList.getSelectionModel().getSelectedItem();
-      ObservableList<Category> selectedItems = categoryList.getSelectionModel().getSelectedItems();
-/*
+        //    Category c = categoryList.getSelectionModel().getSelectedItem();
+        ObservableList<Category> selectedItems = categoryList.getSelectionModel().getSelectedItems();
+        /*
         if (c == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
@@ -181,14 +194,16 @@ public class CategoryController implements Initializable {
         tfNom.setText("");
         tfImage.setText("");
 
-    */
-    for (Category item : selectedItems) {
-    item.setNom(nom); // Update the name of the item
-    item.setImg(image);  // Update the image of the item
-}
+         */
+        for (Category item : selectedItems) {
+            item.setNom(nom); // Update the name of the item
+            item.setImg(image);  // Update the image of the item
+            sc.update(item);
+
+        }
 
 // Refresh the ListView to reflect the changes
-categoryList.refresh();
+        categoryList.refresh();
     }
 
     @FXML
@@ -198,7 +213,7 @@ categoryList.refresh();
 
         // Get the selected category from the ListView
         Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();
-Category c=new Category();
+        Category c = new Category();
         if (selectedCategory == null) {
             // Show a warning message if no category is selected
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -210,7 +225,7 @@ Category c=new Category();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Delete Category");
-            alert.setContentText("Are you sure you want to delete the selected category :"+"  "+selectedCategory.getNom()+" "+"?");
+            alert.setContentText("Are you sure you want to delete the selected category :" + "  " + selectedCategory.getNom() + " " + "?");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -219,7 +234,7 @@ Category c=new Category();
 
                 // Remove the selected category from the ListView
                 categories.remove(selectedCategory);
-              //  categories.clear();
+                //  categories.clear();
                 categoryList.refresh();
 
                 // Clear the text fields

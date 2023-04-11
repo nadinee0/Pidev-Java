@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import tn.leaguestorm.utils.MyConnection;
 
 /**
@@ -33,7 +34,7 @@ public class ServiceArticle  implements IService<Article> {
     }
 
        public void ajouter2(Article a) throws SQLException{
-        String req = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`,`type`) VALUES (?,?,?,?,?,?)";
+      /*  String req = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`,`type`) VALUES (?,?,?,?,?,?)";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, a.getTitre());
         st.setString(2, a.getImage());
@@ -42,8 +43,33 @@ public class ServiceArticle  implements IService<Article> {
         st.setInt(5, a.getStock());
         st.setString(6, a.getType());
         
-        st.executeUpdate();
-    } 
+        st.executeUpdate();*/
+            String req = "SELECT id FROM `article` WHERE titre=?";
+        PreparedStatement st = ds.getCnx().prepareStatement(req);
+        st.setString(1, a.getTitre());
+     ResultSet rs = st.executeQuery();   
+        if (rs.next()) {
+    // Le nom de catégorie existe déjà
+    System.out.println("This Article Already Exists ! ");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(" Exsiting Article ");
+                alert.setContentText(a.getTitre()+" Article Already Exists !!");
+                alert.showAndWait();
+                return;
+} else {
+  String req1 = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`,`type`) VALUES (?,?,?,?,?,?)";
+        PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
+        st1.setString(1, a.getTitre());
+        st1.setString(2, a.getImage());
+        st1.setFloat(3, a.getPrix());
+        st1.setString(4, a.getDescription());
+        st1.setInt(5, a.getStock());
+        st1.setString(6, a.getType());
+          st.executeUpdate();
+    }
+    }
+       
+ 
     
     @Override
     public void modifier(Article a) throws SQLException {
