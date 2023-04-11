@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class SubCategory {
 
- private int id;
-    private String nomSubCategory;
+ private int id,idcatg;
+    private String nomSubCategory,nomcatg;
     //relation category article
     private List<Article> articles;
     private Category category;
@@ -50,6 +50,16 @@ public class SubCategory {
         this.category=category;
     }
 
+    public SubCategory(int id, String nomSubCategory, int idcatg) {
+this.id=id;
+this.nomSubCategory=nomSubCategory;
+this.idcatg=idcatg;
+    }
+
+    public SubCategory(String category, String nomSubCategory) {
+this.nomSubCategory=nomSubCategory;
+this.nomcatg=nomSubCategory;
+    }
 
    
 
@@ -73,7 +83,11 @@ public class SubCategory {
     public Category getCategory() {
         return category;
     }
-
+    
+  public int getCategoryId() {
+        return category == null ? 0 : category.getId();
+    }
+  
     public void setCategory(Category category) {
         this.category = category;
     }

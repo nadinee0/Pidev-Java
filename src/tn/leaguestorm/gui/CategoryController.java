@@ -130,7 +130,7 @@ public class CategoryController implements Initializable {
                 System.out.println("Le nom de catégorie est invalide !");
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Invalid Name");
-                alert.setContentText("Category Name Must Start With Majuscule !!");
+                alert.setContentText("Category Name Must Start With UpperCase  !!");
                 alert.showAndWait();
                 return;
             }
@@ -246,6 +246,7 @@ public class CategoryController implements Initializable {
 
     @FXML
     private void categories(ListView.EditEvent<Category> event) {
+    
     }
 
 }

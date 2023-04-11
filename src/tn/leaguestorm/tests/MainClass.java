@@ -83,8 +83,9 @@ public class MainClass {
             
             SubCategory subc1 = new SubCategory("ghfgfh");
 
-            ss.ajouter(subc1);
-            
+          //  ss.ajouter(subc1);
+                        System.out.println(ss.getAllCategoryNames());
+
             //----------Article----------
             
           //  Article a1 = new Article(174,"pcccc", "hthfffff",5.5f,"ggggg",10,"For Rent");

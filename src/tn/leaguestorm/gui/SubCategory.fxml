@@ -16,7 +16,7 @@
       <Button fx:id="btnAdd" layoutX="85.0" layoutY="287.0" mnemonicParsing="false" onAction="#AddSubCategory" prefHeight="31.0" prefWidth="78.0" text="Add" />
       <Button fx:id="btnUpdate" layoutX="179.0" layoutY="287.0" mnemonicParsing="false" onAction="#UpdateSubCategory" prefHeight="31.0" prefWidth="78.0" text="Update" />
       <Button fx:id="btnDelete" layoutX="273.0" layoutY="287.0" mnemonicParsing="false" onAction="#DeleteSubCategory" prefHeight="31.0" prefWidth="78.0" text="Delete" />
-      <ComboBox fx:id="cbCatg" layoutX="210.0" layoutY="206.0" onAction="#getCategories" prefWidth="150.0" />
+      <ComboBox fx:id="cbCatg" layoutX="210.0" layoutY="206.0" prefWidth="150.0" />
       <TableView fx:id="subcategoryTable" layoutX="475.0" layoutY="72.0" onSort="#subcategories" prefHeight="316.0" prefWidth="549.0">
         <columns>
           <TableColumn fx:id="SubnomColumn" prefWidth="270.0" text="SubCategory Name" />
