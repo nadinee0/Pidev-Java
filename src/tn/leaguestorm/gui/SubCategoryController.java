@@ -7,6 +7,7 @@ package tn.leaguestorm.gui;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -41,8 +42,6 @@ public class SubCategoryController implements Initializable {
     private ObservableList<SubCategory> subcategories;
   
     @FXML
-    private TableColumn<SubCategory, Integer> IDColumn;
-    @FXML
     private TableColumn<SubCategory, String> SubnomColumn;
    @FXML
     private TableColumn<SubCategory, Category> catgColumn;
@@ -73,9 +72,8 @@ public class SubCategoryController implements Initializable {
             Logger.getLogger(SubCategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-      //  IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
         SubnomColumn.setCellValueFactory(new PropertyValueFactory<>("nomSubCategory"));
-        //catgColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        catgColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         subcategoryTable.setItems(subcategories);
         subcategoryTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -92,21 +90,33 @@ public class SubCategoryController implements Initializable {
          //Category category =cbCatg.getValue();
         SubCategory s = new SubCategory(/*category,*/nomSubCategory);
         ServiceSubcategory ss = new ServiceSubcategory();
-        if (nomSubCategory.isEmpty()) {
+      try{
+          if (nomSubCategory.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Empty Field");
             alert.setContentText("Please fill the fields !!");
             alert.showAndWait();
             return;
         }
-
-      
+          
+          
+              if (nomSubCategory.length() < 3) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(" Invalid Length");
+                alert.setContentText("SubCategory Name must contains at least 3 !!");
+                alert.showAndWait();
+                return;
+            }
+   
         ss.ajouter(s);
         subcategoryTable.refresh();
         tfnom.setText("");
     //    cbCatg.set .setText("");
+    }catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
-
+    
     @FXML
     private void UpdateSubCategory(ActionEvent event) throws SQLException {
          String nomSubCategory = tfnom.getText();
@@ -148,15 +158,15 @@ public class SubCategoryController implements Initializable {
         if (s == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
-            alert.setContentText("Please select a category to delete.");
+            alert.setContentText("Please select a subcategory to delete.");
             alert.showAndWait();
             return;
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete Category");
-        alert.setContentText("Are you sure you want to delete the selected category?");
+        alert.setHeaderText("Delete SubCategory");
+        alert.setContentText("Are you sure you want to delete the selected subcategory?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -171,7 +181,18 @@ public class SubCategoryController implements Initializable {
 
 
   @FXML
-    private void subcategories(SortEvent<SubCategory> event) {
+    private void getCategories(ActionEvent event) {
+  
+    }
+
+    @FXML
+    private void subcategories(SortEvent<SubCategory> event) throws SQLException {
+    ServiceSubcategory ss = new  ServiceSubcategory();
+        List<SubCategory> subcategories = ss.getAll();
+        System.out.println("All subcategories:");
+        for (SubCategory s : subcategories) {
+            System.out.println(s.getNomSubCategory() + " - " + s.getCategory().getNom());
+        }
     }
     
 }

@@ -10,7 +10,11 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import static java.awt.PageAttributes.MediaType.C;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,14 +25,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.util.Callback;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.services.ServiceCategory;
+import tn.leaguestorm.utils.MyConnection;
+
 /**
  * FXML Controller class
  *
@@ -46,43 +56,57 @@ public class CategoryController implements Initializable {
     private Button btnUpdate;
     @FXML
     private Button btnDelete;
+
+    private ObservableList<Category> categories = FXCollections.observableArrayList();
     @FXML
-    private TableView<Category> categoryTable;
-    @FXML
-    private TableColumn<Category, Integer> IDColumn;
-    @FXML
-    private TableColumn<Category, String> nameColumn;
-    @FXML
-    private TableColumn<Category, String> imageColumn;
-    @FXML
-    private ObservableList<Category> categories;
-   
+    private ListView<Category> categoryList;
 
     /**
      * Initializes the controller class.
      */
+    private MyConnection ds = MyConnection.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        ServiceCategory sc = new ServiceCategory();
- 
         try {
-            categories = FXCollections.observableArrayList(sc.getAll());
+            // TODO 
+
+            ServiceCategory sc = new ServiceCategory();
+
+            /*   List<Category>  category  = sc.getAll();
+            for(Category cat: category){
+                categoryTable.getItems().add(cat.getNom()+"                     "+cat.getImg());
+            }*/
+            String req = "Select * from category";
+            Statement st = ds.getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Category c = new Category(rs.getString(2), rs.getString(3));
+                //   categories.add(c);
+                //}
+                categoryList.getItems().add(c);
+            }
+            // Personnalisation de la ListView pour afficher les catégories
+            categoryList.setCellFactory(new Callback<ListView<Category>, ListCell<Category>>() {
+                @Override
+                public ListCell<Category> call(ListView<Category> listView) {
+                    return new CategoryListCell();
+                }
+            });
+            categoryList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    // Update the labels with the data from the selected Category object
+                    tfNom.setText(newSelection.getNom());
+                    tfImage.setText(newSelection.getImg());
+                } else {
+                    // Clear the labels if no row is selected
+                    tfNom.setText("");
+                    tfImage.setText("");
+                }
+            });
         } catch (SQLException ex) {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-     //   IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        imageColumn.setCellValueFactory(new PropertyValueFactory<>("img"));
-        categoryTable.setItems(categories);
-        categoryTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                tfNom.setText(newSelection.getNom());
-            } else {
-                tfNom.setText("");
-            }
-        });
     }
 
     @FXML
@@ -90,18 +114,34 @@ public class CategoryController implements Initializable {
         String nom = tfNom.getText();
         String image = tfImage.getText();
 
-        if (nom.isEmpty() && image.isEmpty()) {
+        /* if (nom.isEmpty() && image.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Empty Field");
             alert.setContentText("Please fill the fields !!");
             alert.showAndWait();
             return;
+        }*/
+        try {
+            // code that might throw an exception
+            if (nom.isEmpty() && image.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Empty Field");
+                alert.setContentText("Please fill the fields !!");
+                alert.showAndWait();
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("An error occurred: " + e.getMessage());
+            alert.showAndWait();
         }
 
         Category c = new Category(nom, image);
         ServiceCategory sc = new ServiceCategory();
-        sc.ajouter(c);
-        categoryTable.refresh();
+        sc.ajouter2(c);
+        categoryList.refresh();
         tfNom.setText("");
         tfImage.setText("");
 
@@ -114,7 +154,9 @@ public class CategoryController implements Initializable {
         String image = tfImage.getText();
         ServiceCategory sc = new ServiceCategory();
 
-        Category c = categoryTable.getSelectionModel().getSelectedItem();
+    //    Category c = categoryList.getSelectionModel().getSelectedItem();
+      ObservableList<Category> selectedItems = categoryList.getSelectionModel().getSelectedItems();
+/*
         if (c == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
@@ -122,12 +164,12 @@ public class CategoryController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+/*
         ///String nom = tfNom.getText().trim();
         if (nom.isEmpty() && image.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Empty Field");
-            alert.setContentText("Please enter a name !");
+            alert.setContentText("Please fill the fields !");
             alert.showAndWait();
             return;
         }
@@ -135,10 +177,18 @@ public class CategoryController implements Initializable {
         c.setNom(nom);
         c.setImg(image);
         sc.modifier(c);
-        categoryTable.refresh();
+        categoryList.refresh();
         tfNom.setText("");
         tfImage.setText("");
 
+    */
+    for (Category item : selectedItems) {
+    item.setNom(nom); // Update the name of the item
+    item.setImg(image);  // Update the image of the item
+}
+
+// Refresh the ListView to reflect the changes
+categoryList.refresh();
     }
 
     @FXML
@@ -146,32 +196,41 @@ public class CategoryController implements Initializable {
 
         ServiceCategory sc = new ServiceCategory();
 
-        Category c = categoryTable.getSelectionModel().getSelectedItem();
-        if (c == null) {
+        // Get the selected category from the ListView
+        Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();
+Category c=new Category();
+        if (selectedCategory == null) {
+            // Show a warning message if no category is selected
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setContentText("Please select a category to delete.");
             alert.showAndWait();
-            return;
+        } else {
+            // Show a confirmation dialog to confirm the deletion
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Delete Category");
+            alert.setContentText("Are you sure you want to delete the selected category :"+"  "+selectedCategory.getNom()+" "+"?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Delete the selected category from the database
+                sc.deleteCategory(selectedCategory);
+
+                // Remove the selected category from the ListView
+                categories.remove(selectedCategory);
+              //  categories.clear();
+                categoryList.refresh();
+
+                // Clear the text fields
+                tfNom.clear();
+                tfImage.clear();
+            }
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete Category");
-        alert.setContentText("Are you sure you want to delete the selected category?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-
-            sc.deleteCategory(c);
-            categories.remove(c);
-            categoryTable.refresh();
-            tfNom.setText("");
-            
-    }}
+    }
 
     @FXML
-    private void categories(SortEvent<Category> event) {
+    private void categories(ListView.EditEvent<Category> event) {
     }
-    
+
 }

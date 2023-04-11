@@ -16,12 +16,12 @@ public class Article {
     private int id, stock;
     private String titre, image, description,type;
     private float prix;
-   // relation category ,subcatg ratings locatioin users 
+   // relation category ,subcatg ratings locatioin  
     private Category category;
     private SubCategory subcategory;
     private List<Location> location;
     private List<Rating> rating;
-   // private List<User> user;
+
 
     
 
@@ -59,6 +59,7 @@ public class Article {
         this.category = category;
         this.subcategory = subcategory;
     }
+
     
     public int getId() {
         return id;
@@ -104,9 +105,6 @@ public class Article {
         return rating;
     }
 
-   /* public List<User> getUser() {
-        return user;
-    }*/
 
     public void setId(int id) {
         this.id = id;
@@ -114,6 +112,7 @@ public class Article {
 
     public void setStock(int stock) {
         this.stock = stock;
+        
     }
 
     public void setTitre(String titre) {

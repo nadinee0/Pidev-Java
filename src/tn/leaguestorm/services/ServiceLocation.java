@@ -13,10 +13,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+//import java.util.Date;
 import java.util.List;
 import tn.leaguestorm.entities.Location;
 import tn.leaguestorm.utils.MyConnection;
+import java.sql.Date;
 
 /**
  *
@@ -32,7 +35,17 @@ public class ServiceLocation implements IService<Location>{
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);   
     }
-
+      public void ajouter2(Location l) throws SQLException{
+        String req = "INSERT INTO `location` (`date_d`,`date_f`,`statut`,`frais_retard`,`date_retour`) VALUES (?,?,?,?,?)";
+        PreparedStatement st = ds.getCnx().prepareStatement(req);
+        st.setDate(1, new java.sql.Date(l.getDateD().getTime()));
+        st.setDate(2, new java.sql.Date(l.getDateF().getTime()));
+        st.setString(3, l.getStatut());
+        st.setFloat(4, l.getFraisRetard());
+        st.setDate(5, new java.sql.Date(l.getDate_retour().getTime()));
+                
+        st.executeUpdate();
+    } 
     @Override
     public void modifier(Location l) throws SQLException {
     String req = "UPDATE `location` SET `date_d` = '"+l.getDateD()+"', `date_f` = '"+l.getDateF()+"', `statut` = '"+l.getStatut()+"', `frais_retard` = '"+l.getFraisRetard()+"', `date_retour` = '"+l.getDate_retour()+"' WHERE `location`.`id` = "+l.getId(); 
@@ -61,4 +74,10 @@ public class ServiceLocation implements IService<Location>{
         
         return list;    
     }
+    
+    private String formatDate(Date dateexpiration) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(dateexpiration);
+    }
 }
+

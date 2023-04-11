@@ -34,7 +34,7 @@ public class ServiceSubcategory implements IService<SubCategory>{
     }
 
        public void ajouter2(SubCategory s) throws SQLException{
-        String req = "INSERT INTO `sub_category` (`nom_sub_category`) VALUES (?,?)";
+        String req = "INSERT INTO `sub_category` (`nom_sub_category`) VALUES (?)";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, s.getNomSubCategory());
       

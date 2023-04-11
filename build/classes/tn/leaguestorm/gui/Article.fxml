@@ -3,24 +3,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="767.0" prefWidth="1273.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.leaguestorm.gui.ArticleController">
+<AnchorPane id="AnchorPane" prefHeight="767.0" prefWidth="1273.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ArticleController">
    <children>
       <TextField fx:id="tfTitle" layoutX="241.0" layoutY="52.0" />
-      <TextField layoutX="241.0" layoutY="116.0" />
       <TextArea fx:id="taDescription" layoutX="241.0" layoutY="186.0" prefHeight="115.0" prefWidth="316.0" />
       <TextField fx:id="tfPrice" layoutX="240.0" layoutY="343.0" />
-      <TextField fx:id="tfStock" layoutX="757.0" layoutY="162.0" />
+      <TextField fx:id="tfStock" layoutX="772.0" layoutY="162.0" />
       <ComboBox fx:id="category" layoutX="776.0" layoutY="234.0" prefWidth="150.0" />
       <ComboBox fx:id="subcategory" layoutX="776.0" layoutY="307.0" prefWidth="150.0" />
-      <Label layoutX="127.0" layoutY="121.0" prefHeight="21.0" prefWidth="65.0" text="Image" />
+      <Label layoutX="127.0" layoutY="121.0" prefHeight="21.0" prefWidth="157.0" text="Image" />
       <Label layoutX="127.0" layoutY="57.0" prefHeight="21.0" prefWidth="51.0" text="Title" />
       <Label layoutX="127.0" layoutY="232.0" prefHeight="21.0" prefWidth="104.0" text="Description" />
       <Label layoutX="132.0" layoutY="348.0" prefHeight="21.0" prefWidth="51.0" text="Price" />
@@ -28,14 +27,11 @@
       <Label layoutX="644.0" layoutY="168.0" text="Stock" />
       <Label layoutX="644.0" layoutY="239.0" text="Category" />
       <Label layoutX="644.0" layoutY="312.0" text="SubCategory" />
-      <RadioButton fx:id="rbRent" layoutX="750.0" layoutY="94.0" mnemonicParsing="false" text="For Rent" />
-      <RadioButton fx:id="rbSale" layoutX="872.0" layoutY="94.0" mnemonicParsing="false" text="For Sale" />
       <Button fx:id="btnAdd" layoutX="1084.0" layoutY="144.0" mnemonicParsing="false" onAction="#saveArticle" prefHeight="31.0" prefWidth="104.0" text="Add" />
       <Button fx:id="btnUpdate" layoutX="1084.0" layoutY="208.0" mnemonicParsing="false" onAction="#updateArticle" prefHeight="31.0" prefWidth="104.0" text="Update" />
       <Button fx:id="btnDelete" layoutX="1084.0" layoutY="276.0" mnemonicParsing="false" onAction="#deleteArticle" prefHeight="31.0" prefWidth="104.0" text="Delete" />
-      <TableView fx:id="articleTable" layoutX="11.0" layoutY="473.0" prefHeight="280.0" prefWidth="1251.0">
+      <TableView fx:id="articleTable" layoutX="11.0" layoutY="583.0" prefHeight="170.0" prefWidth="1251.0">
          <columns>
-            <TableColumn fx:id="IDColumn" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="titleColumn" prefWidth="139.00003051757812" text="Title" />
             <TableColumn fx:id="imageColumn" prefWidth="130.0" text="Image" />
             <TableColumn fx:id="descriptionColumn" prefWidth="257.0" text="Description" />
@@ -46,5 +42,18 @@
             <TableColumn fx:id="subcategoryColumn" prefWidth="148.0" text="SubCategory" />
          </columns>
       </TableView>
+      <ComboBox fx:id="cbType" layoutX="774.0" layoutY="90.0" prefWidth="150.0" />
+      <Button fx:id="btnImport" layoutX="443.0" layoutY="116.0" mnemonicParsing="false" onAction="#Import" text="Import" />
+      <Label fx:id="LabelImage" layoutX="217.0" layoutY="107.0" prefHeight="49.0" prefWidth="220.0" />
+      <Label fx:id="LabelImage" layoutX="442.0" layoutY="344.0" prefHeight="226.0" prefWidth="295.0" text="l">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
    </children>
 </AnchorPane>

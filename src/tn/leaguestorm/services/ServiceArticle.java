@@ -33,7 +33,7 @@ public class ServiceArticle  implements IService<Article> {
     }
 
        public void ajouter2(Article a) throws SQLException{
-        String req = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`,`type`) VALUES (?,?)";
+        String req = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`,`type`) VALUES (?,?,?,?,?,?)";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, a.getTitre());
         st.setString(2, a.getImage());
@@ -44,7 +44,7 @@ public class ServiceArticle  implements IService<Article> {
         
         st.executeUpdate();
     } 
-       
+    
     @Override
     public void modifier(Article a) throws SQLException {
         String req = "UPDATE `article` SET `titre` = '"+a.getTitre()+"', `image` = '"+a.getImage()+"', `prix` = '"+a.getPrix()+"', `description` = '"+a.getDescription()+"', `stock` = '"+a.getStock()+"', `type` = '"+a.getType()+"' WHERE `article`.`id` = "+a.getId();
@@ -59,6 +59,13 @@ public class ServiceArticle  implements IService<Article> {
         st.executeUpdate(req);   
     }
 
+        public void deleteArticle(Article article) throws SQLException {
+    String sql = "DELETE FROM article WHERE id = ?";
+         PreparedStatement statement = ds.getCnx().prepareStatement(sql);
+        statement.setInt(1, article.getId());
+        statement.executeUpdate();  
+}
+    
     @Override
     public List<Article> getAll() throws SQLException {
         

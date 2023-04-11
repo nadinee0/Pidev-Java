@@ -28,12 +28,12 @@ public class FirstWindow extends Application {
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
 
             
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("CATEGORY");
+            primaryStage.setTitle("ARTICLE");
             primaryStage.setScene(scene);
             primaryStage.show();
             
