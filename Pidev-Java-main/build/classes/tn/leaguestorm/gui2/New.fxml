@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="566.0" style="-fx-background-color: D922E8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui2.NewController">
+   <children>
+      <ImageView fx:id="logo" fitHeight="35.0" fitWidth="200.0" layoutX="307.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: ffffff;" />
+      <Label fx:id="nom" layoutX="91.0" layoutY="42.0" text="NomTeam" textAlignment="CENTER" textFill="#382525">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="68.0" layoutY="76.0" text="DescriptionTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="89.0" layoutY="252.0" text="RateTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font></Label>
+      <TextField fx:id="Nom" layoutX="307.0" layoutY="40.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez taper le nom d'equipe" />
+      <Button fx:id="Add" layoutX="189.0" layoutY="374.0" mnemonicParsing="false" onAction="#saveTeam" prefHeight="34.0" prefWidth="166.0" style="-fx-background-color: #FF69B4;" text="Add Team" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS" underline="true">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="Description" layoutX="307.0" layoutY="76.0" prefHeight="35.0" prefWidth="200.0" promptText="Veuillez taper une brief description" />
+      <Label layoutX="86.0" layoutY="169.0" text="WinsTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="289.0" text="LogoTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="83.0" layoutY="206.0" text="LossesTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="Rate" layoutX="307.0" layoutY="250.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez taper le Ratio de l'equipe" />
+      <ColorPicker fx:id="color" layoutX="307.0" layoutY="329.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: ffffff;" />
+      <ChoiceBox fx:id="Wins" layoutX="307.0" layoutY="167.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: ffffff;" />
+      <ChoiceBox fx:id="Losses" layoutX="307.0" layoutY="204.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: ffffff;" />
+      <Label layoutX="88.0" layoutY="331.0" text="ColorTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
+      <ScrollBar layoutX="543.0" layoutY="8.0" orientation="VERTICAL" prefHeight="426.0" prefWidth="14.0" style="-fx-background-color: DD8DE3;" />
+      <Separator layoutX="269.0" layoutY="23.0" orientation="VERTICAL" prefHeight="328.0" prefWidth="6.0" />
+      <Separator layoutX="26.0" layoutY="26.0" orientation="VERTICAL" prefHeight="342.0" prefWidth="6.0" />
+      <Separator layoutX="29.0" layoutY="15.0" prefHeight="3.0" prefWidth="222.0" />
+      <Separator layoutX="289.0" layoutY="16.0" prefHeight="3.0" prefWidth="242.0" />
+      <Separator layoutX="528.0" layoutY="26.0" orientation="VERTICAL" prefHeight="342.0" prefWidth="6.0" />
+      <Label layoutX="50.0" layoutY="124.0" text="DateDeCreationTeam">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dato" layoutX="319.0" layoutY="123.0" />
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>
