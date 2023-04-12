@@ -6,6 +6,8 @@
 package tn.leaguestorm.gui;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,7 @@ import javafx.util.Callback;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.entities.SubCategory;
 import tn.leaguestorm.services.ServiceSubcategory;
+import tn.leaguestorm.utils.MyConnection;
 
 /**
  * FXML Controller class
@@ -112,6 +115,7 @@ public class SubCategoryController implements Initializable {
             }
         });
     }
+    private MyConnection ds = MyConnection.getInstance();
 
     @FXML
     private void AddSubCategory(ActionEvent event) throws SQLException {
@@ -119,9 +123,9 @@ public class SubCategoryController implements Initializable {
 
         String nomSubCategory = tfnom.getText();
         String category = cbCatg.getValue();
-       // int categoryId = ss.getCategoryIDByName(category); // implement this method to retrieve the ID of the category from the database based on its name
+        int categoryId = ss.getCategoryIDByName(category);
 
-        SubCategory s = new SubCategory(category, nomSubCategory);
+        SubCategory s = new SubCategory(categoryId, nomSubCategory);
         try {
             if (nomSubCategory.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -155,8 +159,13 @@ public class SubCategoryController implements Initializable {
             alert.setContentText("An error occurred: " + e.getMessage());
             alert.showAndWait();
         }
+        String req = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?,?)";
+        PreparedStatement st = ds.getCnx().prepareStatement(req);
+        st.setString(1, s.getNomSubCategory());
+        st.setInt(2, categoryId);
+        st.executeUpdate();
+        // ss.ajouter2(s);
 
-        ss.ajouter2(s);
         subcategoryTable.refresh();
         tfnom.setText("");
         cbCatg.setValue(null); // Reset the selected category in the combo box
@@ -212,13 +221,13 @@ public class SubCategoryController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Delete SubCategory");
-        alert.setContentText("Are you sure you want to delete the selected subcategory :"+s.getNomSubCategory()+" ?");
+        alert.setContentText("Are you sure you want to delete the selected subcategory :" + s.getNomSubCategory() + " ?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             ss.deleteSubCategory(s);
-       //     subcategories.remove(s);
+            //     subcategories.remove(s);
             subcategoryTable.refresh();
             tfnom.setText("");
 

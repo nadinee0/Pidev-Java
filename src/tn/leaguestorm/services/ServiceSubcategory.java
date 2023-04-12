@@ -49,26 +49,26 @@ public void ajouter2(SubCategory s) throws SQLException {
         alert.showAndWait();
         return;
     } else {
-        int categoryId = getCategoryIDByName(s.getCategory().getNom());
-        String req1 = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?,?)";
+        //int categoryId = getCategoryIDByName(s.getCategory().getNom());
+        String req1 = "INSERT INTO `sub_category` (`nom_sub_category`) VALUES (?)";
         PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
         st1.setString(1, s.getNomSubCategory());
-        st1.setInt(2, categoryId);
+     //   st1.setInt(2, categoryId);
         st1.executeUpdate();
     }
 }
-
-private int getCategoryIDByName(String categoryName) throws SQLException {
-    int categoryId = -1;
-    String req = "SELECT id FROM `category` WHERE nom_category=?";
-    PreparedStatement st = ds.getCnx().prepareStatement(req);
-    st.setString(1, categoryName);
-    ResultSet rs = st.executeQuery();
-    if (rs.next()) {
-        categoryId = rs.getInt("id");
+public int getCategoryIDByName(String categoryName) throws SQLException {
+    String query = "SELECT id FROM category WHERE nom = ?";
+    PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+    preparedStatement.setString(1, categoryName);
+    ResultSet resultSet = preparedStatement.executeQuery();
+    if (resultSet.next()) {
+        return resultSet.getInt("id");
+    } else {
+        throw new SQLException("No category found with name " + categoryName);
     }
-    return categoryId;
 }
+
 
 
     @Override
