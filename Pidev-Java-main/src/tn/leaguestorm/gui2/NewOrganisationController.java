@@ -57,16 +57,15 @@ public class NewOrganisationController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
-
-    
     private void addOrganism(ActionEvent event) {
         String nomc = Ncommercial.getText().trim();
         String nomj = Njuridique.getText().trim();
@@ -78,108 +77,44 @@ public class NewOrganisationController implements Initializable {
         String emai = email.getText().trim();
         String img = ImageOrg.getImage() != null ? ImageOrg.getImage().toString() : null;
         String morei = more.getText().trim();
-         boolean isValid = false;
-        
-    
-    // Validate nom commercial
-    if (nomc.length() < 2 || nomc.length() > 50 || !nomc.matches("[a-zA-Z]+")) {
-      
-        // Show an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setHeaderText(null);
-        alert.setContentText("Nom commercial doit contenir entre 2 et 50 lettres et pas de chiffres ou de caractères spéciaux.");
-        alert.showAndWait();
-    }
-    
-    // Validate nom juridique
-    if (nomj.length() < 2 || nomj.length() > 50 || !nomj.matches("[a-zA-Z]+")) {
-        isValid = false;
-        // Show an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setHeaderText(null);
-        alert.setContentText("Nom juridique doit contenir entre 2 et 50 lettres et pas de chiffres ou de caractères spéciaux.");
-        alert.showAndWait();
-    }
-    
-    // Validate phone number
-    
+        boolean isValid = false;
 
-if (!phoneStr.matches("[2|5|7|9][0-9]\\d{6}")) {
-    isValid = false;
-    // Show an error message
-    Alert alert = new Alert(AlertType.ERROR);
-    alert.setHeaderText(null);
-    alert.setContentText("Numéro de 8 chiffres téléphone Oooredoo ou Telecom ou Orange ou FAX");
-    alert.showAndWait();
-} else {
-    try {
-        ph = Integer.parseInt(phoneStr);
-    } catch (NumberFormatException e) {
-        isValid = false;
-        // Show an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setHeaderText(null);
-        alert.setContentText("Numéro de téléphone doit être un nombre entier.");
-        alert.showAndWait();
-    }
-}
+        try {
 
-    
-    // Validate email
-    if (!emai.matches("^(?=.{1,256}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-        isValid = false;
-        // Show an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setHeaderText(null);
-        alert.setContentText("Adresse email doit être de la forme 'nom@domaine.com'.");
-        alert.showAndWait();
-    }
-    // Validate date de fondation
-        if (localDate == null || localDate.isAfter(LocalDate.now()) || localDate.isBefore(LocalDate.now().minusMonths(1))) {
-           
+            if (nomc.isEmpty()) {
+                throw new Exception("Le nom commercial ne doit pas être vide.");
+            } else if (nomc.length() < 2 || nomc.length() > 50 || !nomc.matches("[a-zA-Z]+")) {
+                throw new Exception("Nom commercial doit contenir entre 2 et 50 lettres et pas de chiffres ou de caractères spéciaux.");
+            }
+        } catch (Exception e) {
             // Show an error message
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Date de fondation doit être avant la date d'aujourd'hui et d'au plus un mois.");
-            alert.showAndWait();
-        } else {
-            Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
-            ServiceOrganism or = new ServiceOrganism();
-            or.ajouter(o);
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("good");
-            alert.setHeaderText(null);
-            alert.setContentText("L'organisme a été ajouté avec succès");
+            alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-    
+        try {
 
-                // Validate more
-            if (morei.length() < 10 || !morei.matches("[a-zA-Z]+")) {
-                isValid = false;
-                // Show an error message
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Description doit contenir au moins 10 lettres et pas de chiffres ou de caractères spéciaux.");
-                alert.showAndWait();
+            if (nomj.isEmpty()) {
+                throw new Exception("Le nom juridique ne doit pas être vide.");
+            } else if (nomj.length() < 2 || nomj.length() > 50 || !nomj.matches("[a-zA-Z]+")) {
+                throw new Exception("Nom juridique doit contenir entre 2 et 50 lettres et pas de chiffres ou de caractères spéciaux.");
             }
-
-            // Validate image
-            if (img.isEmpty()) {
-                isValid = false;
-                // Show an error message
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Veuillez choisir une image.");
-                alert.showAndWait();
-            }
-
-            if (isValid) {
-
-
-
-            Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
-
+        } catch (Exception e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+        try {
+            localDate = dati.getValue();
+            if (localDate == null) {
+                throw new Exception("La date ne doit pas être vide.");
+            } else if (localDate.isAfter(LocalDate.now()) || localDate.isBefore(LocalDate.now().minusMonths(1))) {
+                throw new Exception("Date de fondation doit être avant la date d'aujourd'hui et d'au plus un mois.");
+            } else {
+                Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
                 ServiceOrganism or = new ServiceOrganism();
                 or.ajouter(o);
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -187,29 +122,143 @@ if (!phoneStr.matches("[2|5|7|9][0-9]\\d{6}")) {
                 alert.setHeaderText(null);
                 alert.setContentText("L'organisme a été ajouté avec succès");
                 alert.showAndWait();
-                // clear fields
-                Ncommercial.clear();
-                Njuridique.clear();
-                dati.setValue(null);
-                phone.clear();
-                email.clear();
-                ImageOrg.setImage(null);
-                more.clear();
-
+            }
+        } catch (Exception e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+        try {
+            if (!phoneStr.matches("[2|5|7|9][0-9]\\d{6}")) {
+                throw new Exception("Numéro de 8 chiffres téléphone Oooredoo ou Telecom ou Orange ou FAX.");
             } else {
+                ph = Integer.parseInt(phoneStr);
+            }
+        } catch (NumberFormatException e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Numéro de téléphone doit être un nombre entier.");
+            alert.showAndWait();
+            return;
+        } catch (Exception e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            return;
+        }
+        try {
+
+            if (emai.isEmpty()) {
+                throw new Exception("L'adresse email ne doit pas être vide.");
+            }
+            if (!emai.matches("^(?=.{1,256}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                throw new Exception("Adresse email doit être de la forme 'nom@domaine.com'.");
+            }
+
+        } catch (Exception e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+        try {
+
+            if (emai.isEmpty()) {
+                throw new Exception("L'adresse email ne doit pas être vide.");
+            }
+            if (!emai.matches("^(?=.{1,256}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                throw new Exception("Adresse email doit être de la forme 'nom@domaine.com'.");
+            }
+
+        } catch (Exception e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+        try {
+            if (ImageOrg.getImage() == null) {
+                throw new Exception("Veuillez choisir une image.");
+            }
+            img = ImageOrg.getImage().toString();
+        } catch (Exception e) {
+            // Show an error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+        try {
+            if (morei.isEmpty()) {
+                throw new Exception("La description ne doit pas être vide.");
+            }
+            if (morei.length() < 10 || !morei.matches("[a-zA-Z]+")) {
+                // Show an error message
                 Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error Dialog");
                 alert.setHeaderText(null);
-                alert.setContentText("Une erreur s'est produite.");
+                alert.setContentText("Description doit contenir au moins 10 lettres et pas de chiffres ou de caractères spéciaux.");
                 alert.showAndWait();
-            }}
+            }
+        } catch (Exception e) {
+            // Handle the exception
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+        // Validate image
+        try {
+            if (img.isEmpty()) {
 
-    @FXML
-    private void AddOrganism(ActionEvent event) {
+                // Show an error message
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setContentText("Veuillez choisir une image.");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            // Handle the exception
+        }
+
+        if (isValid) {
+
+            Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
+
+            ServiceOrganism or = new ServiceOrganism();
+            or.ajouter(o);
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("good");
+            alert.setHeaderText(null);
+            alert.setContentText("L'organisme a été ajouté avec succès");
+            alert.showAndWait();
+            // clear fields
+            Ncommercial.clear();
+            Njuridique.clear();
+            dati.setValue(null);
+            phone.clear();
+            email.clear();
+            ImageOrg.setImage(null);
+            more.clear();
+
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Une erreur s'est produite.");
+            alert.showAndWait();
+        }
     }
-}
 
-  
+}
 
 /*
 /**
@@ -267,13 +316,3 @@ alert.setHeaderText(null);
 alert.setContentText(errorMessage);
 alert.showAndWait();
 return false;*/
-
-
-
-
-
-
-
-     
-   
-

@@ -14,35 +14,56 @@ import java.util.Objects;
  */
 public class Team {
     private String nom_team, description_team, color, logo_team;
-    private int id, wins_team, losses_team;
+    private int id, wins_team, losses_team, organisme_id;
     private float rate_team;
     private Date date_de_creation_team;
     
-     public Team() {
-    }
-        
-    public Team( int id,String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team,Date date_de_creation_team) {
-        this.nom_team = nom_team;
-        this.description_team = description_team;
-        this.color = color;
-        this.logo_team = logo_team;
-        this.id = id;
-        this.wins_team = wins_team;
-        this.losses_team = losses_team;
-        this.rate_team = rate_team;
-    }
-  
+   
+public Team() {
+}
 
-    public Team(String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team) {
-        this.nom_team = nom_team;
-        this.description_team = description_team;
-        this.color = color;
-        this.logo_team = logo_team;
-        this.wins_team = wins_team;
-        this.losses_team = losses_team;
-        this.rate_team = rate_team;
-    }
-    public Team(String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team , Date date_de_creation_team) {
+public Team(int id, String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team, Date date_de_creation_team, int organism_id) {
+    this.id = id;
+    this.nom_team = nom_team;
+    this.description_team = description_team;
+    this.color = color;
+    this.logo_team = logo_team;
+    this.wins_team = wins_team;
+    this.losses_team = losses_team;
+    this.rate_team = rate_team;
+    this.date_de_creation_team = date_de_creation_team;
+    this.organisme_id = organism_id;
+}
+
+public Team(String nom_team, int organism_id, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team, Date date_de_creation_team) {
+    this.nom_team = nom_team;
+    this.description_team = description_team;
+    this.color = color;
+    this.logo_team = logo_team;
+    this.wins_team = wins_team;
+    this.losses_team = losses_team;
+    this.rate_team = rate_team;
+    this.date_de_creation_team = date_de_creation_team;
+    this.organisme_id = organism_id;
+}
+public Team(int id,String nom_team, int organism_id, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team, Date date_de_creation_team) {
+    this.id = id;
+    this.nom_team = nom_team;
+    this.description_team = description_team;
+    this.color = color;
+    this.logo_team = logo_team;
+    this.wins_team = wins_team;
+    this.losses_team = losses_team;
+    this.rate_team = rate_team;
+    this.date_de_creation_team = date_de_creation_team;
+    this.organisme_id = organism_id;
+}
+
+    
+
+    
+  public Team( String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team, Date date_de_creation_team) {
+        this.id = id;
         this.nom_team = nom_team;
         this.description_team = description_team;
         this.color = color;
@@ -51,20 +72,16 @@ public class Team {
         this.losses_team = losses_team;
         this.rate_team = rate_team;
         this.date_de_creation_team = date_de_creation_team;
+        this.organisme_id = organisme_id;
+        
+        
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-   
 
     
-    
+
+
     public String getNom_team() {
         return nom_team;
     }
@@ -97,6 +114,14 @@ public class Team {
         this.logo_team = logo_team;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getWins_team() {
         return wins_team;
     }
@@ -113,6 +138,14 @@ public class Team {
         this.losses_team = losses_team;
     }
 
+    public int getOrganisme_id() {
+        return organisme_id;
+    }
+
+    public void setOrganisme_id(int organisme_id) {
+        this.organisme_id = organisme_id;
+    }
+
     public float getRate_team() {
         return rate_team;
     }
@@ -120,6 +153,7 @@ public class Team {
     public void setRate_team(float rate_team) {
         this.rate_team = rate_team;
     }
+
     public Date getDate_de_creation_team() {
         return date_de_creation_team;
     }
@@ -128,10 +162,11 @@ public class Team {
         this.date_de_creation_team = date_de_creation_team;
     }
 
-    @Override
-    public String toString() {
-        return "Team{" + "nom_team=" + nom_team + ", description_team=" + description_team + ", color=" + color + ", logo_team=" + logo_team + ", id=" + id + ", wins_team=" + wins_team + ", losses_team=" + losses_team + ", rate_team=" + rate_team + ", date_de_creation_team=" + date_de_creation_team + '}';
-    }
+  
+
+ 
+
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -159,6 +194,18 @@ public class Team {
             return false;
         }
         return true;
-    }}
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" + "nom_team=" + nom_team + ", description_team=" + description_team + ", color=" + color + ", logo_team=" + logo_team + ", id=" + id + ", wins_team=" + wins_team + ", losses_team=" + losses_team + ", rate_team=" + rate_team + ", date_de_creation_team=" + date_de_creation_team +", organisme_id=" + organisme_id +'}';
+    }
+
+    
+
+    
+
+
+}
     
  

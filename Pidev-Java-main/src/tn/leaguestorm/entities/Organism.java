@@ -6,7 +6,10 @@
 package tn.leaguestorm.entities;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -14,70 +17,67 @@ import java.util.Date;
  * @author dell
  */
 public class Organism {
-    private String nom_commercial, nom_juridique, email_organisation, image, more;
     private int id, phone_organisation;
+    private String nom_commercial, nom_juridique, email_organisation, image, more;
+    
     private Date Date_de_fondation;
+    private List<Team> teams;
 
- 
-    public Organism(String nom_commercial, String nom_juridique, String email_organisation, String image, String more, int id, int phone_organisation, Date Date_de_fondation) {
-        this.nom_commercial = nom_commercial;
-        this.nom_juridique = nom_juridique;
-        this.email_organisation = email_organisation;
-        this.image = image;
-        this.more = more;
-        this.id = id;
-        this.phone_organisation = phone_organisation;
-        this.Date_de_fondation = Date_de_fondation;
-    }
-
-    public Organism(int id, String nom_commercial, String nom_juridique,Date Date_de_fondation, int phone_organisation, String email_organisation, String image, String more ) {
-        this.nom_commercial = nom_commercial;
-        this.nom_juridique = nom_juridique;
-        this.email_organisation = email_organisation;
-        this.image = image;
-        this.more = more;
-        this.id = id;
-        this.phone_organisation = phone_organisation;
-         this.Date_de_fondation = Date_de_fondation;
-         
-    }
-        public Organism( String nom_commercial, String nom_juridique,Date Date_de_fondation, int phone_organisation, String email_organisation, String image, String more ) {
-        this.nom_commercial = nom_commercial;
-        this.nom_juridique = nom_juridique;
-        this.email_organisation = email_organisation;
-        this.image = image;
-        this.more = more;
-        this.phone_organisation = phone_organisation;
-        this.Date_de_fondation = Date_de_fondation;
-         
-    }
-    
-    
-    public Organism(String nom_commercial, String nom_juridique, int phone_organisation, String email_organisation, String image, String more) {
-        this.nom_commercial = nom_commercial;
-        this.nom_juridique = nom_juridique;
-        this.phone_organisation = phone_organisation;
-        this.email_organisation = email_organisation;
-        this.image = image;
-        this.more = more;
-        
-    }
-    
     public Organism() {
+        teams = new ArrayList<>();
     }
-       public Organism(String nom_commercial, String nom_juridique, int phone_organisation, String email_organisation, String image) {
+ 
+    public Organism(int id, String nom_commercial, String nom_juridique, Date Date_de_fondation, int phone_organisation, String email_organisation, String image, String more) {
+        this.id=id;
         this.nom_commercial = nom_commercial;
         this.nom_juridique = nom_juridique;
-        this.phone_organisation = phone_organisation;
         this.email_organisation = email_organisation;
-        this.image = image;
+      
+        this.phone_organisation = phone_organisation;
+        this.Date_de_fondation = Date_de_fondation;
+          this.image = image;
         this.more = more;
-        
+        teams = new ArrayList<>();
+    }
+    
+    public Organism(String nom_commercial, String nom_juridique, Date Date_de_fondation, int phone_organisation, String email_organisation, String image, String more) {
+        this.nom_commercial = nom_commercial;
+        this.nom_juridique = nom_juridique;
+        this.email_organisation = email_organisation;
+      
+        this.phone_organisation = phone_organisation;
+        this.Date_de_fondation = Date_de_fondation;
+          this.image = image;
+        this.more = more;
+        teams = new ArrayList<>();
+    }
+    
+
+
+    public List<Team> getTeams() {
+        return teams;
     }
 
-   
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
     
-        public int getId() {
+    public void addTeam(Team team) {
+        teams.add(team);
+    }
+    
+    public void removeTeam(Team team) {
+        teams.remove(team);
+    }
+    
+    public void removeAllTeams() {
+        teams.clear();
+    }
+
+
+
+        
+    public int getId() {
         return id;
     }
 
@@ -139,16 +139,57 @@ public class Organism {
 
     public void setMore(String more) {
         this.more = more;
+    
+    
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.nom_commercial);
+        hash = 47 * hash + Objects.hashCode(this.nom_juridique);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Organism other = (Organism) obj;
+        if (!Objects.equals(this.nom_commercial, other.nom_commercial)) {
+            return false;
+        }
+        if (!Objects.equals(this.nom_juridique, other.nom_juridique)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Organism{" + "nom_commercial=" + nom_commercial + ", nom_juridique=" + nom_juridique + ", email_organisation=" + email_organisation + ", image=" + image + ", more=" + more + ", id=" + id + ", phone_organisation=" + phone_organisation + ", Date_de_fondation=" + Date_de_fondation + '}';
+        return "Organism{" + "id=" + id + ", phone_organisation=" + phone_organisation + ", nom_commercial=" + nom_commercial + ", nom_juridique=" + nom_juridique + ", email_organisation=" + email_organisation + ", image=" + image + ", more=" + more + ", Date_de_fondation=" + Date_de_fondation + ", teams=" + teams + '}';
     }
 
+
+
+
+
+
+}
+ 
+    
+
+   
    
 
  
-    }
+ 
 
 
