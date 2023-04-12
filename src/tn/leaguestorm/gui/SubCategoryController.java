@@ -115,10 +115,13 @@ public class SubCategoryController implements Initializable {
 
     @FXML
     private void AddSubCategory(ActionEvent event) throws SQLException {
+        ServiceSubcategory ss = new ServiceSubcategory();
+
         String nomSubCategory = tfnom.getText();
         String category = cbCatg.getValue();
+       // int categoryId = ss.getCategoryIDByName(category); // implement this method to retrieve the ID of the category from the database based on its name
+
         SubCategory s = new SubCategory(category, nomSubCategory);
-        ServiceSubcategory ss = new ServiceSubcategory();
         try {
             if (nomSubCategory.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -153,10 +156,10 @@ public class SubCategoryController implements Initializable {
             alert.showAndWait();
         }
 
-        ss.ajouter(s);
+        ss.ajouter2(s);
         subcategoryTable.refresh();
         tfnom.setText("");
-        cbCatg.setAccessibleText("");
+        cbCatg.setValue(null); // Reset the selected category in the combo box
 
     }
 
@@ -209,13 +212,13 @@ public class SubCategoryController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Delete SubCategory");
-        alert.setContentText("Are you sure you want to delete the selected subcategory?");
+        alert.setContentText("Are you sure you want to delete the selected subcategory :"+s.getNomSubCategory()+" ?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             ss.deleteSubCategory(s);
-            subcategories.remove(s);
+       //     subcategories.remove(s);
             subcategoryTable.refresh();
             tfnom.setText("");
 

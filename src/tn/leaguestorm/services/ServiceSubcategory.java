@@ -35,35 +35,41 @@ public class ServiceSubcategory implements IService<SubCategory> {
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
     }
-
-    public void ajouter2(SubCategory s) throws SQLException {
-       /* String req = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?)";
-        PreparedStatement st = ds.getCnx().prepareStatement(req);
-        st.setString(1, s.getNomSubCategory());
-        st.setInt(1, s.getCategory().getId());
-        st.executeUpdate();*/
-        String req = "SELECT id FROM `sub_category` WHERE nom_sub_category=?";
-        PreparedStatement st = ds.getCnx().prepareStatement(req);
-        st.setString(1, s.getNomSubCategory());
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            // Le nom de catégorie existe déjà
-            System.out.println("This SubCategory Already Exists ! ");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle(" Exsiting Category ");
-            alert.setContentText(s.getNomSubCategory() + " SubCategory Already Exists !!");
-            alert.showAndWait();
-            return;
-        } else {
-            String req1 = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?,?)";
-            PreparedStatement st1 = ds.getCnx().prepareStatement(req);
-            st1.setString(1, s.getNomSubCategory());
-            st1.setInt(1, s.getCategory().getId());
-            PreparedStatement insertst = ds.getCnx().prepareStatement(req1);
-
-            st1.executeUpdate();
-        }
+public void ajouter2(SubCategory s) throws SQLException {
+    String req = "SELECT id FROM `sub_category` WHERE nom_sub_category=?";
+    PreparedStatement st = ds.getCnx().prepareStatement(req);
+    st.setString(1, s.getNomSubCategory());
+    ResultSet rs = st.executeQuery();
+    if (rs.next()) {
+        // The subcategory name already exists
+        System.out.println("This SubCategory Already Exists ! ");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(" Exsiting SubCategory ");
+        alert.setContentText(s.getNomSubCategory() + " SubCategory Already Exists !!");
+        alert.showAndWait();
+        return;
+    } else {
+        int categoryId = getCategoryIDByName(s.getCategory().getNom());
+        String req1 = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?,?)";
+        PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
+        st1.setString(1, s.getNomSubCategory());
+        st1.setInt(2, categoryId);
+        st1.executeUpdate();
     }
+}
+
+private int getCategoryIDByName(String categoryName) throws SQLException {
+    int categoryId = -1;
+    String req = "SELECT id FROM `category` WHERE nom_category=?";
+    PreparedStatement st = ds.getCnx().prepareStatement(req);
+    st.setString(1, categoryName);
+    ResultSet rs = st.executeQuery();
+    if (rs.next()) {
+        categoryId = rs.getInt("id");
+    }
+    return categoryId;
+}
+
 
     @Override
     public void modifier(SubCategory s) throws SQLException {
@@ -80,33 +86,34 @@ public class ServiceSubcategory implements IService<SubCategory> {
     }
 
     public void deleteSubCategory(SubCategory subcategory) throws SQLException {
-        String sql = "DELETE FROM sub_category WHERE id = ?";
+        String sql = "DELETE FROM sub_category WHERE nom_sub_category = ?";
         PreparedStatement statement = ds.getCnx().prepareStatement(sql);
-        statement.setInt(1, subcategory.getId());
+        statement.setString(1, subcategory.getNomSubCategory());
         statement.executeUpdate();
     }
-private Category loadCategoryById(int categoryId) {
-    Category category = null;
-    try {
-        String sql = "SELECT * FROM category WHERE id=?";
-        PreparedStatement statement = ds.getCnx().prepareStatement(sql);
-        statement.setInt(1, categoryId);
-        ResultSet rs = statement.executeQuery();
-        if (rs.next()) {
-            category = new Category(rs.getInt("id"), rs.getString("nom_sub_category"));
-        }
-        rs.close();
-        statement.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return category;
-}
+        
 
-    
+    private Category loadCategoryById(int categoryId) {
+        Category category = null;
+        try {
+            String sql = "SELECT * FROM category WHERE id=?";
+            PreparedStatement statement = ds.getCnx().prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                category = new Category(rs.getInt("id"), rs.getString("nom_sub_category"));
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return category;
+    }
+
     @Override
     public List<SubCategory> getAll() throws SQLException {
-     /*  List<SubCategory> list = new ArrayList<>();
+        /*  List<SubCategory> list = new ArrayList<>();
         String req = "SELECT s.id, s.nom_sub_category, c.nom AS category_name FROM sub_category s JOIN category c ON s.category_id = c.id";
         Statement st = ds.getCnx().createStatement();
         ResultSet rs = st.executeQuery(req);
@@ -117,35 +124,34 @@ private Category loadCategoryById(int categoryId) {
             Category category = new Category(categoryName);
             SubCategory sc = new SubCategory(id, category, nomSubCategory);
             list.add(sc);
-   */ 
- Connection conn = null;
-PreparedStatement stmt = null;
-ResultSet rs = null;
-List<SubCategory> subCategories = new ArrayList<>();
+         */
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<SubCategory> subCategories = new ArrayList<>();
 
+        conn = ds.getCnx();
+        String sql = "SELECT sub_category.id, sub_category.nom_sub_category, category.id AS category_id, category.nom AS category_name FROM sub_category JOIN category ON sub_category.category_id = category.id";
+        stmt = conn.prepareStatement(sql);
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("nom_sub_category");
+            int categoryId = rs.getInt("category_id");
+            String categoryName = rs.getString("category_name");
+            Category category = new Category(categoryId, categoryName);
+            SubCategory subCategory = new SubCategory(id, name, category);
+            subCategories.add(subCategory);
 
-    conn = ds.getCnx();
-    String sql = "SELECT sub_category.id, sub_category.nom_sub_category, category.id AS category_id, category.nom AS category_name FROM sub_category JOIN category ON sub_category.category_id = category.id";
-    stmt = conn.prepareStatement(sql);
-    rs = stmt.executeQuery();
-    while (rs.next()) {
-        int id = rs.getInt("id");
-        String name = rs.getString("nom_sub_category");
-        int categoryId = rs.getInt("category_id");
-        String categoryName = rs.getString("category_name");
-        Category category = new Category(categoryId, categoryName);
-        SubCategory subCategory = new SubCategory(id, name, category);
-        subCategories.add(subCategory);
- 
-}
-return subCategories;
+        }
+        return subCategories;
     }
-    
-public List<String> getAllCategoryNames() throws SQLException {
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-    List<String> categoryNames = new ArrayList<>();
+
+    public List<String> getAllCategoryNames() throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<String> categoryNames = new ArrayList<>();
 
         conn = ds.getCnx();
         String sql = "SELECT nom FROM category";
@@ -156,10 +162,9 @@ public List<String> getAllCategoryNames() throws SQLException {
             String categoryName = rs.getString("nom");
             categoryNames.add(categoryName);
         }
- 
-    return categoryNames;
 
-}
-        
-        
+        return categoryNames;
+
+    }
+
 }
