@@ -77,6 +77,27 @@ public int getCategoryIDByName(String categoryName) throws SQLException {
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
     }
+    
+   /* public void updateSubCategory(SubCategory subCategory) throws SQLException {
+    Connection connection = ds.getInstance().getCnx();
+    PreparedStatement ps = connection.prepareStatement("UPDATE sub_category SET category_id = ?, nom_sub_category = ? WHERE id = ?");
+    ps.setInt(1, subCategory.getCategoryId());
+    ps.setString(2, subCategory.getNomSubCategory());
+    ps.setInt(3, subCategory.getId());
+    ps.executeUpdate();
+    ps.close();
+    connection.close();
+}*/
+    public void updateSubCategory(int subCategoryId, String newSubCategoryName, String newCategory) throws SQLException {
+    String query = "UPDATE sub_category SET nom_sub_category = ?, category_id = ? WHERE id = ?";
+    PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+    preparedStatement.setString(1, newSubCategoryName);
+    preparedStatement.setInt(2, getCategoryIDByName(newCategory));
+    preparedStatement.setInt(3, subCategoryId);
+    preparedStatement.executeUpdate();
+}
+
+
 
     @Override
     public void supprimer(int id) throws SQLException {

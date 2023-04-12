@@ -29,6 +29,7 @@ import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import tn.leaguestorm.entities.Category;
@@ -159,24 +160,41 @@ public class SubCategoryController implements Initializable {
             alert.setContentText("An error occurred: " + e.getMessage());
             alert.showAndWait();
         }
-        String req = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?,?)";
+        String req = "SELECT id FROM `sub_category` WHERE nom_sub_category=?";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, s.getNomSubCategory());
-        st.setInt(2, categoryId);
-        st.executeUpdate();
-        // ss.ajouter2(s);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            // The subcategory name already exists
+            System.out.println("This SubCategory Already Exists ! ");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(" Exsiting SubCategory ");
+            alert.setContentText(s.getNomSubCategory() + " SubCategory Already Exists !!");
+            alert.showAndWait();
+            return;
+        } else {
+            String req1 = "INSERT INTO `sub_category` (`nom_sub_category`,`category_id`) VALUES (?,?)";
+            PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
+            st1.setString(1, s.getNomSubCategory());
+            st1.setInt(2, categoryId);
+            st1.executeUpdate();
+            // ss.ajouter2(s);
 
-        subcategoryTable.refresh();
-        tfnom.setText("");
-        cbCatg.setValue(null); // Reset the selected category in the combo box
+            subcategoryTable.refresh();
+            tfnom.setText("");
+            cbCatg.setValue(null); // Reset the selected category in the combo box
 
+        }
     }
 
     @FXML
     private void UpdateSubCategory(ActionEvent event) throws SQLException {
-        String nomSubCategory = tfnom.getText();
+        /*String nomSubCategory = tfnom.getText();
         String category = cbCatg.getValue();
+        
         ServiceSubcategory ss = new ServiceSubcategory();
+        
+          int categoryId = ss.getCategoryIDByName(category);
 
         SubCategory s = subcategoryTable.getSelectionModel().getSelectedItem();
         if (s == null) {
@@ -197,12 +215,95 @@ public class SubCategoryController implements Initializable {
         }
 
         s.setNomSubCategory(nomSubCategory);
-        //  s.setCategory(category);
-        ss.modifier(s);
+         s.setCategory(categoryId);
+
+        ss.updateSubCategory(s);
         subcategoryTable.refresh();
         tfnom.setText("");
-        cbCatg.setAccessibleText("");
+        cbCatg.setValue(null);*/
+        
+        /*SubCategory selectedSubCategory = subcategoryTable.getSelectionModel().getSelectedItem();
+    if (selectedSubCategory != null) {
+        TextInputDialog dialog = new TextInputDialog(selectedSubCategory.getNomSubCategory());
+        dialog.setTitle("Update SubCategory");
+        dialog.setHeaderText("Update the name of the subcategory");
+        dialog.setContentText("Name:");
 
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            selectedSubCategory.setNomSubCategory(name);
+            try {
+                ServiceSubcategory ss = new ServiceSubcategory();
+                ss.updateSubCategory(selectedSubCategory);
+                subcategoryTable.refresh();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("An error occurred while updating the subcategory: " + e.getMessage());
+                alert.showAndWait();
+            }
+        });
+    } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No SubCategory Selected");
+        alert.setContentText("Please select a subcategory in the table.");
+        alert.showAndWait();
+    }*/
+         ServiceSubcategory ss = new ServiceSubcategory();
+
+    SubCategory subCategory = subcategoryTable.getSelectionModel().getSelectedItem();
+    if (subCategory == null) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("No Selection");
+        alert.setContentText("Please select a subcategory in the table.");
+        alert.showAndWait();
+        return;
+    }
+
+    String newSubCategoryName = tfnom.getText();
+    String newCategory = cbCatg.getValue();
+          int categoryId = ss.getCategoryIDByName(newCategory);
+
+    try {
+        if (newSubCategoryName.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Empty Field");
+            alert.setContentText("Please fill the fields !!");
+            alert.showAndWait();
+            return;
+        }
+
+        if (newSubCategoryName.length() < 3 || newSubCategoryName.length() > 15) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(" Invalid Length");
+            alert.setContentText("SubCategory Name must be between 3 and 15 !");
+            alert.showAndWait();
+            return;
+        }
+
+        // Vérifier si le nom de catégorie commence par une majuscule
+        if (!newSubCategoryName.matches("^[A-Z].*")) {
+            System.out.println("Le nom de catégorie est invalide !");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Invalid Name");
+            alert.setContentText("SubCategory Name Must Start With UpperCase !!");
+            alert.showAndWait();
+            return;
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText("An error occurred: " + e.getMessage());
+        alert.showAndWait();
+    }
+
+    ss.updateSubCategory(subCategory.getId(), newSubCategoryName, newCategory);
+    subcategoryTable.refresh();
+    tfnom.setText("");
+    cbCatg.setValue(null);
     }
 
     @FXML
