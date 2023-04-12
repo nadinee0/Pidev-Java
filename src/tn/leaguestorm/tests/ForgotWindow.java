@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.leaguestorm.gui;
+package tn.leaguestorm.tests;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -24,17 +24,17 @@ import javafx.stage.StageStyle;
  *
  * @author Bellalouna Iheb
  */
-public class SigninWindow extends Application {
+public class ForgotWindow extends Application {
     
     @Override
     public void start(Stage primaryStage) {
        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Forgot.fxml"));
             
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("Signin");
+            primaryStage.setTitle("Forgot Password");
             primaryStage.setScene(scene);
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();

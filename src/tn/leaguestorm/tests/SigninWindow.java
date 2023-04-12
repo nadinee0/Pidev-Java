@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.leaguestorm.gui;
+package tn.leaguestorm.tests;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -23,18 +24,17 @@ import javafx.stage.StageStyle;
  *
  * @author Bellalouna Iheb
  */
-public class SignupWindow extends Application {
+public class SigninWindow extends Application {
     
     @Override
     public void start(Stage primaryStage) {
        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Signup.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Signin.fxml"));
             
             Scene scene = new Scene(root);
             
-            
-            primaryStage.setTitle("Signup");
+            primaryStage.setTitle("Signin");
             primaryStage.setScene(scene);
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();

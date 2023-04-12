@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SignupController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SigninController.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/Forgot.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SignupWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/style.css</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/Home.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/Main.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/User.java</file>

@@ -99,6 +99,7 @@ public class SignupController implements Initializable {
         String country = (String) countryBox.getSelectionModel().getSelectedItem();
         int phoneNumber = Integer.parseInt(tfPhone.getText());
         int isVerified = 0;
+        String roles = "ORGANISATION";
 
         if (firstName.isEmpty() || !firstName.matches("[a-zA-Z]+")) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -118,7 +119,7 @@ public class SignupController implements Initializable {
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(13));
 
-        User u = new User(email, hashedPassword, isVerified, firstName, lastName, country, phoneNumber);
+        User u = new User(email, roles, hashedPassword, isVerified, firstName, lastName, country, phoneNumber);
         UserService us = new UserService();
         us.ajouter3(u);
         Alert alert = new Alert(AlertType.INFORMATION);
