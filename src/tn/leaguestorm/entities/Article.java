@@ -12,24 +12,20 @@ import java.util.List;
  * @author Nadine
  */
 public class Article {
-  
-    private int id, stock;
-    private String titre, image, description,type;
+
+    private int id, stock, idcatg, idsubcatg;
+    private String titre, image, description, type;
     private float prix;
-   // relation category ,subcatg ratings locatioin  
+    // relation category ,subcatg ratings locatioin  
     private Category category;
     private SubCategory subcategory;
     private List<Location> location;
     private List<Rating> rating;
 
-
-    
-
-    
     public Article() {
     }
 
-    public Article( String titre, String image, float prix ,String description, int stock,String type) {
+    public Article(String titre, String image, float prix, String description, int stock, String type) {
         this.stock = stock;
         this.titre = titre;
         this.image = image;
@@ -39,7 +35,7 @@ public class Article {
     }
 
     public Article(int id, String titre, String image, float prix, String description, int stock, String type) {
-        this.id = id; 
+        this.id = id;
         this.stock = stock;
         this.titre = titre;
         this.image = image;
@@ -48,7 +44,36 @@ public class Article {
         this.type = type;
     }
 
-      public Article(int id, int stock, String titre, String image, String description, String type, float prix, Category category, SubCategory subcategory) {
+   
+
+    public Article(String title, float price, String description, int stock, String type) {
+        this.stock = stock;
+        this.titre = titre;
+        this.description = description;
+        this.prix = prix;
+        this.type = type;
+    }
+
+    public Article(String title, float price, String description, int stock, String type, int categoryId, int subcategoryId) {
+        this.stock = stock;
+        this.titre = titre;
+        this.description = description;
+        this.prix = prix;
+        this.type = type;
+        this.idcatg = categoryId;
+        this.idsubcatg = subcategoryId;
+    }
+
+    public Article(int articleId, String articleTitle, String articleImage, double articlePrice, String articleDescription, int articleStock, String articleType, Category category, SubCategory subCategory) {
+  this.stock = stock;
+        this.titre = titre;
+        this.description = description;
+        this.prix = prix;
+        this.type = type;
+        this.category = category;
+        this.subcategory = subCategory;
+    }
+ public Article(int id, String titre, String image, float prix, String description,  int stock, Category category,String type, SubCategory subcategory) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -59,15 +84,6 @@ public class Article {
         this.category = category;
         this.subcategory = subcategory;
     }
-
-    public Article(String title, float price, String description, int stock, String type) {
- this.stock = stock;
-        this.titre = titre;
-        this.description = description;
-        this.prix = prix;
-        this.type = type;    }
-
-    
     public int getId() {
         return id;
     }
@@ -91,7 +107,7 @@ public class Article {
     public float getPrix() {
         return prix;
     }
-    
+
     public String getType() {
         return type;
     }
@@ -112,14 +128,13 @@ public class Article {
         return rating;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
 
     public void setStock(int stock) {
         this.stock = stock;
-        
+
     }
 
     public void setTitre(String titre) {
@@ -137,8 +152,8 @@ public class Article {
     public void setPrix(float prix) {
         this.prix = prix;
     }
-    
-     public void setType(String type) {
+
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -158,19 +173,14 @@ public class Article {
         this.rating = rating;
     }
 
-  /*  public void setUser(List<User> user) {
+    /*  public void setUser(List<User> user) {
         this.user = user;
     }*/
-
-     
-     
-    /*@Override
+ /*@Override
     public String toString() {
         return "Article{" + "stock=" + stock + ", titre=" + titre + ", image=" + image + ", description=" + description + ", prix=" + prix +  ", type=" + type + '}';
     }
-*/
-    
-    
+     */
     @Override
     public String toString() {
         return "Article{" + "id=" + id + ", stock=" + stock + ", titre=" + titre + ", image=" + image + ", description=" + description + ", type=" + type + ", prix=" + prix + ", category=" + category + ", subcategory=" + subcategory + '}';
@@ -199,5 +209,5 @@ public class Article {
         }
         return true;
     }
-    
+
 }

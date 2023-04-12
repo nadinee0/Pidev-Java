@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class SubCategory {
 
- private int id,idcatg;
-    private String nomSubCategory,nomcatg;
+    private int id, idcatg;
+    private String nomSubCategory, nomcatg;
     //relation category article
     private List<Article> articles;
     private Category category;
@@ -31,7 +31,7 @@ public class SubCategory {
         this.nomSubCategory = nomSubCategory;
     }
 
-    public SubCategory( Category category,String nomSubCategory) {
+    public SubCategory(Category category, String nomSubCategory) {
         this.nomSubCategory = nomSubCategory;
         this.articles = articles;
         this.category = category;
@@ -47,23 +47,24 @@ public class SubCategory {
     public SubCategory(int id, String nomSubCategory, Category category) {
         this.id = id;
         this.nomSubCategory = nomSubCategory;
-        this.category=category;
+        this.category = category;
     }
 
     public SubCategory(int id, String nomSubCategory, int idcatg) {
-this.id=id;
-this.nomSubCategory=nomSubCategory;
-this.idcatg=idcatg;
+        this.id = id;
+        this.nomSubCategory = nomSubCategory;
+        this.idcatg = idcatg;
     }
 
     public SubCategory(String category, String nomSubCategory) {
-this.nomSubCategory=nomSubCategory;
-this.nomcatg=nomSubCategory;
+        this.nomSubCategory = nomSubCategory;
+        this.nomcatg = category;
     }
 
-   
+    public SubCategory(int subCategoryId) {
+        this.id = subCategoryId;
+    }
 
-    
     public int getId() {
         return id;
     }
@@ -83,15 +84,15 @@ this.nomcatg=nomSubCategory;
     public Category getCategory() {
         return category;
     }
-    
-  public int getCategoryId() {
+
+    public int getCategoryId() {
         return category == null ? 0 : category.getId();
     }
-  
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
@@ -100,12 +101,11 @@ this.nomcatg=nomSubCategory;
         this.nomSubCategory = nomSubCategory;
     }
 
-/*    @Override
+    /*    @Override
     public String toString() {
         return "SubCategory{" + " nomSubCategory=" + nomSubCategory + '}';
     }
-*/
-    
+     */
     @Override
     public String toString() {
         return "SubCategory{" + "id=" + id + ", nomSubCategory=" + nomSubCategory + ", category=" + category + '}';
@@ -135,5 +135,4 @@ this.nomcatg=nomSubCategory;
         return true;
     }
 
-    
 }

@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import static java.awt.PageAttributes.MediaType.C;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -160,50 +161,103 @@ public class CategoryController implements Initializable {
 
     }
 
+    private void clearFields() {
+    tfNom.setText("");
+    tfImage.setText("");
+}
+
+    
     @FXML
     private void UpdateCategory(ActionEvent event) throws SQLException {
-
-        String nom = tfNom.getText();
+                ServiceCategory sc = new ServiceCategory();
+                 // Récupérer la catégorie sélectionnée dans la tableview
+    Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();
+    
+    if (selectedCategory != null) {
+        // Récupérer les nouvelles valeurs des champs
+        String name = tfNom.getText();
         String image = tfImage.getText();
-        ServiceCategory sc = new ServiceCategory();
+        
+             
 
-        //    Category c = categoryList.getSelectionModel().getSelectedItem();
-        ObservableList<Category> selectedItems = categoryList.getSelectionModel().getSelectedItems();
-        /*
-        if (c == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setContentText("Please select a category to update !");
-            alert.showAndWait();
-            return;
-        }
-/*
-        ///String nom = tfNom.getText().trim();
-        if (nom.isEmpty() && image.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Empty Field");
-            alert.setContentText("Please fill the fields !");
-            alert.showAndWait();
-            return;
-        }
-
-        c.setNom(nom);
-        c.setImg(image);
-        sc.modifier(c);
+            // Créer la connexion à la base de données
+            
+            // Préparer la requête SQL pour mettre à jour la catégorie
+            String query = "UPDATE category SET nom = ?, img = ? WHERE nom = ?";
+            PreparedStatement statement = ds.getCnx().prepareStatement(query);
+            statement.setString(1, name);
+            statement.setString(2, image);
+            statement.setString(3, selectedCategory.getNom());
+            
+            // Exécuter la requête SQL
+            statement.executeUpdate();
+            
+    
+        
+        // Mettre à jour les données de la catégorie
+        selectedCategory.setNom(name);
+        selectedCategory.setImg(image);
+        
+        // Mettre à jour la catégorie dans la base de données
+      //  sc.updateCategory(selectedCategory);
+        
+        // Rafraîchir la listview
         categoryList.refresh();
-        tfNom.setText("");
-        tfImage.setText("");
+        
+        // Afficher un message de succès
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Modification réussie");
+        alert.setHeaderText(null);
+        alert.setContentText("La catégorie a été modifiée avec succès !");
+        alert.showAndWait();
+        
+        // Effacer les champs
+        clearFields();
+    } else {
+        // Afficher un message d'erreur si aucune catégorie n'a été sélectionnée
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur de modification");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez sélectionner une catégorie à modifier.");
+        alert.showAndWait();
+    }
+                
+        /*Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();    
+      //  System.out.println(selectedCategory);
+        
+    if (selectedCategory == null) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Category Selected");
+        alert.setContentText("Please select a category in the table.");
+        alert.showAndWait();
+        return;
+    }
 
-         */
-        for (Category item : selectedItems) {
-            item.setNom(nom); // Update the name of the item
-            item.setImg(image);  // Update the image of the item
-            sc.update(item);
+    String name = tfNom.getText();
+    String image = tfImage.getText();
+    /*if (name.isEmpty() && image.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Empty Fields");
+        alert.setHeaderText("Empty Fields");
+        alert.setContentText("Please fill in at least one field.");
+        alert.showAndWait();
+        return;
+    }
 
-        }
-
-// Refresh the ListView to reflect the changes
+    selectedCategory.setNom(name);
+    selectedCategory.setImg(image);
+    try {
+        sc.updateCategory(selectedCategory);
         categoryList.refresh();
+    } catch (SQLException ex) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Database Error");
+        alert.setHeaderText("Database Error");
+        alert.setContentText("An error occurred while updating the category in the database.");
+        alert.showAndWait();
+        ex.printStackTrace();
+    }*/
     }
 
     @FXML

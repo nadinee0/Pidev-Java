@@ -18,10 +18,13 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -33,6 +36,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -42,6 +46,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -64,7 +69,6 @@ public class ArticleController implements Initializable {
     Article a = new Article();
     @FXML
     private TextField tfTitle;
-    @FXML
     private TextField tfImage;
     @FXML
     private TextArea taDescription;
@@ -73,17 +77,13 @@ public class ArticleController implements Initializable {
     @FXML
     private TextField tfStock;
     @FXML
-    private ComboBox<Category> category;
-    @FXML
-    private ComboBox<SubCategory> subcategory;
-    @FXML
     private Button btnAdd;
     @FXML
     private Button btnUpdate;
     @FXML
     private Button btnDelete;
     @FXML
-    private TableView<Article> articleTable;
+    private ListView<Article> articleList;
     @FXML
     private TableColumn<Article, String> titleColumn;
     @FXML
@@ -108,12 +108,13 @@ public class ArticleController implements Initializable {
     @FXML
     private Label LabelImage;
 
-    @FXML
     ImageView imagep = null;
-    @FXML
-    private FontAwesomeIconView photo1;
     private String i;
     byte[] image = null;
+    @FXML
+    private ComboBox<String> cbCategory;
+    @FXML
+    private ComboBox<String> cbSubcategory;
 
     /**
      * Initializes the controller class.
@@ -129,6 +130,30 @@ public class ArticleController implements Initializable {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        try {
+            List<String> categoryNames = sa.getAllCategoryNames();
+            cbCategory.getItems().addAll(categoryNames);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+// Show the combo box when it is clicked
+        cbCategory.setOnMouseClicked(event -> {
+            cbCategory.show();
+        });
+
+        try {
+            List<String> SubcategoryNames = sa.getAllSubCategoryNames();
+            cbSubcategory.getItems().addAll(SubcategoryNames);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+// Show the combo box when it is clicked
+        cbSubcategory.setOnMouseClicked(event -> {
+            cbSubcategory.show();
+        });
+        /*
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         // imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -137,24 +162,56 @@ public class ArticleController implements Initializable {
         stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         subcategoryColumn.setCellValueFactory(new PropertyValueFactory<>("subcategory"));
-        articleTable.setItems(articles);
-        articleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        articleTable.setItems(articles);*/
+        
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("nomSubCategory"));
+            
+        categoryColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategory, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<SubCategory, String> cellData) {
+                String categoryName = cellData.getValue().getCategory().getNom();
+                return new SimpleStringProperty(categoryName);
+            }
+        });
+
+// Load the data into the table
+        List<SubCategory> subCategories;
+        try {
+            subCategories = ss.getAll();
+            subcategoryTable.getItems().setAll(subCategories);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubCategoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        articleList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 tfTitle.setText(newSelection.getTitre());
 //                tfImage.setText(newSelection.getImage());
                 taDescription.setText(newSelection.getDescription());
                 cbType.setValue(newSelection.getType());
-                //  tfStock.setText(newSelection.getStock());
-                //   tfPrice.setText(newSelection.getPrix());
+                tfStock.setText(String.valueOf(newSelection.getStock()));
+                tfPrice.setText(String.valueOf(newSelection.getPrix()));
+                cbSubcategory.setValue(newSelection.getSubcategory().getNomSubCategory());
+                cbCategory.setValue(newSelection.getCategory().getNom());
 
             } else {
                 tfTitle.setText("");
+                taDescription.setText("");
+                cbType.setValue(null);
+                tfStock.setText("");
+                tfPrice.setText("");
+                cbSubcategory.setValue(null);
+                cbCategory.setValue(null);
+
             }
         });
     }
 
     @FXML
     private void saveArticle(ActionEvent event) throws SQLException {
+        ServiceArticle sa = new ServiceArticle();
+
         String title = tfTitle.getText();
 //        String image = tfImage.getText();
         String description = taDescription.getText();
@@ -162,8 +219,13 @@ public class ArticleController implements Initializable {
         String type = cbType.getValue();
         String stockS = tfStock.getText();
         // Integer stock = Integer.valueOf(tfStock.getText());
+        String category = cbCategory.getValue();
+        int categoryId = sa.getCategoryIDByName(category);
+        String subcategory = cbSubcategory.getValue();
+        int subcategoryId = sa.getSubCategoryIDByName(subcategory);
+
         try {
-            if (title.isEmpty() /*&& image.isEmpty() */|| description.isEmpty() || priceS.isEmpty() || type.isEmpty() || stockS.isEmpty() /*&& category.isEmpty() && subcategory.isEmpty()*/) {
+            if (title.isEmpty() /*&& image.isEmpty() */ || description.isEmpty() || priceS.isEmpty() || type.isEmpty() || stockS.isEmpty() && category.isEmpty() && subcategory.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Empty Field");
                 alert.setContentText("Please fill the fields !!");
@@ -171,21 +233,21 @@ public class ArticleController implements Initializable {
                 return;
             }
 
-            if (title.length() < 2|| title.length() > 20) {
+            if (title.length() < 2 || title.length() > 20) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Invalid Length");
                 alert.setContentText("title must must be between 2 and 50 characters !!");
                 alert.showAndWait();
                 return;
             }
- if (!description.matches("[a-zA-Z0-9\\s'.,-]+")) {
-      Alert alert = new Alert(Alert.AlertType.WARNING);
+            if (!description.matches("[a-zA-Z0-9\\s'.,-]+")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Invalid Input");
                 alert.setContentText("Article description can only contain letters, digits, spaces, apostrophes, commas, periods, and hyphens !");
                 alert.showAndWait();
-                return;     
-        }
-            
+                return;
+            }
+
             if (description.length() < 10 || description.length() > 100) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(" Invalid Length");
@@ -226,8 +288,7 @@ public class ArticleController implements Initializable {
                 return;
             }
 
-            Article a = new Article(title,/* image,*/ price, description, stock, type);
-            ServiceArticle sa = new ServiceArticle();
+            Article a = new Article(title,/* image,*/ price, description, stock, type, categoryId, subcategoryId);
             sa.ajouter(a);
             articleTable.refresh();
             tfTitle.setText("");
@@ -236,7 +297,8 @@ public class ArticleController implements Initializable {
             tfPrice.setText("");
             cbType.setValue("");
             tfStock.setText("");
-
+            cbCategory.setValue(null);
+            cbSubcategory.setValue(null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -287,6 +349,8 @@ public class ArticleController implements Initializable {
         tfPrice.setText("");
         cbType.setValue("");
         tfStock.setText("");
+        cbCategory.setValue(null);
+        cbSubcategory.setValue(null);
     }
 
     @FXML
@@ -305,7 +369,7 @@ public class ArticleController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Delete Article");
-        alert.setContentText("Are you sure you want to delete the selected article?");
+        alert.setContentText("Are you sure you want to delete the selected article : " + a.getTitre() + " ?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -314,7 +378,7 @@ public class ArticleController implements Initializable {
             articles.remove(a);
             articleTable.refresh();
             tfTitle.setText("");
-            tfImage.setText("");
+//            tfImage.setText("");
             taDescription.setText("");
             tfPrice.setText("");
             cbType.setValue("");
@@ -324,7 +388,6 @@ public class ArticleController implements Initializable {
     }
 
     /*            private MyConnection ds = MyConnection.getInstance();*/
-
     @FXML
     private void Import(ActionEvent event) {
         /*   Article a = null;

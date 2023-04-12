@@ -76,20 +76,10 @@ public class SubCategoryController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 // Show the combo box when it is clicked
         cbCatg.setOnMouseClicked(event -> {
             cbCatg.show();
-        });
-        /*     cbCatg.setOnAction(event -> {
-                    try {
-                        List<String> categoryNames = ss.getAllCategoryNames();
-                        cbCatg.getItems().setAll(categoryNames);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(SubCategoryController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-    });
-         */
+        });  
         SubnomColumn.setCellValueFactory(new PropertyValueFactory<>("nomSubCategory"));
         catgColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategory, String>, ObservableValue<String>>() {
             @Override
@@ -111,8 +101,11 @@ public class SubCategoryController implements Initializable {
         subcategoryTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 tfnom.setText(newSelection.getNomSubCategory());
+                cbCatg.setValue(newSelection.getCategory().getNom());
+
             } else {
                 tfnom.setText("");
+                cbCatg.setValue(null); // Reset the selected category in the combo box
             }
         });
     }
@@ -221,8 +214,8 @@ public class SubCategoryController implements Initializable {
         subcategoryTable.refresh();
         tfnom.setText("");
         cbCatg.setValue(null);*/
-        
-        /*SubCategory selectedSubCategory = subcategoryTable.getSelectionModel().getSelectedItem();
+
+ /*SubCategory selectedSubCategory = subcategoryTable.getSelectionModel().getSelectedItem();
     if (selectedSubCategory != null) {
         TextInputDialog dialog = new TextInputDialog(selectedSubCategory.getNomSubCategory());
         dialog.setTitle("Update SubCategory");
@@ -250,60 +243,60 @@ public class SubCategoryController implements Initializable {
         alert.setContentText("Please select a subcategory in the table.");
         alert.showAndWait();
     }*/
-         ServiceSubcategory ss = new ServiceSubcategory();
+        ServiceSubcategory ss = new ServiceSubcategory();
 
-    SubCategory subCategory = subcategoryTable.getSelectionModel().getSelectedItem();
-    if (subCategory == null) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("No Selection");
-        alert.setContentText("Please select a subcategory in the table.");
-        alert.showAndWait();
-        return;
-    }
-
-    String newSubCategoryName = tfnom.getText();
-    String newCategory = cbCatg.getValue();
-          int categoryId = ss.getCategoryIDByName(newCategory);
-
-    try {
-        if (newSubCategoryName.isEmpty()) {
+        SubCategory subCategory = subcategoryTable.getSelectionModel().getSelectedItem();
+        if (subCategory == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Empty Field");
-            alert.setContentText("Please fill the fields !!");
+            alert.setTitle("No Selection");
+            alert.setContentText("Please select a subcategory in the table.");
             alert.showAndWait();
             return;
         }
 
-        if (newSubCategoryName.length() < 3 || newSubCategoryName.length() > 15) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle(" Invalid Length");
-            alert.setContentText("SubCategory Name must be between 3 and 15 !");
+        String newSubCategoryName = tfnom.getText();
+        String newCategory = cbCatg.getValue();
+        int categoryId = ss.getCategoryIDByName(newCategory);
+
+        try {
+            if (newSubCategoryName.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Empty Field");
+                alert.setContentText("Please fill the fields !!");
+                alert.showAndWait();
+                return;
+            }
+
+            if (newSubCategoryName.length() < 3 || newSubCategoryName.length() > 15) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(" Invalid Length");
+                alert.setContentText("SubCategory Name must be between 3 and 15 !");
+                alert.showAndWait();
+                return;
+            }
+
+            // Vérifier si le nom de catégorie commence par une majuscule
+            if (!newSubCategoryName.matches("^[A-Z].*")) {
+                System.out.println("Le nom de catégorie est invalide !");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Invalid Name");
+                alert.setContentText("SubCategory Name Must Start With UpperCase !!");
+                alert.showAndWait();
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("An error occurred: " + e.getMessage());
             alert.showAndWait();
-            return;
         }
 
-        // Vérifier si le nom de catégorie commence par une majuscule
-        if (!newSubCategoryName.matches("^[A-Z].*")) {
-            System.out.println("Le nom de catégorie est invalide !");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Invalid Name");
-            alert.setContentText("SubCategory Name Must Start With UpperCase !!");
-            alert.showAndWait();
-            return;
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("An error occurred: " + e.getMessage());
-        alert.showAndWait();
-    }
-
-    ss.updateSubCategory(subCategory.getId(), newSubCategoryName, newCategory);
-    subcategoryTable.refresh();
-    tfnom.setText("");
-    cbCatg.setValue(null);
+        ss.updateSubCategory(subCategory.getId(), newSubCategoryName, newCategory);
+        subcategoryTable.refresh();
+        tfnom.setText("");
+        cbCatg.setValue(null);
     }
 
     @FXML
@@ -331,6 +324,7 @@ public class SubCategoryController implements Initializable {
             //     subcategories.remove(s);
             subcategoryTable.refresh();
             tfnom.setText("");
+            cbCatg.setValue(null);
 
         }
     }

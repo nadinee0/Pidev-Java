@@ -57,6 +57,7 @@ public void ajouter2(SubCategory s) throws SQLException {
         st1.executeUpdate();
     }
 }
+
 public int getCategoryIDByName(String categoryName) throws SQLException {
     String query = "SELECT id FROM category WHERE nom = ?";
     PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
@@ -149,6 +150,7 @@ public int getCategoryIDByName(String categoryName) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        
         List<SubCategory> subCategories = new ArrayList<>();
 
         conn = ds.getCnx();

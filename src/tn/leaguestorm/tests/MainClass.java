@@ -70,12 +70,12 @@ public class MainClass {
 
             //-----Categ----
            Category c1 = new Category("hkkl", "ghfgfh");
-           Category c2 = new Category(97,"hammer", "llllllooooo");
+           Category c2 = new Category(102,"hammer", "https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg");
 
          //  sc.ajouter2(c2);
           //sc.deleteCategory(c2);
             //System.out.println(sc.getAll());
-            sc.modifier(c2);
+           // sc.update(c2);
             // sc.supprimer(32);
 
            
@@ -84,7 +84,7 @@ public class MainClass {
             SubCategory subc1 = new SubCategory("ghfgfh");
 
           //  ss.ajouter(subc1);
-                        System.out.println(ss.getAllCategoryNames());
+          //              System.out.println(ss.getAllCategoryNames());
 
             //----------Article----------
             
@@ -92,16 +92,16 @@ public class MainClass {
          Article a2 = new Article("pc", "hthf",5.5f,"ggg",10,"For Rent");
 
             //sa.ajouter(a1);
-           // sa.ajouter2(a2);
+        //    sa.ajouter2(a2);
             
-            //System.out.println(sa.getAll());
+            System.out.println(sa.getAll());
             //sa.modifier(a1);
             
            // sa.supprimer(175);
            
            ///---------location----
            //sl.ajouter2(l);
-                    //   System.out.println(sl.getAll());
+                    //  System.out.println(sl.getAll());
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

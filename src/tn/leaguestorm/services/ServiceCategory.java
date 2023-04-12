@@ -39,22 +39,22 @@ public class ServiceCategory implements IService<Category> {
         String req = "SELECT id FROM `category` WHERE nom=?";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, c.getNom());
-     ResultSet rs = st.executeQuery();   
+        ResultSet rs = st.executeQuery();
         if (rs.next()) {
-    // Le nom de catégorie existe déjà
-    System.out.println("This Category Already Exists ! ");
-      Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle(" Exsiting Category ");
-                alert.setContentText(c.getNom()+" Category Already Exists !!");
-                alert.showAndWait();
-                return;
-} else {
- String req1 = "INSERT INTO `category` (`nom`, `img`) VALUES (?,?)";
-        PreparedStatement insertst = ds.getCnx().prepareStatement(req1);
-        insertst.setString(1, c.getNom());
-        insertst.setString(2, c.getImg());
-        insertst.executeUpdate();
-    }
+            // Le nom de catégorie existe déjà
+            System.out.println("This Category Already Exists ! ");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(" Exsiting Category ");
+            alert.setContentText(c.getNom() + " Category Already Exists !!");
+            alert.showAndWait();
+            return;
+        } else {
+            String req1 = "INSERT INTO `category` (`nom`, `img`) VALUES (?,?)";
+            PreparedStatement insertst = ds.getCnx().prepareStatement(req1);
+            insertst.setString(1, c.getNom());
+            insertst.setString(2, c.getImg());
+            insertst.executeUpdate();
+        }
     }
 
     @Override
@@ -64,13 +64,24 @@ public class ServiceCategory implements IService<Category> {
         st.executeUpdate(req);
     }
 
-    public void update(Category c) throws SQLException {
-        String req = "UPDATE category SET nom = ?, img =? WHERE id =? ";
-       PreparedStatement st = ds.getCnx().prepareStatement(req);
-        st.setString(1, c.getNom());
-        st.setString(2, c.getImg());
-    }
+public void updateCategory(Category c) throws SQLException {
+    String req = "UPDATE category SET nom = ?, img = ? WHERE id = ?";
+    PreparedStatement st = ds.getCnx().prepareStatement(req);
+    st.setString(1, c.getNom());
+    st.setString(2, c.getImg());
+    st.setInt(3, c.getId());
+    st.executeUpdate();
+}
 
+
+    /*   public void updateCategory(int CategoryId, String newSubCategoryName, String img) throws SQLException {
+    String query = "UPDATE category SET nom= ?, img = ? WHERE id = ?";
+    PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+    preparedStatement.setString(1, newSubCategoryName);
+    preparedStatement.setInt(2, getCategoryIDByName(newCategory));
+    preparedStatement.setInt(3, CategoryId);
+    preparedStatement.executeUpdate();
+}*/
     @Override
     public void supprimer(int id) throws SQLException {
         String req = "DELETE FROM `category` WHERE id =" + id;
@@ -79,12 +90,11 @@ public class ServiceCategory implements IService<Category> {
     }
 
     public void deleteCategory(Category category) throws SQLException {
-    String sql = "DELETE FROM category WHERE nom= ?";
-         PreparedStatement statement = ds.getCnx().prepareStatement(sql);
+        String sql = "DELETE FROM category WHERE nom= ?";
+        PreparedStatement statement = ds.getCnx().prepareStatement(sql);
         statement.setString(1, category.getNom());
-        statement.executeUpdate();  
-}
-
+        statement.executeUpdate();
+    }
 
     @Override
     public List<Category> getAll() throws SQLException {
