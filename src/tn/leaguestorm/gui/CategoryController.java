@@ -155,6 +155,10 @@ public class CategoryController implements Initializable {
         Category c = new Category(nom, image);
         ServiceCategory sc = new ServiceCategory();
         sc.ajouter2(c);
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("SUCCESS");
+                alert.setContentText("Category Successfully Added !");
+                alert.showAndWait();
         categoryList.refresh();
         tfNom.setText("");
         tfImage.setText("");

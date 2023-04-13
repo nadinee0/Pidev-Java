@@ -28,7 +28,7 @@ public class FirstWindow extends Application {
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
 
             
             Scene scene = new Scene(root);

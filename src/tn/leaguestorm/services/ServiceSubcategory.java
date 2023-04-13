@@ -71,7 +71,6 @@ public int getCategoryIDByName(String categoryName) throws SQLException {
 }
 
 
-
     @Override
     public void modifier(SubCategory s) throws SQLException {
         String req = "UPDATE `sub_category` SET `nom_sub_category` = '" + s.getNomSubCategory() + "' WHERE `sub_category`.`id` = " + s.getId();
@@ -115,7 +114,7 @@ public int getCategoryIDByName(String categoryName) throws SQLException {
     }
         
 
-    private Category loadCategoryById(int categoryId) {
+  /*  private Category loadCategoryById(int categoryId) {
         Category category = null;
         try {
             String sql = "SELECT * FROM category WHERE id=?";
@@ -132,7 +131,7 @@ public int getCategoryIDByName(String categoryName) throws SQLException {
         }
         return category;
     }
-
+*/
     @Override
     public List<SubCategory> getAll() throws SQLException {
         /*  List<SubCategory> list = new ArrayList<>();

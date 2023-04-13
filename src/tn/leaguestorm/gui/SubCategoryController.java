@@ -79,7 +79,7 @@ public class SubCategoryController implements Initializable {
 // Show the combo box when it is clicked
         cbCatg.setOnMouseClicked(event -> {
             cbCatg.show();
-        });  
+        });
         SubnomColumn.setCellValueFactory(new PropertyValueFactory<>("nomSubCategory"));
         catgColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategory, String>, ObservableValue<String>>() {
             @Override
@@ -172,7 +172,10 @@ public class SubCategoryController implements Initializable {
             st1.setInt(2, categoryId);
             st1.executeUpdate();
             // ss.ajouter2(s);
-
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("SUCCESS");
+            alert.setContentText("SubCategory Successfully Added !");
+            alert.showAndWait();
             subcategoryTable.refresh();
             tfnom.setText("");
             cbCatg.setValue(null); // Reset the selected category in the combo box
@@ -182,67 +185,7 @@ public class SubCategoryController implements Initializable {
 
     @FXML
     private void UpdateSubCategory(ActionEvent event) throws SQLException {
-        /*String nomSubCategory = tfnom.getText();
-        String category = cbCatg.getValue();
-        
-        ServiceSubcategory ss = new ServiceSubcategory();
-        
-          int categoryId = ss.getCategoryIDByName(category);
 
-        SubCategory s = subcategoryTable.getSelectionModel().getSelectedItem();
-        if (s == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setContentText("Please select a subcategory to update !");
-            alert.showAndWait();
-            return;
-        }
-
-        ///String nom = tfNom.getText().trim();
-        if (nomSubCategory.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Empty Field");
-            alert.setContentText("Please enter a name !");
-            alert.showAndWait();
-            return;
-        }
-
-        s.setNomSubCategory(nomSubCategory);
-         s.setCategory(categoryId);
-
-        ss.updateSubCategory(s);
-        subcategoryTable.refresh();
-        tfnom.setText("");
-        cbCatg.setValue(null);*/
-
- /*SubCategory selectedSubCategory = subcategoryTable.getSelectionModel().getSelectedItem();
-    if (selectedSubCategory != null) {
-        TextInputDialog dialog = new TextInputDialog(selectedSubCategory.getNomSubCategory());
-        dialog.setTitle("Update SubCategory");
-        dialog.setHeaderText("Update the name of the subcategory");
-        dialog.setContentText("Name:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            selectedSubCategory.setNomSubCategory(name);
-            try {
-                ServiceSubcategory ss = new ServiceSubcategory();
-                ss.updateSubCategory(selectedSubCategory);
-                subcategoryTable.refresh();
-            } catch (SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("An error occurred while updating the subcategory: " + e.getMessage());
-                alert.showAndWait();
-            }
-        });
-    } else {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No SubCategory Selected");
-        alert.setContentText("Please select a subcategory in the table.");
-        alert.showAndWait();
-    }*/
         ServiceSubcategory ss = new ServiceSubcategory();
 
         SubCategory subCategory = subcategoryTable.getSelectionModel().getSelectedItem();

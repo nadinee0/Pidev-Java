@@ -89,7 +89,7 @@ public class MainClass {
             //----------Article----------
             
           //  Article a1 = new Article(174,"pcccc", "hthfffff",5.5f,"ggggg",10,"For Rent");
-         Article a2 = new Article("pc", "hthf",5.5f,"ggg",10,"For Rent");
+//         Article a2 = new Article("pc", "hthf",5.5f,"ggg",10,"For Rent");
 
             //sa.ajouter(a1);
         //    sa.ajouter2(a2);
