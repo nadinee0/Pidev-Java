@@ -11,9 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import tn.leaguestorm.utils.FXMLUtils;
 
 /**
  * FXML Controller class
@@ -25,9 +27,11 @@ public class ForgotController implements Initializable {
     @FXML
     private PasswordField tfPassword;
     @FXML
-    private Button btnLogin;
-    @FXML
     private ImageView exitImg;
+    @FXML
+    private Button btnConfirm;
+    @FXML
+    private Hyperlink lnkCancel;
 
     /**
      * Initializes the controller class.
@@ -38,7 +42,8 @@ public class ForgotController implements Initializable {
     }    
 
     @FXML
-    private void handleLoginButtonAction(ActionEvent event) {
+    private void handleCancelLinkAction(ActionEvent event) {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
     }
 
     @FXML

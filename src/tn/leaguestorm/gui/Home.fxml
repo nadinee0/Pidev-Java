@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.HomeController" stylesheets="file:///C:/leagueStorm/src/tn/leaguestorm/gui/style.css">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="90.0" prefHeight="504.0" prefWidth="256.0" style="-fx-background-color: #ebe8f9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="userProfilePic" fitHeight="119.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="userProfilePic" fitHeight="119.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" styleClass="circular-image">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
@@ -138,7 +138,6 @@
                      </font>
                   </Label>
                   <Label fx:id="lblCountry" layoutX="33.0" layoutY="99.0" prefHeight="17.0" prefWidth="80.0" textFill="#0000004b" />
-                  <Button fx:id="btnSelectPicture" layoutX="46.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleBtnSelectFile" text="Browse" />
                </children>
             </Pane>
          </children>

@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import tn.leaguestorm.entities.User;
+import tn.leaguestorm.utils.FXMLUtils;
 
 public class HomeController implements Initializable {
 
@@ -125,7 +126,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleExitButtonAction(ActionEvent event) {
-        System.exit(0);
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
     }
 
     public void initData(User user) {

@@ -82,12 +82,12 @@ public class BackController {
         }
         try {
       
-            List<User> users = userService.getAll();
-            emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-            firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-            lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-            phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-            tableView.setItems(user);
+                List<User> users = userService.getAll();
+                emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+                firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+                lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+                phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+                tableView.setItems(user);
             
         } catch (SQLException e) {
             e.printStackTrace();

@@ -23,7 +23,8 @@ public class User {
         this.country = country;
     }
     
-    public User(String email, String firstName, String lastName, String country, int phoneNumber, String profilePictureName) {
+    public User(int id, String email, String firstName, String lastName, String country, int phoneNumber, String profilePictureName) {
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

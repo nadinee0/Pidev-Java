@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
 import org.mindrot.jbcrypt.BCrypt;
+import tn.leaguestorm.utils.FXMLUtils;
 
 /**
  * FXML Controller class
@@ -42,8 +43,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class SignupController implements Initializable {
 
     ObservableList<String> countriesBoxList = FXCollections.observableArrayList(getCountryList());
-    
-    
+
     @FXML
     private TextField tfEmail;
     @FXML
@@ -52,10 +52,8 @@ public class SignupController implements Initializable {
     private TextField tfConfirmPassword;
     @FXML
     private TextField tfFirstName;
-    
     @FXML
     private ComboBox countryBox;
-    
     @FXML
     private Button btnRegister;
     @FXML
@@ -87,10 +85,10 @@ public class SignupController implements Initializable {
         FXCollections.sort(countryList);
         return countryList;
     }
-    
+
     @FXML
     private void saveUser(ActionEvent event) throws SQLException, IOException {
-        
+
         String email = tfEmail.getText();
         String password = tfPassword.getText();
         String confirmPassword = tfConfirmPassword.getText();
@@ -108,7 +106,7 @@ public class SignupController implements Initializable {
             alert.showAndWait();
             return;
         }
-        
+
         if (!password.equals(confirmPassword)) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Password Mismatch");
@@ -126,15 +124,9 @@ public class SignupController implements Initializable {
         alert.setTitle("Created!");
         alert.setContentText("User created successfully");
         alert.showAndWait();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Signin.fxml"));
         
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
     }
-
 
     @FXML
     private void handleExitImgAction(MouseEvent event) {
@@ -142,12 +134,8 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    private void handleSigninLinkAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    private void handleSigninLinkAction(ActionEvent event) throws IOException {   
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
     }
 
 }

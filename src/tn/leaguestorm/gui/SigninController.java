@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import tn.leaguestorm.utils.MyConnection;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.leaguestorm.entities.User;
+import tn.leaguestorm.utils.FXMLUtils;
 
 
 public class SigninController implements Initializable {
@@ -65,13 +66,14 @@ public class SigninController implements Initializable {
                     String hashedPassword = result.getString("password");
                     if (BCrypt.checkpw(tfPassword.getText(), hashedPassword)) {
                         
+                        int id = result.getInt("id");
                         String email = result.getString("email");
                         String firstName = result.getString("first_name");
                         String lastName = result.getString("last_name");
                         String country = result.getString("country");
                         int phoneNumber = result.getInt("phone_number");
                         String profilePictureName = result.getString("profile_picture_name");
-                        User user = new User(email, firstName, lastName, country, phoneNumber, profilePictureName);
+                        User user = new User(id, email, firstName, lastName, country, phoneNumber, profilePictureName);
                         
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");
@@ -79,14 +81,8 @@ public class SigninController implements Initializable {
                         alert.setContentText("Successfully Logged In");
                         alert.showAndWait();
                         
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-                        Parent root = loader.load();
-                        HomeController homeController = loader.getController();
-                        homeController.setUser(user);
-                        
-                        Scene scene = new Scene(root);
-                        Stage stage = (Stage) btnLogin.getScene().getWindow();
-                        stage.setScene(scene);
+                        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Home", user);
+
                     } else {
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Error Message");
@@ -106,11 +102,6 @@ public class SigninController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    @FXML
-    private void handleForgotPasswordLinkAction(ActionEvent event) {
-        // Handle forgot password logic here
     }
 
     @Override
@@ -134,21 +125,13 @@ public class SigninController implements Initializable {
     }
     
     @FXML
-    private void handleForgotLinkAction(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("Forgot.fxml"));
-    Scene scene = new Scene(root);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    stage.setScene(scene);
-    stage.show();
+    private void handleForgotPasswordLinkAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Forgot.fxml", "Forgot", null);
     }
     
     @FXML
     private void handleSignupLinkAction(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("Signup.fxml"));
-    Scene scene = new Scene(root);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    stage.setScene(scene);
-    stage.show();
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signup.fxml", "Sign up", null);
     }
 
 }
