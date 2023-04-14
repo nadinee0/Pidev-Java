@@ -22,18 +22,19 @@ import javafx.stage.Stage;
  *
  * @author Nadine
  */
-public class FirstWindow extends Application {
-    
+public class Front extends Application {
+        public static final String CURRENCY = "$";
+
     @Override
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Shop.fxml"));
 
             
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("ARTICLE");
+            primaryStage.setTitle("Shop");
             primaryStage.setScene(scene);
             primaryStage.show();
             

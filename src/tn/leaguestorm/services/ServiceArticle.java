@@ -37,11 +37,11 @@ public class ServiceArticle implements IService<Article> {
     }
 
     public void ajouter2(Article a) throws SQLException {
-   
+
         int categoryId = getCategoryIDByName(a.getCategory().getNom());
         int subcategoryId = getSubCategoryIDByName(a.getSubcategory().getNomSubCategory());
-        
-      String req = "SELECT id FROM `article` WHERE titre=?";
+
+        String req = "SELECT id FROM `article` WHERE titre=?";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
         st.setString(1, a.getTitre());
         ResultSet rs = st.executeQuery();
@@ -65,13 +65,29 @@ public class ServiceArticle implements IService<Article> {
             st1.setString(7, a.getType());
             st1.setInt(8, subcategoryId);
             st1.executeUpdate();
-    }}
+        }
+    }
 
     @Override
     public void modifier(Article a) throws SQLException {
         String req = "UPDATE `article` SET `titre` = '" + a.getTitre() + "', `image` = '" + a.getImage() + "', `prix` = '" + a.getPrix() + "', `description` = '" + a.getDescription() + "', `stock` = '" + a.getStock() + "', `type` = '" + a.getType() + "' WHERE `article`.`id` = " + a.getId();
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
+    }
+
+    public void updateArticle(int articleId, String title, String image, float price, String description, int stock, String newCategory, String type, String newSubCategory) throws SQLException {
+        String query = "UPDATE sub_category SET nom_sub_category = ?, category_id = ? WHERE id = ?";
+        PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+        preparedStatement.setString(1, title);
+        preparedStatement.setString(2, image);
+        preparedStatement.setFloat(3, price);
+        preparedStatement.setString(4, description);
+        preparedStatement.setInt(5, stock);
+        preparedStatement.setInt(6, getCategoryIDByName(newCategory));
+        preparedStatement.setString(7, type);
+        preparedStatement.setInt(8, getSubCategoryIDByName(newSubCategory));
+        preparedStatement.setInt(9, articleId);
+        preparedStatement.executeUpdate();
     }
 
     @Override
@@ -86,6 +102,29 @@ public class ServiceArticle implements IService<Article> {
         PreparedStatement statement = ds.getCnx().prepareStatement(sql);
         statement.setInt(1, article.getId());
         statement.executeUpdate();
+    }
+
+    public List<String> retrieveData() throws SQLException {
+        List<String> articleData = new ArrayList<>();
+
+        // Construct an SQL query to retrieve article data from the database
+        String query = "SELECT article.titre AS article_name, article.image AS article_image,article.description AS article_descrip, category.nom AS category_name "
+                + "FROM article "
+                + "JOIN category ON article.category_id = category.id";
+        PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        // Loop through the result set and add each row of data to the list
+        while (resultSet.next()) {
+            String articleName = resultSet.getString("article_name");
+            String articleImg= resultSet.getString("article_image");
+            String articleDescrip = resultSet.getString("article_descrip");
+            String categoryName = resultSet.getString("category_name");
+            String articleInfo = articleName +articleImg + articleDescrip+ " (Category: " + categoryName + ")";
+            articleData.add(articleInfo);
+        }
+
+        return articleData;
     }
 
     @Override
@@ -135,17 +174,17 @@ public class ServiceArticle implements IService<Article> {
     }
 
     public List<String> getAllCategoryNames() throws SQLException {
-       /* Connection conn = null;
+        /* Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;*/
         List<String> categoryNames = new ArrayList<>();
 
-       // conn = ds.getCnx();
+        // conn = ds.getCnx();
         String sql = "SELECT nom FROM category";
-     //   stmt = conn.prepareStatement(sql);
-      PreparedStatement statement = ds.getCnx().prepareStatement(sql);
-        
-       // rs = statement.executeQuery();
+        //   stmt = conn.prepareStatement(sql);
+        PreparedStatement statement = ds.getCnx().prepareStatement(sql);
+
+        // rs = statement.executeQuery();
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
@@ -157,32 +196,29 @@ public class ServiceArticle implements IService<Article> {
 
     }
 
-public int getCategoryIDByName(String categoryName) throws SQLException {
-    String query = "SELECT id FROM category WHERE nom = ?";
-    PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
-    preparedStatement.setString(1, categoryName);
-    ResultSet resultSet = preparedStatement.executeQuery();
-    if (resultSet.next()) {
-        return resultSet.getInt("id");
-    } else {
-        throw new SQLException("No category found with name " + categoryName);
+    public int getCategoryIDByName(String categoryName) throws SQLException {
+        String query = "SELECT id FROM category WHERE nom = ?";
+        PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+        preparedStatement.setString(1, categoryName);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("id");
+        } else {
+            throw new SQLException("No category found with name " + categoryName);
+        }
     }
-}
 
-    
     public void insertArticle(String articleName, String categoryName) throws SQLException {
-    // First, retrieve the category ID based on the category name
-    int categoryID = getCategoryIDByName(categoryName);
+        // First, retrieve the category ID based on the category name
+        int categoryID = getCategoryIDByName(categoryName);
 
-    // Insert the article into the database
-    String query = "INSERT INTO article (nom, category_id) VALUES (?, ?)";
-    PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
-    preparedStatement.setString(1, articleName);
-    preparedStatement.setInt(2, categoryID);
-    preparedStatement.executeUpdate();
-}
-
-    
+        // Insert the article into the database
+        String query = "INSERT INTO article (nom, category_id) VALUES (?, ?)";
+        PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
+        preparedStatement.setString(1, articleName);
+        preparedStatement.setInt(2, categoryID);
+        preparedStatement.executeUpdate();
+    }
 
     public List<String> getAllSubCategoryNames() throws SQLException {
         Connection conn = null;
@@ -215,4 +251,7 @@ public int getCategoryIDByName(String categoryName) throws SQLException {
             throw new SQLException("No category found with name " + SubcategoryName);
         }
     }
+    
+
+    
 }

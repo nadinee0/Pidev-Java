@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 public class Article {
 
     private int id, stock, idcatg, idsubcatg;
-    private String titre, image, description, type,nomcatg;
+    private String titre, image, description, type,nomcatg, color;
     private float prix;
     
     // relation category ,subcatg ratings locatioin  
@@ -137,6 +137,10 @@ public class Article {
         this.nomcatg=category;
     }
 
+    public Article(String name, Image image) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
   
  public int getId() {
         return id;
@@ -166,6 +170,10 @@ public class Article {
         return type;
     }
 
+      public String getColor() {
+        return color;
+    }
+      
     public Category getCategory() {
         return category;
     }
@@ -190,7 +198,9 @@ public class Article {
         this.stock = stock;
 
     }
-
+public void setColor(String color) {
+        this.color = color;
+    }
     public void setTitre(String titre) {
         this.titre = titre;
     }

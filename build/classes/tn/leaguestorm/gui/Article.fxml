@@ -43,6 +43,6 @@
          </textFill>
       </Label>
       <ListView fx:id="articleList" layoutX="10.0" layoutY="407.0" prefHeight="343.0" prefWidth="1406.0" />
-      <TextField fx:id="tfImage" layoutX="234.0" layoutY="116.0" />
+      <TextField fx:id="tfImg" layoutX="234.0" layoutY="116.0" />
    </children>
 </AnchorPane>

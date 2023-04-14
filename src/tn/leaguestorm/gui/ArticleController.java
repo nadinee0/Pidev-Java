@@ -111,6 +111,8 @@ public class ArticleController implements Initializable {
     private ComboBox<String> cbCategory;
     @FXML
     private ComboBox<String> cbSubcategory;
+    @FXML
+    private TextField tfImg;
 
     /**
      * Initializes the controller class.
@@ -121,8 +123,8 @@ public class ArticleController implements Initializable {
 // TODO
         ServiceArticle sa = new ServiceArticle();
         cbType.setItems(FXCollections.observableArrayList("For Rent", "For Sale"));
-        try {
-            articles = FXCollections.observableArrayList(sa.getAll());
+     /*   try {
+        //  articles = FXCollections.observableArrayList(sa.getAll());
         } catch (SQLException ex) {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -147,6 +149,20 @@ public class ArticleController implements Initializable {
             cbSubcategory.show();
         });
 
+           // Retrieve the article data using a separate SQL function
+            List<String> articleData = sa.retrieveData();
+
+            // Update the UI with the retrieved article data
+            ObservableList<String> observableList = FXCollections.observableArrayList(articleData);
+            articleList.setItems(articles);
+        } catch (SQLException e) {
+            // Handle any SQL exceptions that occur
+            e.printStackTrace();
+        }
+
+        
+        
+        
         /*    String req = "Select * from article";
         Statement st = ds.getCnx().createStatement();
         ResultSet rs = st.executeQuery(req);
@@ -336,11 +352,11 @@ public class ArticleController implements Initializable {
     }
 
     @FXML
-    private void saveArticle(ActionEvent event) throws SQLException {
+    private void saveArticle(ActionEvent event) throws SQLException, IOException {
         ServiceArticle sa = new ServiceArticle();
 
         String title = tfTitle.getText();
-        //String image = tfImage.getText();
+        String image = tfImg.getText();
         String description = taDescription.getText();
         String priceS = /*Float.valueOf(tfPrice.getText()); */ tfPrice.getText();
         float price = Float.valueOf(tfPrice.getText());
@@ -356,7 +372,7 @@ public class ArticleController implements Initializable {
         Article a = new Article(title, price, description, stock, categoryId, type, subcategoryId);
 
         try {
-            if (title.isEmpty()   && description.isEmpty() && priceS.isEmpty() && type.isEmpty() && stockS.isEmpty() && category.isEmpty() && subcategory.isEmpty()) {
+            if (title.isEmpty() && description.isEmpty() && priceS.isEmpty() && type.isEmpty() && stockS.isEmpty() && category.isEmpty() && subcategory.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Empty Field");
                 alert.setContentText("Please fill the fields !!");
@@ -450,7 +466,7 @@ public class ArticleController implements Initializable {
             st1.setString(7, a.getType());
             st1.setInt(8, subcategoryId);
             st1.executeUpdate();
-
+            Import(event);
             //  sa.ajouter2(a);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
@@ -459,7 +475,7 @@ public class ArticleController implements Initializable {
 
             articleList.refresh();
             tfTitle.setText("");
-           // tfImage.setText("");
+            tfImg.setText("");
             taDescription.setText("");
             tfPrice.setText("");
             cbType.setValue("");
@@ -472,14 +488,18 @@ public class ArticleController implements Initializable {
 
     @FXML
     private void updateArticle(ActionEvent event) throws SQLException {
+        ServiceArticle sa = new ServiceArticle();
+
         String title = tfTitle.getText();
         String image = tfImage.getText();
         String description = taDescription.getText();
         Float price = Float.valueOf(tfPrice.getText());
         String type = cbType.getValue();
         Integer stock = Integer.valueOf(tfStock.getText());
-
-        ServiceArticle sa = new ServiceArticle();
+        String newCategory = cbCategory.getValue();
+        int categoryId = sa.getCategoryIDByName(newCategory);
+        String newSubCategory = cbSubcategory.getValue();
+        int subcategoryId = sa.getSubCategoryIDByName(newSubCategory);
 
         Article a = articleList.getSelectionModel().getSelectedItem();
         if (a == null) {
@@ -498,16 +518,8 @@ public class ArticleController implements Initializable {
             alert.showAndWait();
             return;
         }*/
-        a.setTitre(title);
-        a.setImage(image);
-        a.setDescription(description);
-        a.setPrix(price);
-        a.setStock(stock);
-        a.setType(type);
-        /*a.setCategory(category);
-        a.setSubcategory(subcategory);*/
+        sa.updateArticle(a.getId(), title, image, price, description, stock, newCategory, type, newSubCategory);
 
-        sa.modifier(a);
         articleList.refresh();
         tfTitle.setText("");
         tfImage.setText("");
@@ -576,7 +588,12 @@ public class ArticleController implements Initializable {
     pstmt.setString(1, a.getImage());
     pstmt.executeUpdate();
          */
+         ServiceArticle sa = new ServiceArticle();
 
+        String category = cbCategory.getValue();
+        int categoryId = sa.getCategoryIDByName(category);
+        String subcategory = cbSubcategory.getValue();
+        int subcategoryId = sa.getSubCategoryIDByName(subcategory);
         // Create a file chooser dialog
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
@@ -591,9 +608,16 @@ public class ArticleController implements Initializable {
                 byte[] imageData = Files.readAllBytes(file.toPath());
 
                 // Prepare the SQL INSERT statement
-                String sql = "INSERT INTO article (image) VALUES (?)";
+                String sql = "INSERT INTO article  (`titre`, `image`,`prix`,`description`,`stock`,`category_id`,`type`,`sub_category_id`) VALUES (?,?,?,?,?,?,?,?)";
                 PreparedStatement pstmt = ds.getCnx().prepareStatement(sql);
-                pstmt.setBytes(1, imageData);
+                pstmt.setString(1, a.getTitre());
+                pstmt.setBytes(2, imageData);
+                pstmt.setFloat(3, a.getPrix());
+                pstmt.setString(4, a.getDescription());
+                pstmt.setInt(5, a.getStock());
+                pstmt.setInt(6, categoryId);
+                pstmt.setString(7, a.getType());
+                pstmt.setInt(8, subcategoryId);
 
                 // Execute the prepared statement to insert the data
                 pstmt.executeUpdate();
