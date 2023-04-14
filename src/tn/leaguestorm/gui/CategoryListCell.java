@@ -33,10 +33,10 @@ public class CategoryListCell extends ListCell<Category> {
             setGraphic(null);
         } else {
             ImageView imageView = new ImageView(new Image(category.getImg()));
-            imageView.setFitWidth(300); // set the width to 50 pixels
-            imageView.setFitHeight(300); // set the height to 50 pixels
+            imageView.setFitWidth(200); // set the width to 50 pixels
+            imageView.setFitHeight(200); // set the height to 50 pixels
             Label label = new Label(category.getNom());
-            label.setStyle("-fx-font-size: 14pt; -fx-font-weight: bold;");
+            label.setStyle("-fx-font-size: 18pt; -fx-font-weight: bold;");
             HBox hbox = new HBox(imageView, label);
             hbox.setSpacing(10);
             setGraphic(hbox);

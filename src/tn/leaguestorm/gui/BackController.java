@@ -5,14 +5,20 @@
  */
 package tn.leaguestorm.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -23,12 +29,6 @@ public class BackController implements Initializable {
 
     @FXML
     private Button btnOverview;
-    @FXML
-    private Button btnOrders;
-    @FXML
-    private Button btnCustomers;
-    @FXML
-    private Button btnMenus;
     @FXML
     private Button btnPackages;
     @FXML
@@ -45,6 +45,12 @@ public class BackController implements Initializable {
     private Pane pnlOverview;
     @FXML
     private VBox pnItems;
+    @FXML
+    private Button btnCategory;
+    @FXML
+    private Button btnSubCategory;
+    @FXML
+    private Button btnArticle;
 
     /**
      * Initializes the controller class.
@@ -56,6 +62,40 @@ public class BackController implements Initializable {
 
     @FXML
     private void handleClicks(ActionEvent event) {
+    }
+
+    @FXML
+    private void category(ActionEvent event) throws IOException {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
+            Parent root = loader.load(); // load the new FXML file
+            Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+            Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+            Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+            Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+            stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+
+    @FXML
+    private void subcategory(ActionEvent event) throws IOException {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
+            Parent root = loader.load(); // load the new FXML file
+            Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+            Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+            Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+            Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+            stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void article(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+            Parent root = loader.load(); // load the new FXML file
+            Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+            Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+            Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+            Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+            stage.setScene(scene); // set the new scene as the content of the stage
     }
     
 }

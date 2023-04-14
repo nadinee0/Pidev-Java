@@ -5,6 +5,7 @@
  */
 package tn.leaguestorm.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -31,6 +36,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.entities.SubCategory;
@@ -62,6 +69,22 @@ public class SubCategoryController implements Initializable {
     private Button btnDelete;
     @FXML
     private ComboBox<String> cbCatg;
+    @FXML
+    private Button btnOverview;
+    @FXML
+    private Button btnCategory;
+    @FXML
+    private Button btnSubCategory;
+    @FXML
+    private Button btnArticle;
+    @FXML
+    private Button btnPackages;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button btnSignout;
+    @FXML
+    private VBox pnItems;
 
     /**
      * Initializes the controller class.
@@ -237,6 +260,10 @@ public class SubCategoryController implements Initializable {
         }
 
         ss.updateSubCategory(subCategory.getId(), newSubCategoryName, newCategory);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("SUCCESS");
+                alert.setContentText("SubCategory Successfully Updated !");
+                alert.showAndWait();
         subcategoryTable.refresh();
         tfnom.setText("");
         cbCatg.setValue(null);
@@ -264,6 +291,10 @@ public class SubCategoryController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             ss.deleteSubCategory(s);
+              //  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("SUCCESS");
+                alert.setContentText("SubCategory Successfully Deleted !");
+                alert.showAndWait();
             //     subcategories.remove(s);
             subcategoryTable.refresh();
             tfnom.setText("");
@@ -273,13 +304,50 @@ public class SubCategoryController implements Initializable {
     }
 
     @FXML
-    private void subcategories(SortEvent<SubCategory> event) {
+    private void handleClicks(ActionEvent event) {
         /*  ServiceSubcategory ss = new  ServiceSubcategory();
         List<SubCategory> subcategories = ss.getAll();
         System.out.println("All subcategories:");
         for (SubCategory s : subcategories) {
             System.out.println(s.getNomSubCategory() + " - " + s.getCategory().getNom());
         }*/
+    }
+
+    @FXML
+    private void category(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void subcategory(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void article(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void subcategories(SortEvent<SubCategory> event) {
     }
 
 }

@@ -37,7 +37,11 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -466,7 +470,7 @@ public class ArticleController implements Initializable {
             st1.setString(7, a.getType());
             st1.setInt(8, subcategoryId);
             st1.executeUpdate();
-            Import(event);
+          //  Import(event);
             //  sa.ajouter2(a);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
@@ -519,7 +523,11 @@ public class ArticleController implements Initializable {
             return;
         }*/
         sa.updateArticle(a.getId(), title, image, price, description, stock, newCategory, type, newSubCategory);
-
+   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("SUCCESS");
+            alert.setContentText("Article Successfully updated !");
+            alert.showAndWait();
+            
         articleList.refresh();
         tfTitle.setText("");
         tfImage.setText("");
@@ -554,6 +562,10 @@ public class ArticleController implements Initializable {
 
             sa.deleteArticle(a);
             articles.remove(a);
+            //   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("SUCCESS");
+            alert.setContentText("Article Successfully Deleted !");
+            alert.showAndWait();
             articleList.refresh();
             tfTitle.setText("");
 //            tfImage.setText("");
@@ -646,5 +658,40 @@ public class ArticleController implements Initializable {
         }
 
     }
+    
+    
+        @FXML
+    private void category(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void subcategory(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void article(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+    
 
 }

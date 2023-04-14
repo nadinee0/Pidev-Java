@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import static java.awt.PageAttributes.MediaType.C;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +25,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -36,6 +41,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
 import tn.leaguestorm.entities.Category;
@@ -68,6 +76,30 @@ public class CategoryController implements Initializable {
      * Initializes the controller class.
      */
     private MyConnection ds = MyConnection.getInstance();
+    @FXML
+    private Button btnOverview;
+    @FXML
+    private Button btnCategory;
+    @FXML
+    private Button btnSubCategory;
+    @FXML
+    private Button btnArticle;
+    @FXML
+    private Button btnPackages;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button btnSignout;
+    @FXML
+    private Pane pnlCustomer;
+    @FXML
+    private Pane pnlOrders;
+    @FXML
+    private Pane pnlMenus;
+    @FXML
+    private Pane pnlOverview;
+    @FXML
+    private VBox pnItems;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -155,10 +187,10 @@ public class CategoryController implements Initializable {
         Category c = new Category(nom, image);
         ServiceCategory sc = new ServiceCategory();
         sc.ajouter2(c);
-         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("SUCCESS");
-                alert.setContentText("Category Successfully Added !");
-                alert.showAndWait();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("SUCCESS");
+        alert.setContentText("Category Successfully Added !");
+        alert.showAndWait();
         categoryList.refresh();
         tfNom.setText("");
         tfImage.setText("");
@@ -166,66 +198,62 @@ public class CategoryController implements Initializable {
     }
 
     private void clearFields() {
-    tfNom.setText("");
-    tfImage.setText("");
-}
+        tfNom.setText("");
+        tfImage.setText("");
+    }
 
-    
     @FXML
     private void UpdateCategory(ActionEvent event) throws SQLException {
-                ServiceCategory sc = new ServiceCategory();
-                 // Récupérer la catégorie sélectionnée dans la tableview
-    Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();
-    
-    if (selectedCategory != null) {
-        // Récupérer les nouvelles valeurs des champs
-        String name = tfNom.getText();
-        String image = tfImage.getText();
-        
-             
+        ServiceCategory sc = new ServiceCategory();
+        // Récupérer la catégorie sélectionnée dans la tableview
+        Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();
+
+        if (selectedCategory != null) {
+            // Récupérer les nouvelles valeurs des champs
+            String name = tfNom.getText();
+            String image = tfImage.getText();
 
             // Créer la connexion à la base de données
-            
             // Préparer la requête SQL pour mettre à jour la catégorie
             String query = "UPDATE category SET nom = ?, img = ? WHERE nom = ?";
             PreparedStatement statement = ds.getCnx().prepareStatement(query);
             statement.setString(1, name);
             statement.setString(2, image);
             statement.setString(3, selectedCategory.getNom());
-            
+
             // Exécuter la requête SQL
             statement.executeUpdate();
-            
-    
-        
-        // Mettre à jour les données de la catégorie
-        selectedCategory.setNom(name);
-        selectedCategory.setImg(image);
-        
-        // Mettre à jour la catégorie dans la base de données
-      //  sc.updateCategory(selectedCategory);
-        
-        // Rafraîchir la listview
-        categoryList.refresh();
-        
-        // Afficher un message de succès
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Modification réussie");
-        alert.setHeaderText(null);
-        alert.setContentText("La catégorie a été modifiée avec succès !");
-        alert.showAndWait();
-        
-        // Effacer les champs
-        clearFields();
-    } else {
-        // Afficher un message d'erreur si aucune catégorie n'a été sélectionnée
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur de modification");
-        alert.setHeaderText(null);
-        alert.setContentText("Veuillez sélectionner une catégorie à modifier.");
-        alert.showAndWait();
-    }
-                
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("SUCCESS");
+            alert.setContentText("Category Successfully Updated !");
+            alert.showAndWait();
+            // Mettre à jour les données de la catégorie
+            selectedCategory.setNom(name);
+            selectedCategory.setImg(image);
+
+            // Mettre à jour la catégorie dans la base de données
+            //  sc.updateCategory(selectedCategory);
+            // Rafraîchir la listview
+            categoryList.refresh();
+
+            // Afficher un message de succès
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Modification réussie");
+            alert1.setHeaderText(null);
+            alert1.setContentText("La catégorie a été modifiée avec succès !");
+            alert1.showAndWait();
+
+            // Effacer les champs
+            clearFields();
+        } else {
+            // Afficher un message d'erreur si aucune catégorie n'a été sélectionnée
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de modification");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner une catégorie à modifier.");
+            alert.showAndWait();
+        }
+
         /*Category selectedCategory = categoryList.getSelectionModel().getSelectedItem();    
       //  System.out.println(selectedCategory);
         
@@ -289,7 +317,10 @@ public class CategoryController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // Delete the selected category from the database
                 sc.deleteCategory(selectedCategory);
-
+                //  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("SUCCESS");
+                alert.setContentText("Category Successfully Deleted !");
+                alert.showAndWait();
                 // Remove the selected category from the ListView
                 categories.remove(selectedCategory);
                 //  categories.clear();
@@ -303,8 +334,50 @@ public class CategoryController implements Initializable {
     }
 
     @FXML
+    private void handleClicks(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void category(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void subcategory(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void article(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void categories(KeyEvent event) throws IOException {
+
+    }
+
+    @FXML
     private void categories(ListView.EditEvent<Category> event) {
-    
     }
 
 }

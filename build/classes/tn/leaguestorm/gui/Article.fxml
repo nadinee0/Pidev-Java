@@ -7,8 +7,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 
 <AnchorPane id="AnchorPane" prefHeight="767.0" prefWidth="1430.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ArticleController">
    <children>
@@ -32,16 +30,6 @@
       <ComboBox fx:id="cbType" layoutX="774.0" layoutY="90.0" prefWidth="150.0" />
       <Button fx:id="btnImport" layoutX="443.0" layoutY="116.0" mnemonicParsing="false" onAction="#Import" text="Import" />
       <Label fx:id="LabelImage" layoutX="217.0" layoutY="107.0" prefHeight="49.0" prefWidth="220.0" />
-      <Label fx:id="LabelImage" layoutX="442.0" layoutY="344.0" prefHeight="226.0" prefWidth="295.0" text="l">
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop color="BLACK" />
-                  <Stop color="WHITE" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </textFill>
-      </Label>
       <ListView fx:id="articleList" layoutX="10.0" layoutY="407.0" prefHeight="343.0" prefWidth="1406.0" />
       <TextField fx:id="tfImg" layoutX="234.0" layoutY="116.0" />
    </children>

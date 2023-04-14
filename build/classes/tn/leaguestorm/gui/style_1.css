@@ -40,3 +40,16 @@
 .scroll-pane > .corner {
     -fx-background-color: black;
 }
+
+.list {
+    background-color: blue;
+}
+
+.table-cell {
+    -fx-background-color: lightgray;
+}
+
+.cbCatg{
+    -fx-background-color: lightgray;
+    -fx-background-radius: 30;
+}
