@@ -15,21 +15,25 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.utils.FXMLUtils;
+import tn.leaguestorm.utils.MyConnection;
 
 public class HomeController implements Initializable {
 
-    @FXML
     private Button btnOverview;
 
-    @FXML
     private Button btnOrders;
 
     private Button btnCustomers;
@@ -37,8 +41,6 @@ public class HomeController implements Initializable {
     @FXML
     private Button btnMenus;
 
-    @FXML
-    private Button btnPackages;
 
     @FXML
     private Button btnSettings;
@@ -60,6 +62,9 @@ public class HomeController implements Initializable {
 
     @FXML
     private Button btnProfile;
+    
+    @FXML
+    private Button btnPassword;
 
     @FXML
     private Label lblFullName;
@@ -75,7 +80,7 @@ public class HomeController implements Initializable {
 
     private User user;
     @FXML
-    private Button btnSelectPicture;
+    private Label lblBirthDate;
 
     public void setUser(User user) {
         this.user = user;
@@ -108,7 +113,6 @@ public class HomeController implements Initializable {
 
     private Alert alert;
 
-    @FXML
     private void handleBtnSelectFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select File");
@@ -133,8 +137,23 @@ public class HomeController implements Initializable {
         lblFullName.setText(user.getFirstName() + " " + user.getLastName());
         lblEmail.setText(user.getEmail());
         lblCountry.setText(user.getCountry());
+        LocalDate birthDate = user.getBirthDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedBirthDate = birthDate.format(formatter);
+        lblBirthDate.setText(formattedBirthDate);
+
         String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + user.getProfilePictureName();
         Image userProfilePic = new Image("file:" + userProfilePicPath);
         this.userProfilePic.setImage(userProfilePic);
+    }
+    
+    @FXML
+    private void handleChangePasswordLinkAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ChangePassword.fxml", "Change Password", null);
+    }
+    
+    @FXML
+    private void handleProfileUpdateLinkAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ProfileUpdate.fxml", "Edit Profile", user);
     }
 }

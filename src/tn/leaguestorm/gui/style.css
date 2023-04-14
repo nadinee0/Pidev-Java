@@ -42,7 +42,7 @@
 }
 
 .circular-image {
-  -fx-border-radius: 50%;
+  -fx-border-radius: 50% !important;;
   -fx-background-radius: 50%;
   -fx-background-color: white;
 }

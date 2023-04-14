@@ -5,15 +5,27 @@
  */
 package tn.leaguestorm.entities;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 /**
  *
  * @author Bellalouna Iheb
  */
 public class User {
-    private int id, phoneNumber, isVerified;
-    private String email, roles, password, firstName, lastName, country, profilePictureName;
+    private int id, isVerified;
+    private String email, roles, password, firstName, lastName, country, profilePictureName, phoneNumber;
+    LocalDate birthDate;
 
-    public User(int phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public User(String phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.roles = roles;
@@ -23,7 +35,7 @@ public class User {
         this.country = country;
     }
     
-    public User(int id, String email, String firstName, String lastName, String country, int phoneNumber, String profilePictureName) {
+    public User(int id, String email, String firstName, String lastName, String country, String phoneNumber, String profilePictureName, LocalDate birthDate) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -31,6 +43,7 @@ public class User {
         this.country = country;
         this.phoneNumber = phoneNumber;
         this.profilePictureName = profilePictureName;
+        this.birthDate = birthDate;
     }
 
     public String getProfilePictureName() {
@@ -41,7 +54,7 @@ public class User {
         this.profilePictureName = profilePictureName;
     }
     
-    public User(String email, String firstName, String lastName, int phoneNumber) {
+    public User(String email, String firstName, String lastName, String phoneNumber) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,7 +75,7 @@ public class User {
         this.isVerified = isVerified;
     }
 
-    public User(String email, String roles, String password, int verified, String firstName, String lastName, String country, int phoneNumber) {
+    public User(String email, String roles, String password, int verified, String firstName, String lastName, String country, String phoneNumber, LocalDate birthDate) {
         this.email = email;
         this.roles = roles;
         this.password = password;
@@ -70,6 +83,7 @@ public class User {
         this.lastName = lastName;
         this.country = country;
         this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
     }
 
     public int getIsVerified() {
@@ -88,11 +102,11 @@ public class User {
         return password;
     }
     
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

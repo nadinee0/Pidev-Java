@@ -8,6 +8,8 @@ package tn.leaguestorm.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -25,10 +27,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
@@ -62,6 +66,8 @@ public class SignupController implements Initializable {
     private TextField tfLastName;
     @FXML
     private TextField tfPhone;
+    @FXML
+    private DatePicker birthDatePicker;
 
     /**
      * Initializes the controller class.
@@ -95,36 +101,86 @@ public class SignupController implements Initializable {
         String firstName = tfFirstName.getText();
         String lastName = tfLastName.getText();
         String country = (String) countryBox.getSelectionModel().getSelectedItem();
-        int phoneNumber = Integer.parseInt(tfPhone.getText());
+        String phoneNumber = tfPhone.getText();
+        LocalDate birthDate = birthDatePicker.getValue();
         int isVerified = 0;
         String roles = "ORGANISATION";
 
-        if (firstName.isEmpty() || !firstName.matches("[a-zA-Z]+")) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Invalid First Name");
-            alert.setContentText("Please enter a valid First Name");
-            alert.showAndWait();
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Password Mismatch");
-            alert.setContentText("Passwords do not match");
-            alert.showAndWait();
-            return;
-        }
-
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(13));
 
-        User u = new User(email, roles, hashedPassword, isVerified, firstName, lastName, country, phoneNumber);
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || firstName.isEmpty()
+                || lastName.isEmpty() || country == null || phoneNumber.isEmpty() || birthDate == null) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("All fields are required");
+            alert.showAndWait();
+            return;
+        } else {
+
+            if (!email.matches("^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Invalid Email");
+                alert.setContentText("Please enter a valid Email : example@email.com");
+                alert.showAndWait();
+                return;
+            }
+
+            if (!firstName.matches("[a-zA-Z]+")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Invalid First Name");
+                alert.setContentText("Please enter a valid First Name");
+                alert.showAndWait();
+                return;
+            }
+
+            if (!lastName.matches("[a-zA-Z]+")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Invalid First Name");
+                alert.setContentText("Please enter a valid Last Name");
+                alert.showAndWait();
+                return;
+            }
+
+            if (!password.equals(confirmPassword)) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Password Mismatch");
+                alert.setContentText("Passwords do not match");
+                alert.showAndWait();
+                return;
+            }
+
+            if (!password.matches("^(?=.*[0-9])(?=.*[A-Z]).+$")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Invalid Password");
+                alert.setContentText("Password must start with an uppercase letter and include at least one number.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (!phoneNumber.matches("^(\\+|00)[0-9\\-\\s]+$")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Invalid Phone");
+                alert.setContentText("Phone Number format is invalid!");
+                alert.showAndWait();
+                return;
+            }
+
+            if (!atLeast12YearsOld(birthDate)) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Invalid Date of Birth");
+                alert.setContentText("You must be at least 12 years old to use this service.");
+                alert.showAndWait();
+                return;
+            }
+        }
+
+        //int phoneNumber = Integer.parseInt(phoneNumberStr);
+        User u = new User(email, roles, hashedPassword, isVerified, firstName, lastName, country, phoneNumber, birthDate);
         UserService us = new UserService();
-        us.ajouter3(u);
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Created!");
-        alert.setContentText("User created successfully");
-        alert.showAndWait();
-        
+        if (!us.ajouter3(u)) {
+            return;
+        }
+
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
     }
 
@@ -134,8 +190,14 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    private void handleSigninLinkAction(ActionEvent event) throws IOException {   
+    private void handleSigninLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
+    }
+
+    public static boolean atLeast12YearsOld(LocalDate birthdate) {
+        LocalDate today = LocalDate.now();
+        int age = Period.between(birthdate, today).getYears();
+        return age >= 12;
     }
 
 }

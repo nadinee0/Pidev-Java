@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -71,9 +73,11 @@ public class SigninController implements Initializable {
                         String firstName = result.getString("first_name");
                         String lastName = result.getString("last_name");
                         String country = result.getString("country");
-                        int phoneNumber = result.getInt("phone_number");
+                        String phoneNumber = result.getString("phone_number");
                         String profilePictureName = result.getString("profile_picture_name");
-                        User user = new User(id, email, firstName, lastName, country, phoneNumber, profilePictureName);
+                        java.sql.Date sqlDate = result.getDate("birth_date");
+                        LocalDate birthDate = sqlDate.toLocalDate();
+                        User user = new User(id, email, firstName, lastName, country, phoneNumber, profilePictureName, birthDate);
                         
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");
@@ -107,16 +111,6 @@ public class SigninController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialize controller logic here
-    }
-
-    private boolean isValidEmail(String email) {
-        // Implement email validation logic here
-        return true;
-    }
-
-    private boolean isValidPassword(String password) {
-        // Implement password validation logic here
-        return true;
     }
     
     @FXML

@@ -21,7 +21,7 @@ import tn.leaguestorm.gui.HomeController;
  * @author Bellalouna Iheb
  */
 public class FXMLUtils {
-    
+
     public static void changeScene(ActionEvent event, String fxmlFile, String title, User user) {
         Parent root = null;
         if (user != null) {
@@ -45,5 +45,22 @@ public class FXMLUtils {
         stage.setTitle(title);
         stage.setScene(new Scene(root));
     }
-    
 }
+
+//  public static <T> void changeScene(ActionEvent event, String fxmlFile, String title, User user, Class<T> controllerClass) {
+//    Parent root = null;
+//    try {
+//        FXMLLoader loader = new FXMLLoader(MyConnection.class.getResource(fxmlFile));
+//        root = loader.load();
+//        T controller = loader.getController();
+//        if (user != null && controller instanceof HomeController) {
+//            ((HomeController) controller).initData(user);
+//        }
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+//    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//    stage.setTitle(title);
+//    stage.setScene(new Scene(root));
+//}  
+
