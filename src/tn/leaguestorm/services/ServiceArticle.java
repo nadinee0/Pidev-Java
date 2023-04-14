@@ -76,7 +76,7 @@ public class ServiceArticle implements IService<Article> {
     }
 
     public void updateArticle(int articleId, String title, float price, String description, int stock, String newCategory, String type, String newSubCategory) throws SQLException {
-        String query = "UPDATE sub_category SET nom_sub_category = ?, category_id = ? WHERE id = ?";
+        String query = "UPDATE article SET titre = ?, prix = ?,description = ?,stock = ?,category_id = ?,type = ?,sub_category_id = ? WHERE id = ?";
         PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
         preparedStatement.setString(1, title);
        // preparedStatement.setString(2, image);
