@@ -59,6 +59,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -105,8 +107,6 @@ public class ArticleController implements Initializable {
     private ComboBox<String> cbType;
     @FXML
     private Button btnImport;
-    @FXML
-    private Label LabelImage;
 
     ImageView imagep = null;
     private String i;
@@ -117,6 +117,30 @@ public class ArticleController implements Initializable {
     private ComboBox<String> cbSubcategory;
     @FXML
     private TextField tfImg;
+    @FXML
+    private Button btnOverview;
+    @FXML
+    private Button btnCategory;
+    @FXML
+    private Button btnSubCategory;
+    @FXML
+    private Button btnArticle;
+    @FXML
+    private Button btnPackages;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button btnSignout;
+    @FXML
+    private Pane pnlCustomer;
+    @FXML
+    private Pane pnlOrders;
+    @FXML
+    private Pane pnlMenus;
+    @FXML
+    private Pane pnlOverview;
+    @FXML
+    private VBox pnItems;
 
     /**
      * Initializes the controller class.
@@ -127,8 +151,8 @@ public class ArticleController implements Initializable {
 // TODO
         ServiceArticle sa = new ServiceArticle();
         cbType.setItems(FXCollections.observableArrayList("For Rent", "For Sale"));
-     /*   try {
-        //  articles = FXCollections.observableArrayList(sa.getAll());
+       try {
+          articles = FXCollections.observableArrayList(sa.getAll());
         } catch (SQLException ex) {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -154,17 +178,14 @@ public class ArticleController implements Initializable {
         });
 
            // Retrieve the article data using a separate SQL function
-            List<String> articleData = sa.retrieveData();
-
-            // Update the UI with the retrieved article data
-            ObservableList<String> observableList = FXCollections.observableArrayList(articleData);
+           
             articleList.setItems(articles);
-        } catch (SQLException e) {
+  /*     catch (SQLException e) {
             // Handle any SQL exceptions that occur
             e.printStackTrace();
         }
 
-        
+*/
         
         
         /*    String req = "Select * from article";
@@ -495,7 +516,7 @@ public class ArticleController implements Initializable {
         ServiceArticle sa = new ServiceArticle();
 
         String title = tfTitle.getText();
-        String image = tfImage.getText();
+//        String image = tfImage.getText();
         String description = taDescription.getText();
         Float price = Float.valueOf(tfPrice.getText());
         String type = cbType.getValue();
@@ -522,7 +543,7 @@ public class ArticleController implements Initializable {
             alert.showAndWait();
             return;
         }*/
-        sa.updateArticle(a.getId(), title, image, price, description, stock, newCategory, type, newSubCategory);
+        sa.updateArticle(a.getId(), title, price, description, stock, newCategory, type, newSubCategory);
    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
             alert.setContentText("Article Successfully updated !");
@@ -530,7 +551,7 @@ public class ArticleController implements Initializable {
             
         articleList.refresh();
         tfTitle.setText("");
-        tfImage.setText("");
+       // tfImage.setText("");
         taDescription.setText("");
         tfPrice.setText("");
         cbType.setValue("");
@@ -691,6 +712,10 @@ public class ArticleController implements Initializable {
         Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
         Stage stage = (Stage) currentScene.getWindow(); // get the current stage
         stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void handleClicks(ActionEvent event) {
     }
     
 
