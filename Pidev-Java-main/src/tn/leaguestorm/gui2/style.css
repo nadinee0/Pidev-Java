@@ -1,51 +1,39 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 11 avr. 2023, 23:47:23
-    Author     : Dell
-*/
-.button
-{
--fx-background-color : #05071F;
--fx-text-fill : #e7e5e5;
+.white-form {
+    -fx-background-color: #fff;
+    -fx-border-color: #8a2be2;
+    -fx-border-width: 2px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
 }
-.button:hover{
--fx-background-color : #10165F;
+.btn{
+    -fx-background-color: linear-gradient(to bottom right ,#9E20A0 ,#5A3375);
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px; 
+    -fx-cursor: hand;
 }
-.button:pressed
-{
--fx-background-color : #1620A1;
+.btn:hover{
+    -fx-background-color: linear-gradient(to bottom right ,#a914ae ,#7f4fa4);
 }
 
-.scroll-pane {
-    -fx-background-color: #02030A;
+.listview_crud {
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
 }
 
-.scroll-bar:horizontal, .scroll-bar:vertical{
-    -fx-background-color:transparent;
+.list-cell {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
 }
 
-.increment-button, .decrement-button {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+.list-cell:hover {
+    -fx-background-color: #f0f0f0;
 }
 
-.scroll-bar:horizontal .track,
-.scroll-bar:vertical .track{
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 0em;
+.list-cell:filled:selected {
+    -fx-background-color: #0077c6;
+    -fx-text-fill: white;
 }
 
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #10165F;
-    -fx-background-radius: 5em;
-}
 
-.scroll-pane > .corner {
-    -fx-background-color: black;
-}

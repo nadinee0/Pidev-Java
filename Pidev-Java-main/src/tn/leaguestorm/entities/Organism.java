@@ -52,6 +52,7 @@ public class Organism {
         teams = new ArrayList<>();
     }
     
+    
 
 
     public List<Team> getTeams() {
@@ -174,7 +175,7 @@ public class Organism {
 
     @Override
     public String toString() {
-        return "Organism{" + "id=" + id + ", phone_organisation=" + phone_organisation + ", nom_commercial=" + nom_commercial + ", nom_juridique=" + nom_juridique + ", email_organisation=" + email_organisation + ", image=" + image + ", more=" + more + ", Date_de_fondation=" + Date_de_fondation + ", teams=" + teams + '}';
+        return "Organism{" + "id=" + id + ", phone_organisation=" + phone_organisation + ", nom_commercial=" + nom_commercial + ", nom_juridique=" + nom_juridique + ", email_organisation=" + email_organisation + ", image=" + image + ", more=" + more + ", Date_de_fondation=" + Date_de_fondation + '}';
     }
 
 

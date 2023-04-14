@@ -7,6 +7,7 @@ package tn.leaguestorm.tests;
 
 import java.io.IOException;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,13 +17,15 @@ import javafx.stage.Stage;
  *
  * @author Dell
  */
-public class Window extends Application {
+public class Door extends Application {
+    
+   
     
     @Override
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui2/orca.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui2/tewt.fxml"));
 
             
             Scene scene = new Scene(root);

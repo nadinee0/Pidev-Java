@@ -5,6 +5,7 @@
  */
 package tn.leaguestorm.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,6 +21,17 @@ public class Team {
     
    
 public Team() {
+}public Team(String nom_team, String description_team, int wins_team, int losses_team, float rate_team, Date date_de_creation_team,String color, String logo_team) {
+
+    this.nom_team = nom_team;
+    this.description_team = description_team;
+    this.color = color;
+    this.logo_team = logo_team;
+    this.wins_team = wins_team;
+    this.losses_team = losses_team;
+    this.rate_team = rate_team;
+    this.date_de_creation_team = date_de_creation_team;
+    
 }
 
 public Team(int id, String nom_team, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team, Date date_de_creation_team, int organism_id) {
@@ -34,6 +46,8 @@ public Team(int id, String nom_team, String description_team, int wins_team, int
     this.date_de_creation_team = date_de_creation_team;
     this.organisme_id = organism_id;
 }
+
+
 
 public Team(String nom_team, int organism_id, String description_team, int wins_team, int losses_team, float rate_team, String color, String logo_team, Date date_de_creation_team) {
     this.nom_team = nom_team;
@@ -75,6 +89,17 @@ public Team(int id,String nom_team, int organism_id, String description_team, in
         this.organisme_id = organisme_id;
         
         
+    }
+
+    public Team(String nom, String description, int wins, int losses, double rate, LocalDate date, String logo, String color) {
+        this.nom_team = nom_team;
+        this.description_team = description_team;
+        this.color = color;
+        this.logo_team = logo_team;
+        this.wins_team = wins_team;
+        this.losses_team = losses_team;
+        this.rate_team = rate_team;
+        this.date_de_creation_team = date_de_creation_team;
     }
 
 

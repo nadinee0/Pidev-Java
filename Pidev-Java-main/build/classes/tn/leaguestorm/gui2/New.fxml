@@ -10,13 +10,11 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="566.0" style="-fx-background-color: D922E8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui2.NewController">
+<AnchorPane id="AnchorPane" fx:id="logo" prefHeight="435.0" prefWidth="566.0" style="-fx-background-color: D922E8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui2.NewController">
    <children>
-      <ImageView fx:id="logo" fitHeight="35.0" fitWidth="200.0" layoutX="307.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: ffffff;" />
       <Label fx:id="nom" layoutX="91.0" layoutY="42.0" text="NomTeam" textAlignment="CENTER" textFill="#382525">
          <font>
             <Font name="Cambria Bold" size="18.0" />
@@ -72,6 +70,7 @@
          </font>
       </Label>
       <DatePicker fx:id="dato" layoutX="319.0" layoutY="123.0" />
+      <TextField fx:id="logo" layoutX="309.0" layoutY="288.0" prefHeight="26.0" prefWidth="200.0" />
    </children>
    <opaqueInsets>
       <Insets />

@@ -5,7 +5,6 @@
  */
 package tn.leaguestorm.gui2;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.Instant;
@@ -14,18 +13,13 @@ import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import static sun.security.krb5.KrbException.errorMessage;
 import tn.leaguestorm.entities.Organism;
 
 import tn.leaguestorm.services.ServiceOrganism;
@@ -46,7 +40,7 @@ public class NewOrganisationController implements Initializable {
     @FXML
     private TextField email;
     @FXML
-    private ImageView ImageOrg;
+    private TextField ImageOrg;
     @FXML
     private TextArea more;
     private DatePicker dati;
@@ -63,7 +57,8 @@ public class NewOrganisationController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+           
+
     }
 
     private void addOrganism(ActionEvent event) {
@@ -75,7 +70,7 @@ public class NewOrganisationController implements Initializable {
         String phoneStr = phone.getText();
         int ph = Integer.parseInt(phoneStr);
         String emai = email.getText().trim();
-        String img = ImageOrg.getImage() != null ? ImageOrg.getImage().toString() : null;
+        String img = ImageOrg.getText();
         String morei = more.getText().trim();
         boolean isValid = false;
 
@@ -186,10 +181,10 @@ public class NewOrganisationController implements Initializable {
         }
 
         try {
-            if (ImageOrg.getImage() == null) {
+            if (ImageOrg.getText() == null) {
                 throw new Exception("Veuillez choisir une image.");
             }
-            img = ImageOrg.getImage().toString();
+            img = ImageOrg.getText();
         } catch (Exception e) {
             // Show an error message
             Alert alert = new Alert(AlertType.ERROR);
@@ -246,7 +241,7 @@ public class NewOrganisationController implements Initializable {
             dati.setValue(null);
             phone.clear();
             email.clear();
-            ImageOrg.setImage(null);
+            ImageOrg.clear();
             more.clear();
 
         } else {
@@ -256,6 +251,10 @@ public class NewOrganisationController implements Initializable {
             alert.setContentText("Une erreur s'est produite.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void AddOrganism(ActionEvent event) {
     }
 
 }

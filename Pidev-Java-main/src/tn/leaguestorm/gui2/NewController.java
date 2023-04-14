@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import tn.leaguestorm.entities.Team;
@@ -55,7 +56,7 @@ public class NewController implements Initializable {
     @FXML
     private Button Add;
     @FXML
-    private ImageView logo;
+    private AnchorPane logo;
     @FXML
     private Label nom;
     @FXML

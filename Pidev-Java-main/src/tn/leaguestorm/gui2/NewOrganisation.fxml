@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -46,7 +45,6 @@
       <TextField fx:id="Njuridique" layoutX="332.0" layoutY="63.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez taper le nom juridique" />
       <TextField fx:id="phone" layoutX="332.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez taper le numéro du téléphone" />
       <TextField fx:id="email" layoutX="330.0" layoutY="177.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez taper le mail" />
-      <ImageView fx:id="ImageOrg" fitHeight="38.0" fitWidth="200.0" layoutX="325.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true" />
       <DatePicker fx:id="date" layoutX="332.0" layoutY="104.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez donner une date " />
       <Label layoutX="66.0" layoutY="105.0" text="Date de Fondation">
          <font>
@@ -54,5 +52,6 @@
          </font>
       </Label>
       <Button fx:id="aaddorga" layoutX="274.0" layoutY="352.0" mnemonicParsing="false" onAction="#AddOrganism" text="Ajout" />
+      <TextField fx:id="ImageOrg" layoutX="330.0" layoutY="227.0" prefHeight="26.0" prefWidth="200.0" promptText="Veuillez insérer une image " />
    </children>
 </AnchorPane>
