@@ -39,20 +39,8 @@ import tn.leaguestorm.utils.MyConnection;
  */
 public class ChangePasswordController implements Initializable{
 
-    @FXML
     private ImageView userProfilePic;
-    @FXML
     private Label lblFullName;
-    @FXML
-    private Button btnProfile;
-    @FXML
-    private Button btnMenus;
-    @FXML
-    private Button btnPassword;
-    @FXML
-    private Button btnSettings;
-    @FXML
-    private Button btnSignout;
     @FXML
     private Pane pnlCustomer;
     @FXML
@@ -159,20 +147,6 @@ public class ChangePasswordController implements Initializable{
             ex.getMessage();
         }
         return true;
-    }
-    
-    @FXML
-    private void handleClicks(ActionEvent event) {
-    }
-    
-    @FXML
-    private void handleProfileUpdateLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ProfileUpdate.fxml", "Edit Profile");
-    }
-    
-    @FXML
-    private void handleProfileLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Profile");
     }
 
 }

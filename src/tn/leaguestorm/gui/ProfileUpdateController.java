@@ -39,18 +39,6 @@ public class ProfileUpdateController implements Initializable{
     @FXML
     private ImageView userProfilePic;
     @FXML
-    private Label lblFullName;
-    @FXML
-    private Button btnProfile;
-    @FXML
-    private Button btnMenus;
-    @FXML
-    private Button btnPassword;
-    @FXML
-    private Button btnSettings;
-    @FXML
-    private Button btnSignout;
-    @FXML
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
@@ -88,17 +76,6 @@ public class ProfileUpdateController implements Initializable{
         }
     }
 
-    @FXML
-    private void handleClicks(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleChangePasswordLinkAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleExitButtonAction(ActionEvent event) {
-    }
 
     @FXML
     private void applyAction(ActionEvent event) {
