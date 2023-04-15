@@ -85,7 +85,7 @@ public class HomeController implements Initializable {
     @FXML
     private Label lblBirthDate;
     
-    Circle circle = new Circle(20, 20, 90);
+    Circle circle = new Circle(100, 100, 90);
     
     User currentUser = CurrentUser.getUser();
     

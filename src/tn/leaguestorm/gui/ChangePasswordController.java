@@ -6,15 +6,18 @@
 package tn.leaguestorm.gui;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +25,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
@@ -33,7 +37,7 @@ import tn.leaguestorm.utils.MyConnection;
  *
  * @author Bellalouna Iheb
  */
-public class ChangePasswordController {
+public class ChangePasswordController implements Initializable{
 
     @FXML
     private ImageView userProfilePic;
@@ -72,9 +76,21 @@ public class ChangePasswordController {
     private Alert alert;
 
     User currentUser = CurrentUser.getUser();
-
-//    private int userID = initData(user);
     
+    Circle circle = new Circle(100, 100, 90);
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+        if (currentUser != null) {
+        String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
+        Image userProfilePic = new Image("file:" + userProfilePicPath);
+        this.userProfilePic.setImage(userProfilePic);
+        this.userProfilePic.setClip(circle);
+    } else {
+            System.out.println("Error");
+}
+    }
 
     @FXML
     private void applyPasswordChangeAction(ActionEvent event) {

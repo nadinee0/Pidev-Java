@@ -167,9 +167,9 @@
                         <Font name="Consolas" size="35.0" />
                      </font>
                   </Label>
-                  <Text layoutX="297.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile" wrappingWidth="200.79997558593755">
+                  <Text layoutX="273.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile" wrappingWidth="207.99992675781255">
                      <font>
-                        <Font size="71.0" />
+                        <Font name="Imprint MT Shadow" size="71.0" />
                      </font>
                      <fill>
                         <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0" startX="1.0">

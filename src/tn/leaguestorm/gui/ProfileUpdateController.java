@@ -17,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import tn.leaguestorm.entities.User;
+import tn.leaguestorm.utils.CurrentUser;
 
 /**
  *
@@ -48,20 +50,13 @@ public class ProfileUpdateController {
     @FXML
     private Pane pnlOverview;
     @FXML
-    private Label lblCountry;
+    private PasswordField tfFirstName;
     @FXML
-    private PasswordField tfCurrentPassword;
+    private PasswordField tfLastName;
     @FXML
-    private PasswordField tfCurrentPassword1;
-    @FXML
-    private Label lblCountry1;
-    @FXML
-    private Label lblCountry11;
-    @FXML
-    private Label lblCountry2;
-    @FXML
-    private PasswordField tfCurrentPassword11;
+    private PasswordField tfPhoneNumber;
     
+    User currentUser = CurrentUser.getUser();
     
     private void handleBtnSelectFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
