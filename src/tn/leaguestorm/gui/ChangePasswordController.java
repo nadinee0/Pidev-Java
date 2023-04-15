@@ -82,6 +82,7 @@ public class ChangePasswordController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+        
         if (currentUser != null) {
         String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
         Image userProfilePic = new Image("file:" + userProfilePicPath);
