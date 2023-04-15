@@ -160,7 +160,7 @@ public class ChangePasswordController {
     
     @FXML
     private void handleProfileUpdateLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ProfileUpdate.fxml", "Edit Profile", user);
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ProfileUpdate.fxml", "Edit Profile");
     }
 
 }

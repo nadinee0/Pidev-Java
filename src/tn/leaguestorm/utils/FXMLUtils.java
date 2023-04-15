@@ -21,46 +21,40 @@ import tn.leaguestorm.gui.HomeController;
  * @author Bellalouna Iheb
  */
 public class FXMLUtils {
-
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, User user) {
-        Parent root = null;
-        if (user != null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(MyConnection.class.getResource(fxmlFile));
-                root = loader.load();
-                HomeController hc = loader.getController();
-                hc.initData(user);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                root = FXMLLoader.load(MyConnection.class.getResource(fxmlFile));
-                System.out.println(fxmlFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public static void changeScene(ActionEvent event, String fxmlFile, String title) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(FXMLUtils.class.getResource(fxmlFile));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
         stage.setTitle(title);
-        stage.setScene(new Scene(root));
+        stage.show();
     }
-}
+    
 
-//  public static <T> void changeScene(ActionEvent event, String fxmlFile, String title, User user, Class<T> controllerClass) {
-//    Parent root = null;
-//    try {
-//        FXMLLoader loader = new FXMLLoader(MyConnection.class.getResource(fxmlFile));
-//        root = loader.load();
-//        T controller = loader.getController();
-//        if (user != null && controller instanceof HomeController) {
-//            ((HomeController) controller).initData(user);
+//    public static void changeScene(ActionEvent event, String fxmlFile, String title, User user) {
+//        Parent root = null;
+//        if (user != null) {
+//            try {
+//                FXMLLoader loader = new FXMLLoader(MyConnection.class.getResource(fxmlFile));
+//                root = loader.load();
+//                HomeController hc = loader.getController();
+//                hc.initData(user);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            try {
+//                root = FXMLLoader.load(MyConnection.class.getResource(fxmlFile));
+//                System.out.println(fxmlFile);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 //        }
-//    } catch (IOException e) {
-//        e.printStackTrace();
+//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setTitle(title);
+//        stage.setScene(new Scene(root));
 //    }
-//    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//    stage.setTitle(title);
-//    stage.setScene(new Scene(root));
-//}  
+}
 

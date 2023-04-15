@@ -88,6 +88,7 @@ public class SignupController implements Initializable {
                 countryList.add(country);
             }
         }
+        countryList.add("Palestine");
         FXCollections.sort(countryList);
         return countryList;
     }
@@ -181,7 +182,7 @@ public class SignupController implements Initializable {
             return;
         }
 
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
     }
 
     @FXML
@@ -191,7 +192,7 @@ public class SignupController implements Initializable {
 
     @FXML
     private void handleSigninLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
     }
 
     public static boolean atLeast12YearsOld(LocalDate birthdate) {

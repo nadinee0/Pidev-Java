@@ -43,7 +43,7 @@ public class ForgotController implements Initializable {
 
     @FXML
     private void handleCancelLinkAction(ActionEvent event) {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in", null);
+        //FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
     }
 
     @FXML

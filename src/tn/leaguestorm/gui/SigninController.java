@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import tn.leaguestorm.utils.MyConnection;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.leaguestorm.entities.User;
+import tn.leaguestorm.utils.CurrentUser;
 import tn.leaguestorm.utils.FXMLUtils;
 
 
@@ -78,14 +79,14 @@ public class SigninController implements Initializable {
                         java.sql.Date sqlDate = result.getDate("birth_date");
                         LocalDate birthDate = sqlDate.toLocalDate();
                         User user = new User(id, email, firstName, lastName, country, phoneNumber, profilePictureName, birthDate);
-                        
+                        CurrentUser.setUser(user);
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");
                         alert.setHeaderText(null);
                         alert.setContentText("Successfully Logged In");
                         alert.showAndWait();
                         
-                        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Home", user);
+                        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Home");
 
                     } else {
                         alert = new Alert(AlertType.INFORMATION);
@@ -120,12 +121,12 @@ public class SigninController implements Initializable {
     
     @FXML
     private void handleForgotPasswordLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Forgot.fxml", "Forgot", null);
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Forgot.fxml", "Forgot");
     }
     
     @FXML
     private void handleSignupLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signup.fxml", "Sign up", null);
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signup.fxml", "Sign up");
     }
 
 }
