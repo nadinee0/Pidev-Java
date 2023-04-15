@@ -18,12 +18,15 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.leaguestorm.entities.User;
@@ -79,17 +82,18 @@ public class HomeController implements Initializable {
     @FXML
     private ImageView userProfilePic;
 
-    private User user;
     @FXML
     private Label lblBirthDate;
-
+    
+    Circle circle = new Circle(20, 20, 90);
+    
     User currentUser = CurrentUser.getUser();
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
         if (currentUser != null) {
-    lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+        lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         lblEmail.setText(currentUser.getEmail());
         lblCountry.setText(currentUser.getCountry());
         LocalDate birthDate = currentUser.getBirthDate();
@@ -100,6 +104,7 @@ public class HomeController implements Initializable {
         String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
         Image userProfilePic = new Image("file:" + userProfilePicPath);
         this.userProfilePic.setImage(userProfilePic);
+        this.userProfilePic.setClip(circle);
     } else {
             System.out.println("Error");
 }
@@ -127,26 +132,20 @@ public class HomeController implements Initializable {
 
     private Alert alert;
 
-    private void handleBtnSelectFile(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select File");
-
-        File selectedFile = fileChooser.showOpenDialog(((Node) event.getTarget()).getScene().getWindow());
-
-        if (selectedFile != null) {
-            alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Selected file: " + selectedFile.getAbsolutePath());
-            alert.showAndWait();
+    @FXML
+    private void handleExitButtonAction(ActionEvent event) {
+        CurrentUser.endSession();
+        try {
+            FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void handleExitButtonAction(ActionEvent event) {
-        //FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
+    private void handleProfileLinkAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Profile");
     }
-
     
     @FXML
     private void handleChangePasswordLinkAction(ActionEvent event) throws IOException {

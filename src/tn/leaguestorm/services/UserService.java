@@ -42,8 +42,8 @@ public class UserService implements IService<User> {
         ps.executeUpdate();
     }
     
-    public void updatePassword(String password) throws SQLException {
-        String req = "UPDATE `user` SET `password` = '" + password + "' WHERE `user`.`id` = id" ;
+    public void updatePassword(String password, int id) throws SQLException {
+        String req = "UPDATE `user` SET `password` = '" + password + "' WHERE `user`.`id` =" + id ;
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
     }

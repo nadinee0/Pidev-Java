@@ -71,6 +71,7 @@ public class SigninController implements Initializable {
                         
                         int id = result.getInt("id");
                         String email = result.getString("email");
+                        String password = result.getString("password");
                         String firstName = result.getString("first_name");
                         String lastName = result.getString("last_name");
                         String country = result.getString("country");
@@ -78,7 +79,7 @@ public class SigninController implements Initializable {
                         String profilePictureName = result.getString("profile_picture_name");
                         java.sql.Date sqlDate = result.getDate("birth_date");
                         LocalDate birthDate = sqlDate.toLocalDate();
-                        User user = new User(id, email, firstName, lastName, country, phoneNumber, profilePictureName, birthDate);
+                        User user = new User(id, email, password, firstName, lastName, country, phoneNumber, profilePictureName, birthDate);
                         CurrentUser.setUser(user);
                         alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Information Message");

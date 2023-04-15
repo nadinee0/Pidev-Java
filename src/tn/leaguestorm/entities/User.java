@@ -35,9 +35,10 @@ public class User {
         this.country = country;
     }
     
-    public User(int id, String email, String firstName, String lastName, String country, String phoneNumber, String profilePictureName, LocalDate birthDate) {
+    public User(int id, String email, String password, String firstName, String lastName, String country, String phoneNumber, String profilePictureName, LocalDate birthDate) {
         this.id = id;
         this.email = email;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;

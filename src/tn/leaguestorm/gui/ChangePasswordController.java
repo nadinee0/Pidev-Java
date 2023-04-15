@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ import javafx.scene.layout.Pane;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
+import tn.leaguestorm.utils.CurrentUser;
 import tn.leaguestorm.utils.FXMLUtils;
 import tn.leaguestorm.utils.MyConnection;
 
@@ -69,12 +71,7 @@ public class ChangePasswordController {
     
     private Alert alert;
 
-    private User user;
-
-    public void setUser(User user) {
-        this.user = user;
-        System.out.println(user.getId());
-    }
+    User currentUser = CurrentUser.getUser();
 
 //    private int userID = initData(user);
     
@@ -132,28 +129,21 @@ public class ChangePasswordController {
     }
 
     private boolean checkCurrentPassword(String password) {
-        String hashedPassword = "SELECT password FROM user WHERE id = id";
-        if (BCrypt.checkpw(password, hashedPassword));
-        return true;
+        String hashedPassword = currentUser.getPassword();
+        return BCrypt.checkpw(password, hashedPassword);
     }
 
     private boolean updateUserPassword(String newPassword) {
         String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(13));
         UserService us = new UserService();
         try {
-            us.updatePassword(hashedPassword);
+            us.updatePassword(hashedPassword, currentUser.getId());
         } catch (SQLException ex) {
             ex.getMessage();
         }
         return true;
     }
-
     
-    public int initData(User user) {
-        int id = user.getId();
-        return id;
-    }
-
     @FXML
     private void handleClicks(ActionEvent event) {
     }
@@ -161,6 +151,11 @@ public class ChangePasswordController {
     @FXML
     private void handleProfileUpdateLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ProfileUpdate.fxml", "Edit Profile");
+    }
+    
+    @FXML
+    private void handleProfileLinkAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Profile");
     }
 
 }
