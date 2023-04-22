@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ShopController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ShopController">
    <children>
       <BorderPane layoutX="6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -61,7 +61,7 @@
                      </styleClass>
                   </HBox>
                   <Pane prefHeight="57.0" prefWidth="435.0" stylesheets="@style.css" VBox.vgrow="ALWAYS" />
-                  <VBox fx:id="chosenFruitCard" alignment="CENTER" prefHeight="535.0" prefWidth="100.0" stylesheets="@../values/style.css">
+                  <VBox fx:id="chosenCard" alignment="CENTER" prefHeight="535.0" prefWidth="100.0" stylesheets="@../values/style.css">
                      <VBox.margin>
                         <Insets left="50.0" right="50.0" />
                      </VBox.margin>
@@ -168,7 +168,7 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="83.0" prefWidth="840.0">
                      <children>
                         <Pane prefHeight="84.0" prefWidth="96.0" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="380.0" styleClass="free-delivery-card" stylesheets="@../values/style.css">
@@ -226,9 +226,9 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ScrollPane fx:id="scroll" prefHeight="582.0" prefWidth="841.0" styleClass="transparent" stylesheets="@../values/style.css">
+                        <ScrollPane fx:id="scroll" prefHeight="642.0" prefWidth="892.0" styleClass="transparent" stylesheets="@../values/style.css">
                            <content>
-                              <GridPane fx:id="grid" prefHeight="257.0" prefWidth="542.0">
+                              <GridPane fx:id="grid" prefHeight="601.0" prefWidth="881.0">
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                  </rowConstraints>

@@ -52,13 +52,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.input.MouseEvent;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.tests.MainClass;
 import tn.leaguestorm.utils.MyConnection;
 
 public class ShopController implements Initializable {
 
-    @FXML
     private VBox chosenFruitCard;
 
     private Label fruitNameLable;
@@ -85,8 +88,13 @@ public class ShopController implements Initializable {
     Article a = new Article();
     private MyConnection ds = MyConnection.getInstance();
     ServiceArticle sa = new ServiceArticle();
+    @FXML
+    private VBox chosenCard;
 
-    public void populateGridPane() throws SQLException, FileNotFoundException {
+private AnchorPane parentAnchorPane;
+    
+    
+   /* public void populateGridPane() throws SQLException, FileNotFoundException {
 
         String query = "SELECT * FROM article";
 
@@ -100,21 +108,25 @@ public class ShopController implements Initializable {
 // Iterate through the result set and add each product to the GridPane
         while (resultSet.next()) {
             // Create a new Label for the product name
-            Label productName = new Label(resultSet.getString("titre"));
+            /*  Label productName = new Label(resultSet.getString("titre"));
             grid.add(productName, colIndex, rowIndex);
-
-String imagePath = "C:/Users/Nadine/Pidev/public/uploads/" + resultSet.getString("image") ; // Replace this with your own file path and column name
+             /
+            String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + resultSet.getString("image"); // Replace this with your own file path and column name
             Image image = new Image(new File(imagePath).toURI().toString());
 
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200); // Set the width to 200 pixels
             imageView.setFitHeight(200); // Set the height to 200 pixels
-            // Create a new ImageView for the product image
-            /*  ImageView productImage = new ImageView(new Image(resultSet.getString("image")));
-             */ grid.add(imageView, colIndex, rowIndex + 1);
+            grid.add(imageView, colIndex, rowIndex + 1);
 
-              Label price = new Label(resultSet.getString("prix"));
-            grid.add(price, colIndex, rowIndex + 1);
+            Tooltip tooltip = new Tooltip(resultSet.getString("titre") + " - " + resultSet.getString("prix"));
+            Tooltip.install(imageView, tooltip);
+
+// Add the ImageView to the GridPane
+            grid.add(imageView, colIndex, rowIndex + 1);
+
+            /*  Label price = new Label(resultSet.getString("prix"));
+            grid.add(price, colIndex, rowIndex + 1); /
             // Increment the column index
             colIndex++;
 
@@ -125,77 +137,131 @@ String imagePath = "C:/Users/Nadine/Pidev/public/uploads/" + resultSet.getString
             }
         }
     }
+*/
+public void populateGridPane() throws SQLException, FileNotFoundException {
+    String query = "SELECT * FROM article";
+    
+    // Execute the query and retrieve the result set
+    Statement statement = ds.getCnx().createStatement();
+    ResultSet resultSet = statement.executeQuery(query);
+    
+    // Define the column and row indexes for the GridPane
+    int colIndex = 0;
+    int rowIndex = 0;
+    
+    // Iterate through the result set and add each product to the GridPane
+    while (resultSet.next()) {
+        // Create a new Label for the product name
+        Label productName = new Label(resultSet.getString("titre"));
+        grid.add(productName, colIndex, rowIndex + 1);
+        
+        // Create a new Label for the product price
+        Label price = new Label(resultSet.getString("prix"));
+        grid.add(price, colIndex, rowIndex + 2);
 
-      private void setChosenArticle(Article article) {
-        fruitNameLable.setText(article.getTitre());
-        fruitPriceLabel.setText(Front.CURRENCY + article.getPrix());
-        image = new Image(getClass().getResourceAsStream(article.getImage()));
-        fruitImg.setImage(image);
-        chosenFruitCard.setStyle("-fx-background-color: #" + article.getColor() + ";\n" +
-                "    -fx-background-radius: 30;");
+        // Create a new ImageView for the product image
+        String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + resultSet.getString("image"); // Replace this with your own file path and column name
+        Image image = new Image(new File(imagePath).toURI().toString());
+
+        ImageView imageView = new ImageView(image);
+        imageView.setBlendMode(BlendMode.MULTIPLY);
+
+        imageView.setFitWidth(200); // Set the width to 200 pixels
+        imageView.setFitHeight(200); // Set the height to 200 pixels
+        
+        // Add a mouse click event handler to the ImageView
+        int productId = resultSet.getInt("id"); // Get the product ID from the result set
+        imageView.setOnMouseClicked(e -> {
+            // Pass the product ID to the method that will handle the click event
+            handleProductClick(productId, productName.getText(), price.getText(), imagePath);
+        });
+        
+        // Add the ImageView to the GridPane
+        grid.add(imageView, colIndex, rowIndex + 3);
+        
+        // Increment the column index
+        colIndex++;
+        
+        // Move to the next row if the current row is full
+        if (colIndex == 3) {
+            colIndex = 0;
+            rowIndex += 4;
+        }
     }
-      
+}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-       /*      try {
-            populateGridPane();
-            if (articles.size() > 0) {
-                setChosenArticle(articles.get(0));
-                myListener = new MyListener() {
-                    @Override
-                    public void onClickListener(Article article ) {
-                        setChosenArticle(article);
-                    }
-                };
-            }
-            
-            int column = 0;
-            int row = 1;
-            try {
+private void handleProductClick(int productId, String productName, String price, String imagePath) {
+    // Update the UI with the selected product details
+    NameLabel.setText(productName);
+    PriceLabel.setText(price);
+    Img.setImage(new Image(new File(imagePath).toURI().toString()));
+    //Img.setBlendMode(BlendMode.MULTIPLY);
+    Img.setStyle("-fx-background-color: transparent");
+
+
+
+}
+
+private void setChosenArticle(Article article) {
+    NameLabel.setText(article.getTitre());
+    PriceLabel.setText(Front.CURRENCY + article.getPrix());
+    Image image = new Image(getClass().getResourceAsStream(article.getImage()));
+    ImageView imageView = new ImageView(image);
+    imageView.setBlendMode(BlendMode.MULTIPLY);
+
+    imageView.setFitWidth(200);
+    imageView.setFitHeight(200);
+    chosenCard.setStyle("-fx-background-color: #" + article.getColor() + ";\n"
+            + "    -fx-background-radius: 30;");
+    chosenCard.getChildren().clear();
+    chosenCard.getChildren().addAll(imageView, NameLabel, PriceLabel);
+}
+
+
+  @Override
+public void initialize(URL location, ResourceBundle resources) {
+    try {
+        populateGridPane();
+        if (articles.size() > 0) {
+            setChosenArticle(articles.get(0));
+            myListener = new MyListener() {
+                @Override
+                public void onClickListener(Article article) {
+                    setChosenArticle(article);
+                }
+            };
+        }
+
+        int column = 0;
+        int row = 1;
+        try {
             for (int i = 0; i < articles.size(); i++) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("gui/item.fxml"));
-            AnchorPane anchorPane = fxmlLoader.load();
-            
-              ItemController itemController = fxmlLoader.getController();
-                  itemController.setData(articles.get(i),myListener);
-            
-            if (column == 3) {
-            column = 0;
-            row++;
-            }
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("tn/leaguestorm/gui/item.fxml"));
+                AnchorPane anchorPane = fxmlLoader.load();
 
-            grid.add(anchorPane, column++, row); //(child,column,row)
-            //set grid width
-            grid.setMinWidth(Region.USE_COMPUTED_SIZE);
-            grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
-            grid.setMaxWidth(Region.USE_PREF_SIZE);
-            
-            //set grid height
-            grid.setMinHeight(Region.USE_COMPUTED_SIZE);
-            grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
-            grid.setMaxHeight(Region.USE_PREF_SIZE);
-            
-            GridPane.setMargin(anchorPane, new Insets(10));
+                ItemController itemController = fxmlLoader.getController();
+                itemController.setData(articles.get(i), myListener);
+
+                if (column == 3) {
+                    column = 0;
+                    row++;
+                }
+
+                grid.add(anchorPane, column++, row);
+
+                GridPane.setMargin(anchorPane, new Insets(10));
             }
-            } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (FileNotFoundException ex) {
+        Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
     }
-     */ try {
-            // Call the method to populate the GridPane with the products from the database
-            populateGridPane();
-        } catch (SQLException e) {
-            e.printStackTrace();
-} catch (FileNotFoundException ex) {
-            Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+}
 
-    }}
+
+}
 
