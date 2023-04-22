@@ -36,7 +36,7 @@ public class Article {
         this.type = type;
     }
 
-    public Article(int id, String titre, String image, float prix, String description, int stock, String type) {
+    public Article(int id, String titre, String image, float prix, String description, int stock) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -48,7 +48,7 @@ public class Article {
 
    
 
-    public Article(String title, float price, String description, int stock, String type) {
+    public Article(String title, float price, String description, int stock) {
         this.stock = stock;
         this.titre = titre;
         this.description = description;
@@ -56,7 +56,7 @@ public class Article {
         this.type = type;
     }
 
-    public Article(String title, float price, String description, int stock, String type, int categoryId, int subcategoryId) {
+    public Article(String title, float price, String description, int stock,  int categoryId, int subcategoryId) {
         this.stock = stock;
         this.titre = titre;
         this.description = description;
@@ -75,7 +75,7 @@ public class Article {
         this.category = category;
         this.subcategory = subCategory;
     }
- public Article(int id, String titre, String image, float prix, String description,  int stock, Category category, SubCategory subcategory) {
+ public Article(int id, String titre, String image, float prix, String description,  int stock, Category category) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -87,7 +87,7 @@ public class Article {
         this.subcategory = subcategory;
     }
 
-    public Article(int id , String titre, String image, float prix, String description, int stock, int idcatg, int idsubcatg) {
+    public Article(int id , String titre, String image, float prix, String description, int stock, int idcatg) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -121,7 +121,7 @@ public class Article {
         //this.idcatg = idcatg;
         this.idsubcatg = idsubcatg;        }
 
-  public Article( String titre, float prix, String description, int stock, int idcatg, String type, int idsubcatg) {
+  /*public Article( String titre, float prix, String description, int stock, int idcatg, int idsubcatg) {
         this.stock = stock;
         this.titre = titre;
         this.image = image;
@@ -131,13 +131,13 @@ public class Article {
         this.idcatg = idcatg;
         this.idsubcatg = idsubcatg;    
     }
-
+*/
     public Article(String title, String category) {
         this.titre = title;
         this.nomcatg=category;
     }
 
-    public Article(String title, String image, float price, String description, int stock, Category category,  SubCategory subCategory) {
+    public Article(String title, String image, float price, String description, int stock, Category category) {
    this.stock = stock;
         this.titre = titre;
         this.image = image;
@@ -145,10 +145,10 @@ public class Article {
         this.type = type;
         this.prix = prix;
         this.category = category;
-        this.subcategory = subCategory;    
+     
     }
 
-    public Article(int id, String title, String image, float prix, String description, int stock, String category,String subcategory) {
+    public Article(int id, String title, String image, float prix, String description, int stock, String category) {
 this.stock = stock;
         this.titre = titre;
         this.image = image;
@@ -156,7 +156,7 @@ this.stock = stock;
         this.type = type;
         this.prix = prix;
         this.nomcatg = category;
-        this.nomsubcatg = subcategory;    
+       
     }
 
     public Article(String title, String image, float prix) {

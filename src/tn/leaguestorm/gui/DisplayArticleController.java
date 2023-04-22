@@ -37,10 +37,10 @@ public class DisplayArticleController implements Initializable {
         // TODO
     }    
      public void setTitre(String titre){
-        titre.setText(titre);
+        //titre.setText(titre);
     }
     
     public void setPrix(float prix){
-        price.setText((prix);
+       // price.setText((prix);
     }
 }

@@ -145,8 +145,8 @@ public class ServiceArticle implements IService<Article> {
         List<Article> articles = new ArrayList<>();
 
         conn = ds.getCnx();
-        String sql = ("SELECT article.id, article.titre, article.description, article.image, article.prix,article.stock, category.nom AS category_name, sub_category.nom_sub_category AS subcategory_name "
-                + "FROM article JOIN category ON article.category_id = category.id JOIN sub_category ON article.sub_category_id = sub_category.id");
+        String sql = ("SELECT article.id, article.titre, article.description, article.image, article.prix,article.stock, category.nom AS category_name "
+                + "FROM article JOIN category ON article.category_id = category.id");
         stmt = conn.prepareStatement(sql);
         rs = stmt.executeQuery();
 
@@ -158,12 +158,12 @@ public class ServiceArticle implements IService<Article> {
             String image = rs.getString("image");   
             float price = rs.getFloat("prix");
             String categoryName = rs.getString("category_name");
-            String subCategoryName = rs.getString("subcategory_name");
+            //String subCategoryName = rs.getString("subcategory_name");
 
             Category category = new Category(categoryName);
-            SubCategory subCategory = new SubCategory(category, subCategoryName);
+           // SubCategory subCategory = new SubCategory(category, subCategoryName);
 
-            Article article = new Article(id, title, image, price, description, stock, category,  subCategory);
+            Article article = new Article(id, title, image, price, description, stock, category/*,  subCategory*/);
 
             articles.add(article);
         }
