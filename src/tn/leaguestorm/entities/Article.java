@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 public class Article {
 
     private int id, stock, idcatg, idsubcatg;
-    private String titre, image, description, type,nomcatg, color;
+    private String titre, image, description, type,nomcatg, nomsubcatg,color;
     private float prix;
     
     // relation category ,subcatg ratings locatioin  
@@ -66,7 +66,7 @@ public class Article {
         this.idsubcatg = subcategoryId;
     }
 
-    public Article(int articleId, String articleTitle, String articleImage, double articlePrice, String articleDescription, int articleStock, String articleType, Category category, SubCategory subCategory) {
+    public Article(int articleId, String articleTitle, String articleImage, double articlePrice, String articleDescription, int articleStock, Category category, SubCategory subCategory) {
   this.stock = stock;
         this.titre = titre;
         this.description = description;
@@ -75,7 +75,7 @@ public class Article {
         this.category = category;
         this.subcategory = subCategory;
     }
- public Article(int id, String titre, String image, float prix, String description,  int stock, Category category,String type, SubCategory subcategory) {
+ public Article(int id, String titre, String image, float prix, String description,  int stock, Category category, SubCategory subcategory) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -87,7 +87,7 @@ public class Article {
         this.subcategory = subcategory;
     }
 
-    public Article(int id , String titre, String image, float prix, String description, int stock, int idcatg, String type, int idsubcatg) {
+    public Article(int id , String titre, String image, float prix, String description, int stock, int idcatg, int idsubcatg) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -110,7 +110,7 @@ public class Article {
     this.type = type;
     this.subcategory = subCategory;}
 */
-    public Article(String title, float price, String description, int stock, String type, int subcategoryId) {
+    public Article(String title, float price, String description, int stock, int subcategoryId) {
  this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -137,8 +137,34 @@ public class Article {
         this.nomcatg=category;
     }
 
-    public Article(String name, Image image) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Article(String title, String image, float price, String description, int stock, Category category,  SubCategory subCategory) {
+   this.stock = stock;
+        this.titre = titre;
+        this.image = image;
+        this.description = description;
+        this.type = type;
+        this.prix = prix;
+        this.category = category;
+        this.subcategory = subCategory;    
+    }
+
+    public Article(int id, String title, String image, float prix, String description, int stock, String category,String subcategory) {
+this.stock = stock;
+        this.titre = titre;
+        this.image = image;
+        this.description = description;
+        this.type = type;
+        this.prix = prix;
+        this.nomcatg = category;
+        this.nomsubcatg = subcategory;    
+    }
+
+    public Article(String title, String image, float prix) {
+      this.titre = titre;
+        this.image = image;
+        this.prix = prix;
+             //   this.id = id;
+
     }
 
   
@@ -272,6 +298,10 @@ public void setColor(String color) {
             return false;
         }
         return true;
+    }
+
+    public void getPrix(float f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

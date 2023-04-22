@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="1412.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.leaguestorm.gui.DisplayArticleController">
+   <children>
+      <ImageView fx:id="image" fitHeight="363.0" fitWidth="464.0" layoutX="89.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="titre" layoutX="671.0" layoutY="109.0" text="Label" />
+      <Label fx:id="price" layoutX="671.0" layoutY="148.0" text="Label" />
+      <TextArea fx:id="description" layoutX="573.0" layoutY="211.0" prefHeight="200.0" prefWidth="486.0" />
+   </children>
+</AnchorPane>

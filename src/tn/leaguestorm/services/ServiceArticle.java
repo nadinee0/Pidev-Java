@@ -31,7 +31,7 @@ public class ServiceArticle implements IService<Article> {
 
     @Override
     public void ajouter(Article a) throws SQLException {
-        String req = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`,`type`) VALUES ('" + a.getTitre() + "', '" + a.getImage() + "', '" + a.getPrix() + "', '" + a.getDescription() + "', '" + a.getStock() + "', '" + a.getType() + "')";
+        String req = "INSERT INTO `article` (`titre`, `image`, `prix`,`description`,`stock`) VALUES ('" + a.getTitre() + "', '" + a.getImage() + "', '" + a.getPrix() + "', '" + a.getDescription() + "', '" + a.getStock() + "')";
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
     }
@@ -54,7 +54,7 @@ public class ServiceArticle implements IService<Article> {
             alert.showAndWait();
             return;
         } else {
-            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`,`type`,`sub_category_id`) VALUES (?,?,?,?,?,?,?,?)";
+            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`,`sub_category_id`) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
             st1.setString(1, a.getTitre());
             st1.setString(2, a.getImage());
@@ -62,21 +62,20 @@ public class ServiceArticle implements IService<Article> {
             st1.setString(4, a.getDescription());
             st1.setInt(5, a.getStock());
             st1.setInt(6, categoryId);
-            st1.setString(7, a.getType());
-            st1.setInt(8, subcategoryId);
+            st1.setInt(7, subcategoryId);
             st1.executeUpdate();
         }
     }
 
     @Override
     public void modifier(Article a) throws SQLException {
-        String req = "UPDATE `article` SET `titre` = '" + a.getTitre() + "', `image` = '" + a.getImage() + "', `prix` = '" + a.getPrix() + "', `description` = '" + a.getDescription() + "', `stock` = '" + a.getStock() + "', `type` = '" + a.getType() + "' WHERE `article`.`id` = " + a.getId();
+        String req = "UPDATE `article` SET `titre` = '" + a.getTitre() + "', `image` = '" + a.getImage() + "', `prix` = '" + a.getPrix() + "', `description` = '" + a.getDescription() + "', `stock` = '" + a.getStock() + "' WHERE `article`.`id` = " + a.getId();
         Statement st = ds.getCnx().createStatement();
         st.executeUpdate(req);
     }
 
-    public void updateArticle(int articleId, String title, float price, String description, int stock, String newCategory, String type, String newSubCategory) throws SQLException {
-        String query = "UPDATE article SET titre = ?, prix = ?,description = ?,stock = ?,category_id = ?,type = ?,sub_category_id = ? WHERE id = ?";
+    public void updateArticle(int articleId, String title, float price, String description, int stock, String newCategory, String newSubCategory) throws SQLException {
+        String query = "UPDATE article SET titre = ?, prix = ?,description = ?,stock = ?,category_id = ?,sub_category_id = ? WHERE id = ?";
         PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
         preparedStatement.setString(1, title);
        // preparedStatement.setString(2, image);
@@ -84,9 +83,8 @@ public class ServiceArticle implements IService<Article> {
         preparedStatement.setString(3, description);
         preparedStatement.setInt(4, stock);
         preparedStatement.setInt(5, getCategoryIDByName(newCategory));
-        preparedStatement.setString(6, type);
-        preparedStatement.setInt(7, getSubCategoryIDByName(newSubCategory));
-        preparedStatement.setInt(8, articleId);
+        preparedStatement.setInt(6, getSubCategoryIDByName(newSubCategory));
+        preparedStatement.setInt(7, articleId);
         preparedStatement.executeUpdate();
     }
 
@@ -147,7 +145,8 @@ public class ServiceArticle implements IService<Article> {
         List<Article> articles = new ArrayList<>();
 
         conn = ds.getCnx();
-        String sql = ("SELECT article.id, article.titre, article.description, article.image, article.type, article.prix,article.stock, category.nom AS category_name, sub_category.nom_sub_category AS subcategory_name FROM article JOIN category ON article.category_id = category.id JOIN sub_category ON article.sub_category_id = sub_category.id");
+        String sql = ("SELECT article.id, article.titre, article.description, article.image, article.prix,article.stock, category.nom AS category_name, sub_category.nom_sub_category AS subcategory_name "
+                + "FROM article JOIN category ON article.category_id = category.id JOIN sub_category ON article.sub_category_id = sub_category.id");
         stmt = conn.prepareStatement(sql);
         rs = stmt.executeQuery();
 
@@ -156,8 +155,7 @@ public class ServiceArticle implements IService<Article> {
             int stock = rs.getInt("stock");
             String title = rs.getString("titre");
             String description = rs.getString("description");
-            String image = rs.getString("image");
-            String type = rs.getString("type");
+            String image = rs.getString("image");   
             float price = rs.getFloat("prix");
             String categoryName = rs.getString("category_name");
             String subCategoryName = rs.getString("subcategory_name");
@@ -165,7 +163,7 @@ public class ServiceArticle implements IService<Article> {
             Category category = new Category(categoryName);
             SubCategory subCategory = new SubCategory(category, subCategoryName);
 
-            Article article = new Article(id, title, image, price, description, stock, category, type, subCategory);
+            Article article = new Article(id, title, image, price, description, stock, category,  subCategory);
 
             articles.add(article);
         }
@@ -253,5 +251,18 @@ public class ServiceArticle implements IService<Article> {
     }
     
 
+        public List<Article> getAllArticle() throws SQLException {
+        List<Article> list = new ArrayList<>();
+
+        String req = "Select titre,image,prix  from article";
+        Statement st = ds.getCnx().createStatement();
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            Article a = new Article( rs.getString("titre"), rs.getString("image"),rs.getFloat("prix"));
+            list.add(a);
+        }
+
+        return list;
+    }
     
 }

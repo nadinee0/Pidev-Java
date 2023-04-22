@@ -103,19 +103,18 @@ public class ArticleController implements Initializable {
     private ListView<Article> articleList;
 
     private ObservableList<Article> articles;
-    @FXML
     private ComboBox<String> cbType;
     @FXML
     private Button btnImport;
 
     ImageView imagep = null;
     private String i;
-    byte[] image = null;
+    @FXML
+    ImageView image = null;
     @FXML
     private ComboBox<String> cbCategory;
     @FXML
     private ComboBox<String> cbSubcategory;
-    @FXML
     private TextField tfImg;
     @FXML
     private Button btnOverview;
@@ -139,8 +138,7 @@ public class ArticleController implements Initializable {
     private Pane pnlMenus;
     @FXML
     private Pane pnlOverview;
-    @FXML
-    private VBox pnItems;
+
 
     /**
      * Initializes the controller class.
@@ -180,6 +178,8 @@ public class ArticleController implements Initializable {
            // Retrieve the article data using a separate SQL function
            
             articleList.setItems(articles);
+            
+            
   /*     catch (SQLException e) {
             // Handle any SQL exceptions that occur
             e.printStackTrace();

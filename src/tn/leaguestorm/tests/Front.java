@@ -29,7 +29,7 @@ public class Front extends Application {
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Shop.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/DisplayArticle.fxml"));
 
             
             Scene scene = new Scene(root);
