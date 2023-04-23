@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -40,31 +41,24 @@
                                                       <String fx:value="border" />
                                                    </styleClass>
                                                    <children>
-                                                      <Label layoutX="17.0" layoutY="105.0" text="ID" textFill="#ff00f2">
+                                                      <Label layoutX="17.0" layoutY="104.0" text="Quantite" textFill="#ff00f2">
                                                          <font>
                                                             <Font name="System Bold" size="15.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField fx:id="tfID1" layoutX="16.0" layoutY="129.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer votre id" />
-                                                      <Label layoutX="17.0" layoutY="160.0" text="Quantite" textFill="#ff00f2">
+                                                      <TextField fx:id="tfQuantite" layoutX="16.0" layoutY="128.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer la quantite" />
+                                                      <Label layoutX="17.0" layoutY="159.0" text="Prix" textFill="#ff00f2">
                                                          <font>
                                                             <Font name="System Bold" size="15.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField fx:id="tfQuantite" layoutX="16.0" layoutY="184.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer la quantite" />
-                                                      <Label layoutX="17.0" layoutY="215.0" text="Prix" textFill="#ff00f2">
+                                                      <TextField fx:id="tfPrix" layoutX="16.0" layoutY="183.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer le prix" />
+                                                      <Label layoutX="17.0" layoutY="214.0" text="Description" textFill="#ff00f2">
                                                          <font>
                                                             <Font name="System Bold" size="15.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField fx:id="tfPrix" layoutX="16.0" layoutY="239.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer le prix" />
-                                                      <Label layoutX="17.0" layoutY="270.0" text="Description" textFill="#ff00f2">
-                                                         <font>
-                                                            <Font name="System Bold" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <TextField fx:id="tfDescription" layoutX="16.0" layoutY="294.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer la description" />
-                                                      <Label layoutX="17.0" layoutY="325.0" text="Type" textFill="#ff00f2">
+                                                      <Label layoutX="17.0" layoutY="338.0" text="Type" textFill="#ff00f2">
                                                          <font>
                                                             <Font name="System Bold" size="15.0" />
                                                          </font>
@@ -74,9 +68,12 @@
                                                             <Image url="@logofoot.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <TextField fx:id="tfType" layoutX="18.0" layoutY="349.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer le type" />
-                                                      <Button layoutX="38.0" layoutY="556.0" mnemonicParsing="false" onAction="#tfModifier1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Modifier" />
-                                                      <Button layoutX="38.0" layoutY="504.0" mnemonicParsing="false" onAction="#tfSupprimer1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Supprimer" />
+                                                      <TextField fx:id="tfType" layoutX="18.0" layoutY="362.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer le type" />
+                                                      <Button layoutX="38.0" layoutY="560.0" mnemonicParsing="false" onAction="#tfModifier1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Modifier" />
+                                                      <Button layoutX="38.0" layoutY="508.0" mnemonicParsing="false" onAction="#tfSupprimer1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Supprimer" />
+                                                      <Button layoutX="38.0" layoutY="412.0" mnemonicParsing="false" onAction="#calculerT" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Total" />
+                                                      <TextArea fx:id="tfDescription" layoutX="16.0" layoutY="236.0" prefHeight="104.0" prefWidth="222.0" promptText="Enter votre description " />
+                                                      <TextField fx:id="deletefield" layoutX="34.0" layoutY="463.0" />
                                                    </children>
                                                 </AnchorPane>
                                                 <Separator layoutX="277.0" layoutY="15.0" orientation="VERTICAL" prefHeight="633.0" prefWidth="3.0" />
@@ -84,7 +81,7 @@
                                           </AnchorPane>
                                           <AnchorPane layoutX="294.0" layoutY="14.0" prefHeight="633.0" prefWidth="550.0" stylesheets="@Table2.css">
                                              <children>
-                                                <TableView fx:id="tableTickets" layoutX="16.0" layoutY="92.0" onMouseClicked="#select3" prefHeight="512.0" prefWidth="532.0" stylesheets="@Table2.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="92.0">
+                                                <TableView fx:id="tableTickets" layoutX="42.0" layoutY="71.0" onMouseClicked="#select3" prefHeight="512.0" prefWidth="532.0" stylesheets="@Table2.css" AnchorPane.bottomAnchor="116.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="71.0">
                                                    <columns>
                                                       <TableColumn fx:id="col_id1" prefWidth="39.0" text="ID" />
                                                       <TableColumn fx:id="col_quantite" prefWidth="77.0" text="Quantite" />
@@ -105,11 +102,14 @@
                                                       <Image url="@refresh.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label layoutX="165.0" layoutY="29.0" prefHeight="45.0" prefWidth="220.0" text="liste des tickets" textFill="#ff00f2">
+                                                <Label layoutX="165.0" layoutY="11.0" prefHeight="45.0" prefWidth="220.0" text="liste des tickets" textFill="#ff00f2">
                                                    <font>
                                                       <Font name="System Bold" size="30.0" />
                                                    </font>
                                                 </Label>
+                                                <Button layoutX="82.0" layoutY="528.0" mnemonicParsing="false" onAction="#search1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Rechercher" />
+                                                <TextField fx:id="filterfield1" layoutX="286.0" layoutY="528.0" prefHeight="37.0" prefWidth="183.0" promptText="rechercher..." />
+                                                <Button fx:id="Stats" layoutX="184.0" layoutY="583.0" mnemonicParsing="false" onAction="#Stats" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Statistique" />
                                              </children>
                                              <styleClass>
                                                 <String fx:value="white-form" />
@@ -137,24 +137,17 @@
                                                 <String fx:value="border" />
                                              </styleClass>
                                              <children>
-                                                <Label layoutX="17.0" layoutY="79.0" text="ID" textFill="#ff00f2">
+                                                <Label layoutX="17.0" layoutY="62.0" text="Titre" textFill="#ff00f2">
                                                    <font>
                                                       <Font name="System Bold" size="15.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="tfID" layoutX="16.0" layoutY="103.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer votre id" />
-                                                <Label layoutX="17.0" layoutY="134.0" text="Titre" textFill="#ff00f2">
+                                                <TextField fx:id="tfTITRE" layoutX="16.0" layoutY="83.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer le titre" />
+                                                <Label layoutX="17.0" layoutY="120.0" text="Description" textFill="#ff00f2">
                                                    <font>
                                                       <Font name="System Bold" size="15.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="tfTITRE" layoutX="16.0" layoutY="158.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer le titre" />
-                                                <Label layoutX="17.0" layoutY="189.0" text="Desceiption" textFill="#ff00f2">
-                                                   <font>
-                                                      <Font name="System Bold" size="15.0" />
-                                                   </font>
-                                                </Label>
-                                                <TextField fx:id="tfDESC" layoutX="16.0" layoutY="213.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer votre description" />
                                                 <Label layoutX="17.0" layoutY="244.0" text="Image" textFill="#ff00f2">
                                                    <font>
                                                       <Font name="System Bold" size="15.0" />
@@ -180,6 +173,8 @@
                                                 <TextField fx:id="tfLOCATION" layoutX="18.0" layoutY="323.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer votre localisation" />
                                                 <Button layoutX="38.0" layoutY="556.0" mnemonicParsing="false" onAction="#tfModifier" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Modifier" />
                                                 <Button layoutX="38.0" layoutY="504.0" mnemonicParsing="false" onAction="#tfSupprimer" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Supprimer" />
+                                                <TextArea fx:id="tfDESC" layoutX="17.0" layoutY="141.0" prefHeight="100.0" prefWidth="221.0" promptText="Entrer votre description" />
+                                                <TextField fx:id="deletefield1" layoutX="34.0" layoutY="451.0" />
                                              </children>
                                           </AnchorPane>
                                           <Separator layoutX="277.0" layoutY="15.0" orientation="VERTICAL" prefHeight="633.0" prefWidth="3.0" />
@@ -187,7 +182,7 @@
                                     </AnchorPane>
                                     <AnchorPane layoutX="294.0" layoutY="14.0" prefHeight="633.0" prefWidth="550.0" stylesheets="@Table2.css">
                                        <children>
-                                          <TableView fx:id="tableajout" layoutX="16.0" layoutY="92.0" onMouseClicked="#select2" prefHeight="512.0" prefWidth="532.0" styleClass="red-cell" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="92.0">
+                                          <TableView fx:id="tableajout" layoutX="29.5" layoutY="105.5" onMouseClicked="#select2" prefHeight="444.0" prefWidth="505.0" styleClass="red-cell" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="99.0">
                                              <columns>
                                                 <TableColumn fx:id="col_id" prefWidth="39.0" text="ID" />
                                                 <TableColumn fx:id="col_titre" prefWidth="77.0" text="Titre" />
@@ -210,6 +205,8 @@
                                                 <Font name="System Bold" size="30.0" />
                                              </font>
                                           </Label>
+                                          <TextField fx:id="filterfield2" layoutX="262.0" layoutY="557.0" promptText="rechercher..." />
+                                          <Button layoutX="57.0" layoutY="553.0" mnemonicParsing="false" onAction="#search2" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Rechercher" />
                                        </children>
                                        <styleClass>
                                           <String fx:value="white-form" />

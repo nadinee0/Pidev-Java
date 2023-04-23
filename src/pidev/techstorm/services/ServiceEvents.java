@@ -68,4 +68,20 @@ public class ServiceEvents implements IService<Events> {
         return list;
     }
     
+    public List<Events> rechercherEvents(String title) throws SQLException {
+String req = "SELECT * FROM events WHERE title LIKE ? OR id LIKE ?";
+PreparedStatement pst = ds.getCnx().prepareStatement(req);
+pst.setString(1, "%" + title + "%");
+pst.setString(2, "%" + title + "%");
+List<Events> events = new ArrayList<>();
+ResultSet rs = pst.executeQuery();
+
+while(rs.next()){
+    Events t = new Events(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("image"), rs.getString("location"), rs.getString("url"));
+    events.add(t);
+}
+
+return events;
+}
+    
 }

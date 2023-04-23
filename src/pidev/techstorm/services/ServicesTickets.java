@@ -5,6 +5,7 @@
  */
 package pidev.techstorm.services;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,8 @@ import pidev.techstorm.utils.DataSource;
  * @author USER
  */
 public class ServicesTickets implements IService<Tickets>{
+    private Connection cnx;
+    Statement st;
      private DataSource ds = DataSource.getInstance();
 
     @Override
@@ -67,5 +70,38 @@ public class ServicesTickets implements IService<Tickets>{
         
         return list;
     }
+    public List<Tickets> rechercherTickets(String type) throws SQLException {
+String req = "SELECT * FROM tickets WHERE type LIKE ? OR id LIKE ?";
+PreparedStatement pst = ds.getCnx().prepareStatement(req);
+pst.setString(1, "%" + type + "%");
+pst.setString(2, "%" + type + "%");
+List<Tickets> tickets = new ArrayList<>();
+ResultSet rs = pst.executeQuery();
+
+while(rs.next()){
+    Tickets t = new Tickets(rs.getInt("id"), rs.getInt("prix"), rs.getInt("quantite"), rs.getString("description"), rs.getString("type"));
+    tickets.add(t);
+}
+
+return tickets;
+}
+
+    
+//    public List<Tickets> rechercherTickets4(String type) throws SQLException {
+//    
+//    String req = "SELECT * FROM tickets WHERE type LIKE ? OR id LIKE ? ";
+//    Statement st = ds.getCnx().createStatement();
+//        //ensemble de resultat
+//        
+//   ResultSet rs = st.executeQuery(req);
+//    rs.setString(1, "%" + type + "%");
+//    rs.setString(2, "%" + type + "%");
+//    List<Tickets> tickets = new ArrayList<>();
+//    while(rs.next()){
+//            Tickets p = new Tickets(rs.getInt("id"), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+//            tickets.add(p);
+//        }
+//    return tickets;
+//}
     
 }

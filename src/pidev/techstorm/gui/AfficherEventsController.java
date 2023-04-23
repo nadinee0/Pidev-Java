@@ -25,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -52,12 +53,11 @@ public class AfficherEventsController implements Initializable {
      private Parent root;
      private byte[] fichier;
 
-    @FXML
     private TextField tfID;
     @FXML
     private TextField tfTITRE;
     @FXML
-    private TextField tfDESC;
+    private TextArea tfDESC;
     @FXML
     private TextField tfURL;
     @FXML
@@ -65,15 +65,13 @@ public class AfficherEventsController implements Initializable {
     @FXML
     private TextField tfIMAGE;
     @FXML
-    private TextField tfID1;
-    @FXML
     private TextField tfQuantite;
     @FXML
     private TextField tfPrix;
     @FXML
     private TextField tfType;
     @FXML
-    private TextField tfDescription;
+    private TextArea tfDescription;
     
 
     /**
@@ -90,20 +88,19 @@ public class AfficherEventsController implements Initializable {
     
     @FXML
     private void tfAJOUTER(ActionEvent event) throws SQLException, IOException {
-        int id =Integer.parseInt(tfID.getText());
         String titre = tfTITRE.getText();
         String description = tfDESC.getText();
         String image = tfIMAGE.getText();
         String location = tfLOCATION.getText();
         String url = tfURL.getText();
-        if(  controleTextField1 (tfTITRE) || controleTextField1 (tfLOCATION) ) {
+        if(  controleTextField3 (tfTITRE) || controleTextField3 (tfLOCATION) ) {
         Alert alert=new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
      
         alert.setContentText("Veuillez remplir les données");
         alert.show();    
        }  else{
-        Events e = new Events(id,titre,description,image,location,url);
+        Events e = new Events(titre,description,image,location,url);
         ServiceEvents se= new ServiceEvents();
         se.ajouter(e);
         clean();
@@ -126,7 +123,6 @@ public class AfficherEventsController implements Initializable {
 }
     }
     private void clean(){
-       tfID.setText(null);
        tfTITRE.setText(null);
        tfDESC.setText(null);
        tfIMAGE.setText(null);
@@ -157,22 +153,23 @@ public class AfficherEventsController implements Initializable {
 
              return false;
     }
-     public boolean controleTextField1(TextField textField) {
+     public boolean controleTextField1(TextArea textField) {
         if (!textField.getText().matches(".*[a-zA-Z].*")) {
-// Alert alert = new Alert(Alert.AlertType.ERROR);
-    //alert.setHeaderText("Veuillez saisir des lettres");
             JOptionPane.showMessageDialog(null,"Veuillez saisir des lettres");
-  //  alert.showAndWait();
+            return true;
+        }
+        return false;
+    }
+     public boolean controleTextField3(TextField textField) {
+        if (!textField.getText().matches(".*[a-zA-Z].*")) {
+            JOptionPane.showMessageDialog(null,"Veuillez saisir des lettres");
             return true;
         }
         return false;
     }
      public boolean controleTextField2(TextField textField) {
         if (!tfType.getText().contains("Standard") && !tfType.getText().contains("VIP")) {
-// Alert alert = new Alert(Alert.AlertType.ERROR);
-    //alert.setHeaderText("Veuillez saisir des lettres");
             JOptionPane.showMessageDialog(null,"Veuillez saisir dans l'url: Standard ou bien VIP");
-  //  alert.showAndWait();
             return true;
         }
         return false;
@@ -180,7 +177,6 @@ public class AfficherEventsController implements Initializable {
 
     @FXML
     private void tfAJOUTER1(ActionEvent event) throws SQLException, IOException {
-        int id =Integer.parseInt(tfID1.getText());
         int quantite =Integer.parseInt(tfQuantite.getText());
         int prix =Integer.parseInt(tfPrix.getText());
         String description = tfDescription.getText();
@@ -192,7 +188,7 @@ public class AfficherEventsController implements Initializable {
         alert.setContentText("Veuillez modifier les données en fonction de leur type d'attribut respectif.");
         alert.show();    
        }  else{
-        Tickets e = new Tickets(id,quantite,prix,description,type);
+        Tickets e = new Tickets(quantite,prix,description,type);
         ServicesTickets se= new ServicesTickets();
         se.ajouter(e);
         clean2();
@@ -210,7 +206,6 @@ public class AfficherEventsController implements Initializable {
         }
     }
     private void clean2(){
-       tfID1.setText(null);
        tfQuantite.setText(null);
        tfPrix.setText(null);
        tfDescription.setText(null);
@@ -219,51 +214,23 @@ public class AfficherEventsController implements Initializable {
     }
 
     @FXML
-    private void checkinputIDE(KeyEvent event) {
-        if(event.getCharacter().matches("[^\\e\t\r\\d+$]")){
-            event.consume();
-           
-            tfID.setStyle("-fx-border-color: red");
-            //new animatefx.animation.Shake(tf_cvc).play();
-        }else{
-            tfID.setStyle("-fx-border-color: green");
-        }
-    }
-
-    @FXML
     private void checkinputQ(KeyEvent event) {
         if(event.getCharacter().matches("[^\\e\t\r\\d+$]")){
-            event.consume();
-           
-            tfQuantite.setStyle("-fx-border-color: red");
-            
-        }else{
-            tfQuantite.setStyle("-fx-border-color: green");
-        }
+        event.consume();
+        tfQuantite.setStyle("-fx-border-color: red; -fx-border-width: 4px;");
+    } else {
+        tfQuantite.setStyle("-fx-border-color: green; -fx-border-width: 4px;");
+    }
     }
 
     @FXML
     private void checkinputP(KeyEvent event) {
-        if(event.getCharacter().matches("[^\\e\t\r\\d+$]")){
-            event.consume();
-           
-            tfPrix.setStyle("-fx-border-color: red");
-        
-        }else{
-            tfPrix.setStyle("-fx-border-color: green");
-        }
+         if(event.getCharacter().matches("[^\\e\t\r\\d+$]")){
+        event.consume();
+        tfPrix.setStyle("-fx-border-color: red; -fx-border-width: 4px;");
+    } else {
+        tfPrix.setStyle("-fx-border-color: green; -fx-border-width: 4px;");
     }
-
-    @FXML
-    private void checkinputIDT(KeyEvent event) {
-        if(event.getCharacter().matches("[^\\e\t\r\\d+$]")){
-            event.consume();
-           
-            tfID1.setStyle("-fx-border-color: red");
-            
-        }else{
-            tfID1.setStyle("-fx-border-color: green");
-        }
     }
 
     @FXML

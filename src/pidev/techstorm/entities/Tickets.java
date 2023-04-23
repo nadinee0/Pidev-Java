@@ -51,7 +51,7 @@ public class Tickets {
         this.quantite = quantite;
     }
 
-    public double getPrix() {
+    public int getPrix() {
         return prix;
     }
 
