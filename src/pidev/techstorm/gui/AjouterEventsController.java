@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -483,6 +485,16 @@ clean();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void Trier(ActionEvent event) {
+        List<Tickets> listProduit = tableTickets.getItems();
+            List<Tickets> sortedList = listProduit.stream()
+                    .sorted(Comparator.comparingDouble(Tickets::getPrix))
+                    .collect(Collectors.toList());
+            tableTickets.getItems().clear(); // Clear previous items
+            tableTickets.getItems().addAll(sortedList); // Add sorted items
     }
  }
         

@@ -109,8 +109,9 @@
                                                 </Label>
                                                 <Button layoutX="82.0" layoutY="528.0" mnemonicParsing="false" onAction="#search1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Rechercher" />
                                                 <TextField fx:id="filterfield1" layoutX="286.0" layoutY="528.0" prefHeight="37.0" prefWidth="183.0" promptText="rechercher..." />
-                                                <Button fx:id="Stats" layoutX="83.0" layoutY="583.0" mnemonicParsing="false" onAction="#Stats" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Statistique" />
-                                                <Button layoutX="288.0" layoutY="580.0" mnemonicParsing="false" onAction="#tfchatbot" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="ChatBot" />
+                                                <Button fx:id="Stats" layoutX="41.0" layoutY="583.0" mnemonicParsing="false" onAction="#Stats" prefHeight="37.0" prefWidth="119.0" styleClass="btn" text="Statistique" />
+                                                <Button layoutX="205.0" layoutY="583.0" mnemonicParsing="false" onAction="#tfchatbot" prefHeight="37.0" prefWidth="120.0" styleClass="btn" text="ChatBot" />
+                                                <Button layoutX="368.0" layoutY="583.0" mnemonicParsing="false" onAction="#Trier" prefHeight="37.0" prefWidth="131.0" styleClass="btn" text="Trier" />
                                              </children>
                                              <styleClass>
                                                 <String fx:value="white-form" />
