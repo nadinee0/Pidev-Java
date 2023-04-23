@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -72,6 +73,8 @@ public class AfficherEventsController implements Initializable {
     private TextField tfType;
     @FXML
     private TextArea tfDescription;
+    @FXML
+    private ImageView imageView;
     
 
     /**
@@ -253,7 +256,6 @@ public class AfficherEventsController implements Initializable {
 
     @FXML
     private void parcourir(ActionEvent event) {
-        
          FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(new Stage());
     if (file != null) {
