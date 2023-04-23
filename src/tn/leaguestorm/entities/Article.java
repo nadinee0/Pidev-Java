@@ -99,7 +99,7 @@ public class Article {
         this.idsubcatg = idsubcatg;    
     }
 
-  /*  public Article(int id, String title, String image, float price, String description, int stock, Category category, String type, SubCategory subCategory) {
+  /*public Article(int id, String title, String image, float price, String description, int stock, Category category) {
        this.id = id;
     this.titre = title;
     this.image = image;
@@ -166,6 +166,18 @@ this.stock = stock;
              //   this.id = id;
 
     }
+
+    public Article(int id, String titre, String image, float prix, String description/*, String category*/) {
+     this.id = id;
+
+        this.titre = titre;
+        this.image = image;
+        this.description = description;
+        this.type = type;
+        this.prix = prix;
+      //  this.nomcatg = category;  
+    }
+
 
   
  public int getId() {

@@ -39,7 +39,6 @@ public class ServiceArticle implements IService<Article> {
     public void ajouter2(Article a) throws SQLException {
 
         int categoryId = getCategoryIDByName(a.getCategory().getNom());
-        int subcategoryId = getSubCategoryIDByName(a.getSubcategory().getNomSubCategory());
 
         String req = "SELECT id FROM `article` WHERE titre=?";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
@@ -54,7 +53,7 @@ public class ServiceArticle implements IService<Article> {
             alert.showAndWait();
             return;
         } else {
-            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`,`sub_category_id`) VALUES (?,?,?,?,?,?,?)";
+            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`) VALUES (?,?,?,?,?,?)";
             PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
             st1.setString(1, a.getTitre());
             st1.setString(2, a.getImage());
@@ -62,7 +61,6 @@ public class ServiceArticle implements IService<Article> {
             st1.setString(4, a.getDescription());
             st1.setInt(5, a.getStock());
             st1.setInt(6, categoryId);
-            st1.setInt(7, subcategoryId);
             st1.executeUpdate();
         }
     }
@@ -163,7 +161,7 @@ public class ServiceArticle implements IService<Article> {
             Category category = new Category(categoryName);
            // SubCategory subCategory = new SubCategory(category, subCategoryName);
 
-            Article article = new Article(id, title, image, price, description, stock, category/*,  subCategory*/);
+            Article article = new Article(id, title, image, price, description, stock, category);
 
             articles.add(article);
         }

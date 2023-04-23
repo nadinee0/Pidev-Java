@@ -110,12 +110,11 @@ public class ArticleController implements Initializable {
     @FXML
     private Button btnImport;
 
-
     @FXML
     private ComboBox<String> cbCategory;
     @FXML
     private ComboBox<String> cbSubcategory;
-   
+
     @FXML
     private Button btnOverview;
     @FXML
@@ -140,8 +139,6 @@ public class ArticleController implements Initializable {
     private Pane pnlOverview;
     @FXML
     private ImageView imageView;
- 
-
 
     /**
      * Initializes the controller class.
@@ -151,9 +148,9 @@ public class ArticleController implements Initializable {
         Article a = new Article();
 // TODO
         ServiceArticle sa = new ServiceArticle();
-      //  cbType.setItems(FXCollections.observableArrayList("For Rent", "For Sale"));
-       try {
-          articles = FXCollections.observableArrayList(sa.getAll());
+        //  cbType.setItems(FXCollections.observableArrayList("For Rent", "For Sale"));
+        try {
+            articles = FXCollections.observableArrayList(sa.getAll());
         } catch (SQLException ex) {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -167,7 +164,7 @@ public class ArticleController implements Initializable {
         cbCategory.setOnMouseClicked(event -> {
             cbCategory.show();
         });
-       /* try {
+        /* try {
             List<String> SubcategoryNames = sa.getAllSubCategoryNames();
             cbSubcategory.getItems().addAll(SubcategoryNames);
         } catch (SQLException e) {
@@ -178,20 +175,16 @@ public class ArticleController implements Initializable {
             cbSubcategory.show();
         });*/
 
-           // Retrieve the article data using a separate SQL function
-           
-            articleList.setItems(articles);
-            
-            
-  /*     catch (SQLException e) {
+        // Retrieve the article data using a separate SQL function
+        articleList.setItems(articles);
+
+        /*     catch (SQLException e) {
             // Handle any SQL exceptions that occur
             e.printStackTrace();
         }
 
-*/
-        
-        
-        /*    String req = "Select * from article";
+         */
+ /*    String req = "Select * from article";
         Statement st = ds.getCnx().createStatement();
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
@@ -382,25 +375,19 @@ public class ArticleController implements Initializable {
     @FXML
     private void saveArticle(ActionEvent event) throws SQLException, IOException {
         ServiceArticle sa = new ServiceArticle();
-
+  Import(event);
         String title = tfTitle.getText();
-      //  String image = tfImg.getText();
         String description = taDescription.getText();
         String priceS = /*Float.valueOf(tfPrice.getText()); */ tfPrice.getText();
         float price = Float.valueOf(tfPrice.getText());
-        //String type = cbType.getValue();
         String stockS = tfStock.getText();
         Integer stock = Integer.valueOf(tfStock.getText());
-
         String category = cbCategory.getValue();
         int categoryId = sa.getCategoryIDByName(category);
-        String subcategory = cbSubcategory.getValue();
-        int subcategoryId = sa.getSubCategoryIDByName(subcategory);
 
-     //   Article a = new Article(title, price, description, stock, categoryId subcategoryId);
-
+        //   Article a = new Article(title, price, description, stock, categoryId subcategoryId);
         try {
-            if (title.isEmpty() && description.isEmpty() && priceS.isEmpty()  && stockS.isEmpty() && category.isEmpty() && subcategory.isEmpty()) {
+            if (title.isEmpty() && description.isEmpty() && priceS.isEmpty() && stockS.isEmpty() && category.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Empty Field");
                 alert.setContentText("Please fill the fields !!");
@@ -483,32 +470,38 @@ public class ArticleController implements Initializable {
             alert.showAndWait();
             return;
         } else {
-            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`,`sub_category_id`) VALUES (?,?,?,?,?,?,?)";
-            PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
-            st1.setString(1, a.getTitre());
-            st1.setString(2, a.getImage());
-            st1.setFloat(3, a.getPrix());
-            st1.setString(4, a.getDescription());
-            st1.setInt(5, a.getStock());
-            st1.setInt(6, categoryId);
-            st1.setInt(7, subcategoryId);
-            st1.executeUpdate();
-          //  Import(event);
+        // try {    
+    String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`) VALUES (?,?,?,?,?,?)";
+PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
+st1.setString(1, a.getTitre());
+if (a.getImage() != null) {
+    st1.setString(2, a.getImage());
+} else {
+    st1.setNull(2, java.sql.Types.NULL);
+}
+st1.setFloat(3, a.getPrix());
+st1.setString(4, a.getDescription());
+st1.setInt(5, a.getStock());
+st1.setInt(6, categoryId);
+st1.executeUpdate();
+System.out.println("Article ajouté avec succès !");
             //  sa.ajouter2(a);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
             alert.setContentText("Article Successfully Added !");
             alert.showAndWait();
-
+/*} catch (SQLException e) {
+        // display an error message if there was a problem inserting the article into the database
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ajout de l'article");
+        alert.showAndWait();
+    }*/
             articleList.refresh();
-            tfTitle.setText("");
-          //  tfImg.setText("");
+            tfTitle.setText("");         
             taDescription.setText("");
             tfPrice.setText("");
-//            cbType.setValue("");
             tfStock.setText("");
             cbCategory.setValue(null);
-            cbSubcategory.setValue(null);
+            imageView.setImage(null);
         }
 
     }
@@ -521,7 +514,7 @@ public class ArticleController implements Initializable {
 //        String image = tfImage.getText();
         String description = taDescription.getText();
         Float price = Float.valueOf(tfPrice.getText());
-       // String type = cbType.getValue();
+        // String type = cbType.getValue();
         Integer stock = Integer.valueOf(tfStock.getText());
         String newCategory = cbCategory.getValue();
         int categoryId = sa.getCategoryIDByName(newCategory);
@@ -537,18 +530,18 @@ public class ArticleController implements Initializable {
             return;
         }
 
-        sa.updateArticle(a.getId(), title, price, description, stock, newCategory,  newSubCategory);
-   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("SUCCESS");
-            alert.setContentText("Article Successfully updated !");
-            alert.showAndWait();
-            
+        sa.updateArticle(a.getId(), title, price, description, stock, newCategory, newSubCategory);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("SUCCESS");
+        alert.setContentText("Article Successfully updated !");
+        alert.showAndWait();
+
         articleList.refresh();
         tfTitle.setText("");
-       // tfImage.setText("");
+        // tfImage.setText("");
         taDescription.setText("");
         tfPrice.setText("");
-       // cbType.setValue("");
+        // cbType.setValue("");
         tfStock.setText("");
         cbCategory.setValue(null);
         cbSubcategory.setValue(null);
@@ -586,7 +579,7 @@ public class ArticleController implements Initializable {
 //            tfImage.setText("");
             taDescription.setText("");
             tfPrice.setText("");
-        //    cbType.setValue("");
+            //    cbType.setValue("");
             tfStock.setText("");
         }
 
@@ -596,28 +589,24 @@ public class ArticleController implements Initializable {
 
     @FXML
     private void Import(ActionEvent event) throws IOException {
-FileChooser fileChooser = new FileChooser();
-File selectedFile = fileChooser.showOpenDialog(null);
-if (selectedFile != null) {
-    // User has selected a file, do something with it
-    Path sourcePath = selectedFile.toPath();
-    Path targetPath = Paths.get("C:/Users/Nadine/Pidev/public/img"); // replace with the desired path to save the image
-    try {
-        Files.copy(sourcePath, targetPath.resolve(selectedFile.getName()), StandardCopyOption.REPLACE_EXISTING);
-        Image image = new Image(selectedFile.toURI().toString());
-        imageView.setImage(image);
-    } catch (IOException e) {
-        // handle the exception
-    }
-}
-
-
-
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            // User has selected a file, do something with it
+            Path sourcePath = selectedFile.toPath();
+            Path targetPath = Paths.get("C:/Users/Nadine/Pidev/public/img"); // replace with the desired path to save the image
+            try {
+                Files.copy(sourcePath, targetPath.resolve(selectedFile.getName()), StandardCopyOption.REPLACE_EXISTING);
+                Image image = new Image(selectedFile.toURI().toString());
+                imageView.setImage(image);
+            } catch (IOException e) {
+                // handle the exception
+            }
+        }
 
     }
-    
-    
-        @FXML
+
+    @FXML
     private void category(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
         Parent root = loader.load(); // load the new FXML file
@@ -653,6 +642,5 @@ if (selectedFile != null) {
     @FXML
     private void handleClicks(ActionEvent event) {
     }
-    
 
 }
