@@ -77,7 +77,7 @@ public class SideMenuController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
     if (currentUser != null) {
         lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
-               
+        
         String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
         Image userProfilePic = new Image("file:" + userProfilePicPath);
         this.userProfilePic.setImage(userProfilePic);

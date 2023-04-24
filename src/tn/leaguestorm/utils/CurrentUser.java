@@ -12,6 +12,9 @@ import tn.leaguestorm.entities.User;
  * @author Bellalouna Iheb
  */
 public class CurrentUser {
+    
+    public static String phoneProcedures;
+    
     private static User currentUser;
     
     public static void setUser(User u) {

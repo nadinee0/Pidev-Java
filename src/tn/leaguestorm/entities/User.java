@@ -13,8 +13,9 @@ import java.util.Date;
  * @author Bellalouna Iheb
  */
 public class User {
+
     private int id, isVerified;
-    private String email, roles, password, firstName, lastName, country, profilePictureName, phoneNumber;
+    private String email, password, firstName, lastName, country, profilePictureName, phoneNumber;
     LocalDate birthDate;
 
     public LocalDate getBirthDate() {
@@ -25,16 +26,15 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public User(String phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
+    public User(String phoneNumber, String email, String password, String firstName, String lastName, String country) {
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.roles = roles;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
     }
-    
+
     public User(int id, String email, String password, String firstName, String lastName, String country, String phoneNumber, String profilePictureName, LocalDate birthDate) {
         this.id = id;
         this.email = email;
@@ -54,7 +54,7 @@ public class User {
     public void setProfilePictureName(String profilePictureName) {
         this.profilePictureName = profilePictureName;
     }
-    
+
     public User(String email, String firstName, String lastName, String phoneNumber) {
         this.email = email;
         this.firstName = firstName;
@@ -62,23 +62,25 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-//    public User(String email, String roles, String password) {
-//        this.email = email;
-//        this.roles = roles;
-//        this.password = password;
-//    }
-
-    public User(String email, String roles, String password,  int isVerified, String firstName) {
+    public User(String email, String password, int isVerified, String firstName) {
         this.email = email;
         this.password = password;
-        this.roles = roles;
         this.firstName = firstName;
         this.isVerified = isVerified;
     }
 
-    public User(String email, String roles, String password, int verified, String firstName, String lastName, String country, String phoneNumber, LocalDate birthDate) {
+    public User(String email, String password, int verified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber) {
         this.email = email;
-        this.roles = roles;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(String email, String password, int verified, String firstName, String lastName, String country, String phoneNumber, LocalDate birthDate) {
+        this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -102,7 +104,7 @@ public class User {
     public String getPassword() {
         return password;
     }
-    
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -117,14 +119,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
     }
 
     public void setPassword(String password) {
@@ -159,6 +153,12 @@ public class User {
     public String toString() {
         return "User{" + "email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", country=" + country + ", phoneNumber=" + phoneNumber + '}';
     }
-  
-}
 
+    public String getRole() {
+        if (this instanceof Role) {
+            return ((Role) this).getRole();
+        } else {
+            return null;
+        }
+    }
+}

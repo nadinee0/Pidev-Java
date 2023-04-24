@@ -31,30 +31,5 @@ public class FXMLUtils {
         stage.setTitle(title);
         stage.show();
     }
-    
-
-//    public static void changeScene(ActionEvent event, String fxmlFile, String title, User user) {
-//        Parent root = null;
-//        if (user != null) {
-//            try {
-//                FXMLLoader loader = new FXMLLoader(MyConnection.class.getResource(fxmlFile));
-//                root = loader.load();
-//                HomeController hc = loader.getController();
-//                hc.initData(user);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            try {
-//                root = FXMLLoader.load(MyConnection.class.getResource(fxmlFile));
-//                System.out.println(fxmlFile);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setTitle(title);
-//        stage.setScene(new Scene(root));
-//    }
 }
 

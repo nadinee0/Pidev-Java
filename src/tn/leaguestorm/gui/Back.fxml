@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -19,6 +19,9 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.BackController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #05071F;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -127,17 +130,12 @@
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
-                                    <children>
-                                        <TableView fx:id="tableView" prefHeight="314.0" prefWidth="735.0" style="-fx-background-color: #000000; -fx-text-background-color: black;">
-                                            <columns>
-                                                <TableColumn fx:id="emailColumn" prefWidth="192.79998189210892" text="Email" />
-                                                <TableColumn fx:id="firstNameColumn" prefWidth="122.40008544921875" text="First Name" />
-                                                <TableColumn fx:id="lastNameColumn" minWidth="8.79998779296875" prefWidth="127.20001220703125" text="Last Name" />
-                                                <TableColumn fx:id="phoneNumberColumn" minWidth="0.0" prefWidth="196.0" text="Phone" />
-                                                <TableColumn fx:id="statusColumn" minWidth="8.79998779296875" prefWidth="98.4000244140625" text="Status" />
-                                            </columns>
-                                        </TableView>
-                                    </children>
+                           <children>
+                              <FlowPane fx:id="cardPane" prefHeight="318.0" prefWidth="735.0">
+                                 <children>
+                                    <VBox fx:id="userContainer" prefHeight="400.0" prefWidth="730.0" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" />
+                                 </children></FlowPane>
+                           </children>
                                 </VBox>
                             </content>
                         </ScrollPane>

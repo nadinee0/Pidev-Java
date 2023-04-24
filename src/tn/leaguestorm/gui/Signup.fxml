@@ -17,14 +17,55 @@
 
 <AnchorPane fx:id="dpBirthDate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.SignupController">
    <children>
-      <VBox alignment="CENTER" layoutX="333.0" layoutY="62.0" prefHeight="469.0" prefWidth="398.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #ACBB78, #F7F8F8); -fx-background-radius: 10px;">
-         <Label prefHeight="47.0" prefWidth="158.0" style="-fx-font-size: 30pt; -fx-font-weight: bold;" text="Register" textFill="WHITE">
+      <VBox alignment="CENTER" layoutX="300.0" layoutY="6.0" prefHeight="500.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #ACBB78, #F7F8F8); -fx-background-radius: 10px;">
+         <Label prefHeight="68.0" prefWidth="184.0" style="-fx-font-weight: bold;" text="Register" textFill="WHITE">
             <font>
-               <Font size="22.0" />
-            </font></Label>
-         <TextField fx:id="tfEmail" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Email" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
-         <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Password" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
+               <Font size="46.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" top="-10.0" />
+            </VBox.margin></Label>
+         <Label alignment="CENTER" prefHeight="13.0" prefWidth="112.0" text="Email" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
+         <TextField fx:id="tfEmail" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Email" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;">
+            <VBox.margin>
+               <Insets bottom="-5.0" />
+            </VBox.margin></TextField>
+         <Label alignment="CENTER" prefHeight="13.0" prefWidth="112.0" text="Password" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
+         <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Password" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;">
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin></PasswordField>
+         <Label alignment="CENTER" prefHeight="13.0" prefWidth="112.0" text="Confirm Password" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
          <PasswordField fx:id="tfConfirmPassword" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Confirm Password" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;" />
+         <Label alignment="CENTER" prefHeight="14.0" prefWidth="168.0" text="First Name &amp; Last Name" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
          <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="267.0">
             <children>
                <TextField fx:id="tfFirstName" maxWidth="-Infinity" prefHeight="32.0" prefWidth="134.0" promptText="First Name" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;">
@@ -36,10 +77,35 @@
                </TextField>
             </children>
          </HBox>
+         <Label alignment="CENTER" prefHeight="14.0" prefWidth="168.0" text="Phone" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
          <TextField fx:id="tfPhone" maxWidth="-Infinity" prefHeight="26.0" prefWidth="197.0" promptText="Phone" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-padding: 5px;">
          </TextField>
-         <DatePicker fx:id="birthDatePicker" promptText="Birth date" />
-         <ComboBox fx:id="countryBox" prefWidth="150.0" promptText="Country" />
+         <Label alignment="CENTER" prefHeight="14.0" prefWidth="168.0" text="BirthDate" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
+         <DatePicker fx:id="birthDatePicker" prefHeight="31.0" prefWidth="196.0" promptText="Birth date" style="-fx-border-radius: 5px; -fx-border-width: 2px; -fx-border-color: #ACBB78;" />
+         <Label alignment="CENTER" prefHeight="14.0" prefWidth="168.0" text="Country" textAlignment="CENTER" textFill="#0000004b">
+            <font>
+               <Font name="Consolas" size="11.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="-10.0" />
+            </VBox.margin>
+         </Label>
+         <ComboBox fx:id="countryBox" prefHeight="30.0" prefWidth="197.0" promptText="Country" style="-fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-border-radius: 5px;" />
+         <ComboBox fx:id="roleBox" prefHeight="30.0" prefWidth="199.0" promptText="What are you?" style="-fx-border-color: #ACBB78; -fx-border-width: 2px; -fx-border-radius: 5px;" />
          <VBox alignment="CENTER" spacing="10.0">
             <Button fx:id="btnRegister" onAction="#saveUser" style="-fx-background-color: #ACBB78; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-text-fill: white; -fx-font-size: 14pt;" text="Register" />
             <HBox alignment="CENTER">

@@ -24,21 +24,21 @@ public class BadgeService implements IService<Badge> {
 
     @Override
     public void ajouter(Badge b) throws SQLException {
-        String req = "INSERT INTO `user` (`valeur`, `logo`, `badgeFileName`, `description`) VALUES ('" + b.getValeur()+ "', '" + b.getLogo()+ "', '" + b.getBadgeFileName()+ "', '" + b.getDescription()+ "')";
+        String req = "INSERT INTO `badge` (`valeur`, `logo`, `badgeFileName`, `description`) VALUES ('" + b.getValeur()+ "', '" + b.getLogo()+ "', '" + b.getBadgeFileName()+ "', '" + b.getDescription()+ "')";
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
     }
 
     @Override
     public void modifier(Badge b) throws SQLException {
-        String req = "UPDATE `user` SET `valeur` = '" + b.getValeur()+ "', `logo` = '" + b.getValeur()+ "', `badgeFileName` = '" + b.getBadgeFileName()+ "', `description` = '" + b.getDescription()+ "' WHERE `badge`.`id` = " + b.getId();
+        String req = "UPDATE `badge` SET `valeur` = '" + b.getValeur()+ "', `logo` = '" + b.getValeur()+ "', `badgeFileName` = '" + b.getBadgeFileName()+ "', `description` = '" + b.getDescription()+ "' WHERE `badge`.`id` = " + b.getId();
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
     }
 
     @Override
     public void supprimer(int id) throws SQLException {
-            String req = "DELETE FROM `Badge` WHERE id = " + id;
+            String req = "DELETE FROM `badge` WHERE id = " + id;
             Statement st = cnx.getCnx().createStatement();
             st.executeUpdate(req);
     }

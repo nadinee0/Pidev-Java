@@ -41,9 +41,15 @@ public class UserService implements IService<User> {
         ps.setString(2, u.getPassword());
         ps.executeUpdate();
     }
-    
+
     public void updatePassword(String password, int id) throws SQLException {
-        String req = "UPDATE `user` SET `password` = '" + password + "' WHERE `user`.`id` =" + id ;
+        String req = "UPDATE `user` SET `password` = '" + password + "' WHERE `user`.`id` =" + id;
+        Statement st = cnx.getCnx().createStatement();
+        st.executeUpdate(req);
+    }
+    
+    public void updateForgottenPassword(String password, String phone) throws SQLException {
+        String req = "UPDATE `user` SET `password` = '" + password + "' WHERE `user`.`phone_number` =" + phone;
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
     }
@@ -57,6 +63,15 @@ public class UserService implements IService<User> {
         return resultSet.getInt(1) > 0;
     }
 
+    public boolean isCode(String phone, String code) throws SQLException {
+        String query = "SELECT auth_code FROM user WHERE phone_number = ? AND auth_code = ?";
+        PreparedStatement statement = cnx.getCnx().prepareStatement(query);
+        statement.setString(1, phone);
+        statement.setString(2, code);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
+
     public boolean ajouter3(User u) throws SQLException {
         if (isEmailExists(u.getEmail())) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -65,7 +80,7 @@ public class UserService implements IService<User> {
             alert.showAndWait();
             return false;
         }
-        String req = "INSERT INTO `user` (`email`, `roles`, `password`, `is_verified`, `first_name`, `last_name`, `birth_date`, `country`, `phone_number`) VALUES ('" + u.getEmail() + "', '" + u.getRoles() + "', '" + u.getPassword() + "', '" + u.getIsVerified() + "', '" + u.getFirstName().substring(0, 1).toUpperCase() + u.getFirstName().substring(1) + "', '" + u.getLastName().substring(0, 1).toUpperCase() + u.getLastName().substring(1) + "', '" + u.getBirthDate() + "', '" + u.getCountry() + "', '" + u.getPhoneNumber() + "')";
+        String req = "INSERT INTO `user` (`email`, `roles`, `password`, `is_verified`, `first_name`, `last_name`, `birth_date`, `country`, `phone_number`) VALUES ('" + u.getEmail() + "', '" + u.getRole() + "', '" + u.getPassword() + "', '" + u.getIsVerified() + "', '" + u.getFirstName().substring(0, 1).toUpperCase() + u.getFirstName().substring(1) + "', '" + u.getLastName().substring(0, 1).toUpperCase() + u.getLastName().substring(1) + "', '" + u.getBirthDate() + "', '" + u.getCountry() + "', '" + u.getPhoneNumber() + "')";
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -84,7 +99,13 @@ public class UserService implements IService<User> {
 
     @Override
     public void modifier(User u) throws SQLException {
-        String req = "UPDATE `user` SET `nom` = '" + u.getLastName() + "', `prenom` = '" + u.getFirstName() + "' WHERE `user`.`id` = " + u.getId();
+        String req = "UPDATE `user` SET `first_name` = '" + u.getLastName() + "', `last_name` = '" + u.getFirstName() + "', `birth_date` = '" + u.getBirthDate() + "', `country` = '" + u.getCountry() + "', `phone_number` = '" + u.getPhoneNumber() + "', `profile_picture_name` = '" + u.getProfilePictureName() + "' WHERE `id` = " + u.getId();
+        Statement st = cnx.getCnx().createStatement();
+        st.executeUpdate(req);
+    }
+
+    public void insCode(String number, String authcode) throws SQLException {
+        String req = "UPDATE `user` SET `auth_code` = '" + authcode + "' WHERE `phone_number` = " + number;
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
     }

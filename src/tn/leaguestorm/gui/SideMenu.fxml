@@ -6,41 +6,22 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" prefHeight="504.0" prefWidth="256.0" style="-fx-background-color: #ebe8f9;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.SideMenuController">
    <children>
-      <ImageView fx:id="userProfilePic" fitHeight="208.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="userProfilePic" fitHeight="208.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
          <VBox.margin>
-            <Insets left="20.0" top="40.0" />
+            <Insets left="17.0" top="40.0" />
          </VBox.margin>
       </ImageView>
-      <Label fx:id="lblFullName" alignment="CENTER" prefHeight="31.0" prefWidth="215.0" textAlignment="CENTER">
+      <Label fx:id="lblFullName" alignment="CENTER" prefHeight="31.0" prefWidth="215.0" textAlignment="CENTER" textFill="#8e8e8e">
          <font>
-            <Font size="21.0" />
+            <Font name="Consolas" size="21.0" />
          </font>
          <VBox.margin>
             <Insets bottom="40.0" />
          </VBox.margin>
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.23157894611358643" green="0.23157894611358643" blue="0.23157894611358643" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </textFill>
       </Label>
       <Button fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleProfileLinkAction" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #ebe8f9; -fx-text-fill: #4e4e4e;" stylesheets="@style.css" text="Profile" textFill="#636363">
          <graphic>

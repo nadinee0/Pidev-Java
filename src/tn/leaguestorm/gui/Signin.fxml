@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.SigninController">
    <children>
-      <VBox alignment="CENTER" layoutX="333.0" layoutY="62.0" prefHeight="469.0" prefWidth="398.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #ACBB78, #F7F8F8); -fx-background-radius: 10px;">
+      <VBox alignment="CENTER" layoutX="300.0" layoutY="18.0" prefHeight="540.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #ACBB78, #F7F8F8); -fx-background-radius: 10px;">
          <Label style="-fx-font-size: 40pt; -fx-font-weight: bold;" text="Login" textFill="WHITE">
             <VBox.margin>
                <Insets bottom="35.0" />

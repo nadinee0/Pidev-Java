@@ -5,6 +5,7 @@
  */
 package tn.leaguestorm.gui;
 
+import javafx.geometry.Insets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +19,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -54,20 +58,17 @@ public class BackController {
     private Pane pnlOverview;
     @FXML
     private VBox pnItems;
-    @FXML
     private TableColumn<User, String> emailColumn;
-    @FXML
     private TableColumn<User, String> firstNameColumn;
-    @FXML
     private TableColumn<User, String> lastNameColumn;
-    @FXML
     private TableColumn<User, Integer> phoneNumberColumn;
-    @FXML
-    private TableColumn<User, Void> buttonColumn;
-    @FXML
     private TableView<User> tableView;
 
-    private ObservableList<User> user;
+    private ObservableList<User> users;
+    @FXML
+    private FlowPane cardPane;
+    @FXML
+    private VBox userContainer;
 
     @FXML
     private void handleClicks(ActionEvent event) {
@@ -76,21 +77,59 @@ public class BackController {
     public void initialize() {
         UserService userService = new UserService();
         try {
-            user = FXCollections.observableArrayList(userService.getAll());
+            users = FXCollections.observableArrayList(userService.getAll());
+        for (User user : users) {
+             VBox card = new VBox();
+            card.getStyleClass().add("card");
+            card.setPrefWidth(300);
+            card.setSpacing(10);
+            card.setPadding(new Insets(10, 10, 10, 10));
+
+            HBox userInfo = new HBox();
+            userInfo.getStyleClass().add("user-info");
+            userInfo.setPrefWidth(250);
+            userInfo.setSpacing(10);
+
+            // Use a GridPane instead of a VBox for the user information labels
+            GridPane userGrid = new GridPane();
+            userGrid.setHgap(10);
+            userGrid.setVgap(5);
+            userGrid.setPadding(new Insets(5));
+
+            Label emailLabel = new Label("Email:");
+            Label emailValue = new Label(user.getEmail());
+            GridPane.setConstraints(emailLabel, 0, 0);
+            GridPane.setConstraints(emailValue, 1, 0);
+
+            Label firstNameLabel = new Label("First Name:");
+            Label firstNameValue = new Label(user.getFirstName());
+            GridPane.setConstraints(firstNameLabel, 0, 1);
+            GridPane.setConstraints(firstNameValue, 1, 1);
+
+            Label lastNameLabel = new Label("Last Name:");
+            Label lastNameValue = new Label(user.getLastName());
+            GridPane.setConstraints(lastNameLabel, 0, 2);
+            GridPane.setConstraints(lastNameValue, 1, 2);
+
+            Label phoneNumberLabel = new Label("Phone Number:");
+            Label phoneNumberValue = new Label(user.getPhoneNumber());
+            GridPane.setConstraints(phoneNumberLabel, 0, 3);
+            GridPane.setConstraints(phoneNumberValue, 1, 3);
+
+            userGrid.getChildren().addAll(
+                emailLabel, emailValue, 
+                firstNameLabel, firstNameValue, 
+                lastNameLabel, lastNameValue, 
+                phoneNumberLabel, phoneNumberValue
+            );
+
+            userInfo.getChildren().addAll(userGrid);
+
+            card.getChildren().addAll(userInfo);
+            userContainer.getChildren().add(card);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-      
-                List<User> users = userService.getAll();
-                emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-                firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-                phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-                tableView.setItems(user);
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
 import org.mindrot.jbcrypt.BCrypt;
+import tn.leaguestorm.entities.Role;
 import tn.leaguestorm.utils.FXMLUtils;
 
 /**
@@ -68,6 +69,10 @@ public class SignupController implements Initializable {
     private TextField tfPhone;
     @FXML
     private DatePicker birthDatePicker;
+    @FXML
+    private AnchorPane dpBirthDate;
+    @FXML
+    private ComboBox roleBox;
 
     /**
      * Initializes the controller class.
@@ -77,6 +82,11 @@ public class SignupController implements Initializable {
         ObservableList<String> countryList = getCountryList();
         countryBox.setItems(countriesBoxList);
         countryBox.setPromptText("Select a country");
+
+        ObservableList<String> roleList = FXCollections.observableArrayList("a simple user", "a player", "a team", "an organization");
+        roleBox.setItems(roleList);
+        roleBox.setPromptText("What are you?");
+
     }
 
     private ObservableList<String> getCountryList() {
@@ -104,8 +114,8 @@ public class SignupController implements Initializable {
         String country = (String) countryBox.getSelectionModel().getSelectedItem();
         String phoneNumber = tfPhone.getText();
         LocalDate birthDate = birthDatePicker.getValue();
+        String role = (String) roleBox.getSelectionModel().getSelectedItem();
         int isVerified = 0;
-        String roles = "ORGANISATION";
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(13));
 
@@ -174,12 +184,28 @@ public class SignupController implements Initializable {
                 return;
             }
         }
-
-        //int phoneNumber = Integer.parseInt(phoneNumberStr);
-        User u = new User(email, roles, hashedPassword, isVerified, firstName, lastName, country, phoneNumber, birthDate);
         UserService us = new UserService();
-        if (!us.ajouter3(u)) {
-            return;
+
+        if (role.equals("a simple user")) {
+            Role u = Role.createUser(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            if (!us.ajouter3(u)) {
+                return;
+            }
+        } else if (role.equals("a player")) {
+            Role u = Role.createPlayer(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            if (!us.ajouter3(u)) {
+                return;
+            }
+        } else if (role.equals("a team")) {
+            Role u = Role.createTeam(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            if (!us.ajouter3(u)) {
+                return;
+            }
+        } else{
+            Role u = Role.createOrganization(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            if (!us.ajouter3(u)) {
+                return;
+            }
         }
 
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
