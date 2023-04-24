@@ -68,12 +68,12 @@
                      <children>
                         <HBox prefHeight="60.0" prefWidth="335.0" stylesheets="@style.css">
                            <children>
-                              <Label fx:id="NameLabel" prefHeight="48.0" prefWidth="276.0" stylesheets="@../values/style.css" text="Manette " textFill="WHITE">
+                              <Label fx:id="NameLabel" prefHeight="48.0" prefWidth="322.0" stylesheets="@../values/style.css" text="Manette " textFill="WHITE">
                                  <font>
                                     <Font name="Cambria" size="29.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="PriceLabel" prefHeight="48.0" prefWidth="166.0" stylesheets="@../values/style.css" text="\$200.99" textFill="WHITE">
+                              <Label fx:id="PriceLabel" prefHeight="48.0" prefWidth="166.0" stylesheets="@../values/style.css" text="\$200" textFill="WHITE">
                                  <font>
                                     <Font name="Cambria" size="27.0" />
                                  </font>

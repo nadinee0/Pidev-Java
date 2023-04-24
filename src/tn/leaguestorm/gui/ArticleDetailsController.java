@@ -101,5 +101,9 @@ imageView.setImage(image);*/
 imageView.setImage(image);
         
             }
+
+    void setImage(ImageView Img) {
+this.imagePath = imagePath;
+    imageView.setImage(new Image(new File(imagePath).toURI().toString()));    }
 }
 
