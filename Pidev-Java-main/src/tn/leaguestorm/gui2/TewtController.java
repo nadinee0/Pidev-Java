@@ -140,35 +140,26 @@ try {
 tableview_crud.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
     if (newSelection != null) {
         // set text of data_nom label to the selected team's name
-        lom.setText(newSelection.getNom_team());
-        Des.setText(newSelection.getDescription_team());
-        w_nom.setText(String.valueOf(newSelection.getWins_team()));
+        Nom.setText(newSelection.getNom_team());
+        Description.setText(newSelection.getDescription_team());
+        lom.setText(String.valueOf(newSelection.getWins_team()));
         l_nom.setText(String.valueOf(newSelection.getLosses_team()));
         r_nom.setText(String.valueOf(newSelection.getRate_team()));
-        lo_nom.setText(String.valueOf(newSelection.getLogo_team()));
+        Logo.setText(String.valueOf(newSelection.getLogo_team()));
         co_nom.setText(String.valueOf(newSelection.getColor()));
     } else {
         // clear text of all labels if no team is selected
-        data_nom.setText("");
-        r_nom.setText("");
-        lom.setText("");
-        l_nom.setText("");
-        w_nom.setText("");
-        co_nom.setText("");
-        Des.setText("");
+        Nom.setText(null);
+        Description.setText(null);
+        Wins.setValue(null);
+        Losses.setValue(null);
+        Rate.setText(null);
+        co_nom.setText(null);
+        Des.setText(null);
     }
 });
 
 }
-
-
-
-    
-    
-
-   
-    
-    
 
 
 @FXML
@@ -229,27 +220,23 @@ private void ajouter(ActionEvent event) throws Exception {
             alert.showAndWait();
         }
 
-
-
-
-        Team t = new Team(nom, description, wins, losses, rate, colorValue, logo, date);
-
-ServiceTeam ta = new ServiceTeam();
-ta.ajouter2(t);
+Team t = new Team(nom, description, wins, losses, rate, colorValue, logo, date);
+ServiceTeam st = new ServiceTeam();
+st.ajouter2(t);
 
 int rowsAffected = 0;
 try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/techstorm_3a39", "root", "")) {
     String req = "INSERT INTO `team` (`nom_team`, `Organisme_id`, `description_team`, `wins_team`, `losses_team`, `rate_team`, `color`, `logo_team`, `date_de_creation_team`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     PreparedStatement statement = connection.prepareStatement(req);
-    statement.setString(1, nom);
+    statement.setString(1, t.getNom_team());
     statement.setInt(2,1);
-    statement.setString(3, description);
-    statement.setInt(4, wins);
-    statement.setInt(5, losses);
-    statement.setFloat(6, rate);
-    statement.setString(7, colorValue);
-    statement.setString(8, logo);
-    statement.setDate(9, new java.sql.Date(date.getTime()));
+    statement.setString(3, t.getDescription_team());
+    statement.setInt(4, t.getWins_team());
+    statement.setInt(5, t.getLosses_team());
+    statement.setFloat(6, t.getRate_team());
+    statement.setString(7, t.getColor());
+    statement.setString(8, t.getLogo_team());
+    statement.setDate(9, new java.sql.Date(t.getDate_de_creation_team().getTime()));
             
     rowsAffected = statement.executeUpdate();
 }
@@ -262,7 +249,7 @@ catch (SQLException e) {
 catch (Exception e) {
     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
     errorAlert.setTitle("Error");
-    errorAlert.setContentText("An error occurred while adding the organism: " + e.getMessage());
+    errorAlert.setContentText("An error occurred while adding the team: " + e.getMessage());
     errorAlert.showAndWait();
 }
 

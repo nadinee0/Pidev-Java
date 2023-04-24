@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -105,7 +106,10 @@ public class OrcaController implements Initializable {
             if (newSelection != null) {
                 // set text of data_nom label to the selected organism's name
                 Ncommercial.setText(newSelection.getNom_commercial());
+
+                // set text of other labels to the selected organism's properties
                 Njuridique.setText(newSelection.getNom_juridique());
+
                 phone.setText(String.valueOf(newSelection.getPhone_organisation()));
                 email.setText(newSelection.getEmail_organisation());
                 ImageOrg.setText(newSelection.getImage());
@@ -123,7 +127,7 @@ public class OrcaController implements Initializable {
     }
 
     @FXML
-    private void ajouter(ActionEvent event) {
+    private void ajouter(ActionEvent event) throws SQLException, Exception {
 
         String nomc = Ncommercial.getText().trim();
         String nomj = Njuridique.getText().trim();
@@ -170,38 +174,35 @@ public class OrcaController implements Initializable {
             if (morei.isEmpty()) {
                 throw new Exception("La description ne doit pas être vide.");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("An error occurred: " + e.getMessage());
+            alert.showAndWait();
+        }
 
-            Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
-            ServiceOrganism or = new ServiceOrganism();
-            or.ajouter(o);
+        Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
+        ServiceOrganism or = new ServiceOrganism();
+        or.ajouter(o);
 
-            int rowsAffected;
+        int rowsAffected = 0;
+        // prepare the SQL statement to insert the new organism
+        try ( // create a connection to the database
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/techstorm_3a39", "root", "")) {
             // prepare the SQL statement to insert the new organism
-            try ( // create a connection to the database
-                    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/techstorm_3a39", "root", "")) {
-                // prepare the SQL statement to insert the new organism
-                String req = "INSERT INTO `Organisme` (`nom_commercial`, `nom_juridique`,`date_de_fondation`, `phone_organization`, `email_organization`, `image`, `more`) VALUES (?, ?, ?, ?, ?, ?,?)";
-                try (PreparedStatement statement = connection.prepareStatement(req)) {
-                    statement.setString(1, nomc);
-                    statement.setString(2, nomj);
-                    statement.setTimestamp(3, new java.sql.Timestamp(date.getTime()));
-                    statement.setInt(4, ph);
-                    statement.setString(5, emai);
-                    statement.setString(6, img);
-                    statement.setString(7, morei);
-                    // execute the SQL statement
-                    rowsAffected = statement.executeUpdate();
-                    // close the statement and the connection
-                }
-            }
-
-            if (rowsAffected == 1) {
-                Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
-                successAlert.setTitle("good");
-                successAlert.setContentText("L'organisme a été ajouté avec succès");
-                successAlert.showAndWait();
-            } else {
-                throw new Exception("Failed to add the organism to the database.");
+            String req = "INSERT INTO `Organisme` (`nom_commercial`, `nom_juridique`,`date_de_fondation`, `phone_organization`, `email_organization`, `image`, `more`) VALUES (?, ?, ?, ?, ?, ?,?)";
+            try (PreparedStatement statement = connection.prepareStatement(req)) {
+                statement.setString(1, nomc);
+                statement.setString(2, nomj);
+                statement.setDate(3, date);
+                statement.setInt(4, ph);
+                statement.setString(5, emai);
+                statement.setString(6, img);
+                statement.setString(7, morei);
+                // execute the SQL statement
+                rowsAffected = statement.executeUpdate();
+                // close the statement and the connection
             }
         } catch (SQLException e) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -213,6 +214,14 @@ public class OrcaController implements Initializable {
             errorAlert.setTitle("Error");
             errorAlert.setContentText("An error occurred while adding the organism: " + e.getMessage());
             errorAlert.showAndWait();
+        }
+        if (rowsAffected == 1) {
+            Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            successAlert.setTitle("good");
+            successAlert.setContentText("L'organisme a été ajouté avec succès");
+            successAlert.showAndWait();
+        } else {
+            throw new Exception("Failed to add the organism to the database.");
         }
     }
 
@@ -229,10 +238,109 @@ public class OrcaController implements Initializable {
 
     @FXML
     private void supprimer(ActionEvent event) {
+        Organism selectedOrganism = organismListView.getSelectionModel().getSelectedItem();
+        if (selectedOrganism == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertissement");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner une équipe à supprimer.");
+            alert.showAndWait();
+        } else {
+            ServiceOrganism serviceOrganism = new ServiceOrganism();
+            serviceOrganism.supprimer(selectedOrganism.getId());
+            organismListView.getItems().remove(selectedOrganism);
+            Ncommercial.setText("");
+            Njuridique.setText("");
+            phone.setText("");
+            email.setText("");
+            ImageOrg.setText("");
+            more.setText("");
+        }
     }
 
     @FXML
-    private void modifier(ActionEvent event) {
-    }
+    private void modifier(ActionEvent event) throws Exception {
+        String nomc = Ncommercial.getText().trim();
+        String nomj = Njuridique.getText().trim();
+        LocalDate localDate = dati.getValue();
+        Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        Date date = Date.valueOf(localDate);
+        String phoneStr = phone.getText();
+        int ph = 0;
+        String emai = email.getText().trim();
+        String img = ImageOrg.getText();
+        String morei = more.getText().trim();
+        try {
+            if (nomc.isEmpty()) {
+                throw new Exception("Le nom commercial ne doit pas être vide.");
+            } else if (nomc.length() < 2 || nomc.length() > 50 || !nomc.matches("[a-zA-Z]+")) {
+                throw new Exception("Nom commercial doit contenir entre 2 et 50 lettres et pas de chiffres ou de caractères spéciaux.");
+            }
 
+            if (nomj.isEmpty()) {
+                throw new Exception("Le nom juridique ne doit pas être vide.");
+            } else if (nomj.length() < 2 || nomj.length() > 50 || !nomj.matches("[a-zA-Z]+")) {
+                throw new Exception("Nom juridique doit contenir entre 2 et 50 lettres et pas de chiffres ou de caractères spéciaux.");
+            }
+
+            if (!phoneStr.matches("[2|5|7|9][0-9]\\d{6}")) {
+                throw new Exception("Numéro de 8 chiffres téléphone Oooredoo ou Telecom ou Orange ou FAX.");
+            } else {
+                ph = Integer.parseInt(phoneStr);
+            }
+
+            if (emai.isEmpty()) {
+                throw new Exception("L'adresse email ne doit pas être vide.");
+            }
+            if (!emai.matches("^(?=.{1,256}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                throw new Exception("Adresse email doit être de la forme 'nom@domaine.com'.");
+            }
+
+            if (img.isEmpty()) {
+                throw new Exception("Veuillez choisir une image.");
+            }
+
+            if (morei.isEmpty()) {
+                throw new Exception("La description ne doit pas être vide.");
+            }
+
+            Organism o = new Organism(nomc, nomj, date, ph, emai, img, morei);
+            ServiceOrganism or = new ServiceOrganism();
+            or.modifier(o);
+
+            int rowsAffected = 0;
+
+            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/techstorm_3a39", "root", "")) {
+                String req = "UPDATE `Organisme` SET `nom_commercial` = ?, `nom_juridique` = ?, `date_de_fondation` = ?, `phone_organization` = ?, `email_organization` = ?, `image` = ?, `more` = ? WHERE `id_organism` = ?";
+                try (PreparedStatement statement = connection.prepareStatement(req)) {
+                    statement.setString(1, o.getNom_commercial());
+                    statement.setString(2, o.getNom_juridique());
+                    statement.setDate(3, (Date) o.getDate_de_fondation());
+                    statement.setInt(4, o.getPhone_organisation());
+                    statement.setString(5, o.getEmail_organisation());
+                    statement.setString(6, o.getImage());
+                    statement.setString(7, o.getMore());
+
+                    // execute the SQL statement
+                    rowsAffected = statement.executeUpdate();
+                    // close the statement and connection
+                    statement.close();
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if (rowsAffected == 1) {
+                Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                successAlert.setTitle("Success");
+                successAlert.setContentText("The team has been added successfully.");
+                successAlert.showAndWait();
+            } else {
+                System.out.println("Failed to update organism.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
