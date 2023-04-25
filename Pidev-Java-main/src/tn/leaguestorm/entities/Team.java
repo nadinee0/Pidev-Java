@@ -101,6 +101,16 @@ public Team(int id,String nom_team, int organism_id, String description_team, in
         this.rate_team = rate_team;
         this.date_de_creation_team = date_de_creation_team;
     }
+     public Team(String nom, String description, int wins, int losses, double rate, String logo, String color) {
+        this.nom_team = nom_team;
+        this.description_team = description_team;
+        this.color = color;
+        this.logo_team = logo_team;
+        this.wins_team = wins_team;
+        this.losses_team = losses_team;
+        this.rate_team = rate_team;
+        this.date_de_creation_team = date_de_creation_team;
+    }
 
 
 

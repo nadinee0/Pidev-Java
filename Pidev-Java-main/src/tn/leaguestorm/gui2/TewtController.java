@@ -139,39 +139,44 @@ try {
 
 tableview_crud.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
     if (newSelection != null) {
-        // set text of data_nom label to the selected team's name
         Nom.setText(newSelection.getNom_team());
         Description.setText(newSelection.getDescription_team());
-        lom.setText(String.valueOf(newSelection.getWins_team()));
-        l_nom.setText(String.valueOf(newSelection.getLosses_team()));
-        r_nom.setText(String.valueOf(newSelection.getRate_team()));
-        Logo.setText(String.valueOf(newSelection.getLogo_team()));
-        co_nom.setText(String.valueOf(newSelection.getColor()));
+        Wins.setValue(newSelection.getWins_team());
+        Losses.setValue(newSelection.getLosses_team());
+        Rate.setText(String.valueOf(newSelection.getRate_team()));
+        Logo.setText(newSelection.getLogo_team());
+        co_nom.setText(newSelection.getColor());
+        
+
+        
+        
     } else {
-        // clear text of all labels if no team is selected
         Nom.setText(null);
         Description.setText(null);
         Wins.setValue(null);
         Losses.setValue(null);
         Rate.setText(null);
+        Logo.setText(null);
         co_nom.setText(null);
-        Des.setText(null);
+        dato.setValue(null);
     }
 });
-
 }
-
-
 @FXML
 private void ajouter(ActionEvent event) throws Exception {
     String nom = Nom.getText().trim();
     String description = Description.getText().trim();
     int wins = Wins.getValue();
     int losses = Losses.getValue();
-    float rate = Float.parseFloat(Rate.getText().trim());
+    double rate = Double.parseDouble(Rate.getText().trim());
     String colorValue = color.getValue().toString().trim();
-    String logo = Logo.getText();
-    Date date = java.sql.Date.valueOf(dato.getValue());
+    String logo = Logo.getText().trim();
+    LocalDate date = dato.getValue();
+    java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+
+
+   
+
 
    try {
     // Validate input fields
@@ -220,7 +225,7 @@ private void ajouter(ActionEvent event) throws Exception {
             alert.showAndWait();
         }
 
-Team t = new Team(nom, description, wins, losses, rate, colorValue, logo, date);
+Team t = new Team(nom, description, wins, losses, rate, colorValue, logo);
 ServiceTeam st = new ServiceTeam();
 st.ajouter2(t);
 
