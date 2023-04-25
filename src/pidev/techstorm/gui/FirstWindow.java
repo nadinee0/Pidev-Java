@@ -22,12 +22,13 @@ import javafx.stage.Stage;
  *
  * @author USER
  */
+
 public class FirstWindow extends Application {
-    
+    public static final String CURRENCY = "$";
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("AfficherEvents.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Front.fxml"));
                     
                     Scene scene = new Scene(root);
                     
