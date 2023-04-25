@@ -47,7 +47,7 @@ public class ForgotVerifController implements Initializable{
     private void handleConfirmAction(ActionEvent event) throws SQLException, IOException {
         
         String code = tfCode.getText();
-        if (us.isCode(code,phone)) {
+        if (!us.isCode(phone,code)) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
