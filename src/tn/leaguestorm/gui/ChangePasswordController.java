@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
@@ -66,9 +67,30 @@ public class ChangePasswordController implements Initializable{
     User currentUser = CurrentUser.getUser();
     
     Circle circle = new Circle(100, 100, 90);
+    @FXML
+    private Hyperlink showHideLink;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        showHideLink.setOnMousePressed(event -> {
+            tfCurrentPassword.setPromptText(tfCurrentPassword.getText());
+            tfCurrentPassword.setText("");
+            tfNewPassword.setPromptText(tfNewPassword.getText());
+            tfNewPassword.setText("");
+            tfConfirmNewPassword.setPromptText(tfConfirmNewPassword.getText());
+            tfConfirmNewPassword.setText("");
+            showHideLink.setText("Hide");
+        });
+
+        showHideLink.setOnMouseReleased(event -> {
+            tfCurrentPassword.setText(tfCurrentPassword.getPromptText());
+            tfCurrentPassword.setPromptText("");
+            tfNewPassword.setText(tfNewPassword.getPromptText());
+            tfNewPassword.setPromptText("");
+            tfConfirmNewPassword.setText(tfConfirmNewPassword.getPromptText());
+            tfConfirmNewPassword.setPromptText("");
+            showHideLink.setText("Show");
+        });
     }
 
     @FXML

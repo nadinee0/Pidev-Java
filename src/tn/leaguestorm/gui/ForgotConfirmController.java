@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -42,18 +43,35 @@ public class ForgotConfirmController implements Initializable {
     
     String phone = CurrentUser.phoneProcedures;
     UserService us = new UserService();
+    @FXML
+    private Hyperlink showHideLink;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        showHideLink.setOnMousePressed(event -> {
+            tfPassword.setPromptText(tfPassword.getText());
+            tfPassword.setText("");
+            tfConfirmPassword.setPromptText(tfConfirmPassword.getText());
+            tfConfirmPassword.setText("");
+            showHideLink.setText("Hide");
+        });
+
+        showHideLink.setOnMouseReleased(event -> {
+            tfPassword.setText(tfPassword.getPromptText());
+            tfPassword.setPromptText("");
+            tfConfirmPassword.setText(tfConfirmPassword.getPromptText());
+            tfConfirmPassword.setPromptText("");
+            showHideLink.setText("Show");
+        });
     }    
 
 
     @FXML
     private void handleExitImgAction(MouseEvent event) {
+        System.exit(0);
     }
 
     @FXML
