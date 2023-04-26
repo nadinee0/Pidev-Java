@@ -28,7 +28,7 @@ import tn.leaguestorm.utils.FXMLUtils;
  *
  * @author Bellalouna Iheb
  */
-public class SideMenuController implements Initializable{
+public class SideMenuController implements Initializable {
 
     @FXML
     private ImageView userProfilePic;
@@ -44,25 +44,25 @@ public class SideMenuController implements Initializable{
     private Button btnSettings;
     @FXML
     private Button btnSignout;
-    
+
     User currentUser = CurrentUser.getUser();
     Circle circle = new Circle(90, 90, 90);
-    
+
     @FXML
     private void handleProfileLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Profile");
     }
-    
+
     @FXML
     private void handleChangePasswordLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ChangePassword.fxml", "Change Password");
     }
-    
+
     @FXML
     private void handleProfileUpdateLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ProfileUpdate.fxml", "Edit Profile");
     }
-    
+
     @FXML
     private void handleExitButtonAction(ActionEvent event) {
         CurrentUser.endSession();
@@ -75,22 +75,22 @@ public class SideMenuController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    if (currentUser != null) {
-        lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
-        
-        String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
-        Image userProfilePic = new Image("file:" + userProfilePicPath);
-        double radius = circle.getRadius();
-double diameter = radius * 2;
-        this.userProfilePic.setImage(userProfilePic);
-        
-        this.userProfilePic.setFitWidth(diameter);
-this.userProfilePic.setFitHeight(diameter);
-this.userProfilePic.setClip(circle);
-    
-    } else {
+        if (currentUser != null) {
+            lblFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+
+            String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
+            Image userProfilePic = new Image("file:" + userProfilePicPath);
+            double radius = circle.getRadius();
+            double diameter = radius * 2;
+            this.userProfilePic.setImage(userProfilePic);
+
+            this.userProfilePic.setFitWidth(diameter);
+            this.userProfilePic.setFitHeight(diameter);
+            this.userProfilePic.setClip(circle);
+
+        } else {
             System.out.println("No such user found!");
-}
+        }
     }
-    
+
 }
