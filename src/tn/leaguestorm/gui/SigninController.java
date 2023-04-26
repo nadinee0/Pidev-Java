@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import tn.leaguestorm.utils.MyConnection;
@@ -29,7 +30,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.utils.CurrentUser;
 import tn.leaguestorm.utils.FXMLUtils;
-
 
 public class SigninController implements Initializable {
 
@@ -42,13 +42,13 @@ public class SigninController implements Initializable {
     @FXML
     private Button btnLogin;
 
-    @FXML
-    private Hyperlink lnkForgotPassword;
-
     private MyConnection connect = MyConnection.getInstance();
     private Alert alert;
     private ResultSet result;
-
+    @FXML
+    private Hyperlink showHideLink;
+    @FXML
+    private ImageView exitImg;
 
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
@@ -68,7 +68,7 @@ public class SigninController implements Initializable {
                 if (result.next()) {
                     String hashedPassword = result.getString("password");
                     if (BCrypt.checkpw(tfPassword.getText(), hashedPassword)) {
-                        
+
                         int id = result.getInt("id");
                         String email = result.getString("email");
                         String password = result.getString("password");
@@ -86,7 +86,7 @@ public class SigninController implements Initializable {
                         alert.setHeaderText(null);
                         alert.setContentText("Successfully Logged In");
                         alert.showAndWait();
-                        
+
                         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Home");
 
                     } else {
@@ -112,19 +112,30 @@ public class SigninController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Initialize controller logic here
+
+        showHideLink.setOnMousePressed(event -> {
+            tfPassword.setPromptText(tfPassword.getText());
+            tfPassword.setText("");
+            showHideLink.setText("Hide");
+        });
+
+        showHideLink.setOnMouseReleased(event -> {
+            tfPassword.setText(tfPassword.getPromptText());
+            tfPassword.setPromptText("");
+            showHideLink.setText("Show");
+        });
     }
-    
+
     @FXML
     private void handleExitImgAction(MouseEvent event) {
         System.exit(0);
     }
-    
+
     @FXML
     private void handleForgotPasswordLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Forgot.fxml", "Forgot");
     }
-    
+
     @FXML
     private void handleSignupLinkAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signup.fxml", "Sign up");
