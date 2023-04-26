@@ -104,14 +104,8 @@ imageView.setImage(image);*/
         categoryLabel.setText(category);
     }
     
-  
-public void setImage(String imagePath) {
-    if (imageView != null) {
-        Image image = new Image(new File(imagePath).toURI().toString());
-        imageView.setImage(image);
-    }
-} public void setImage(Image image) {
-        imageView.setImage(image);
+public void setImage(Image image) {
+        img.setImage(image);
     }
 
 

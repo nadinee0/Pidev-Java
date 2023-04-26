@@ -166,41 +166,9 @@ public class ShopController implements Initializable {
         Img.setImage(new Image(new File(imagePath).toURI().toString()));
         Img.setStyle("-fx-background-color: transparent");
         DescriptionLabel.setText(Description);
-        /*     
-   btndetails.setOnAction(event -> {
-    try {
-        // Pass the product details to the controller of the new scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ArticleDetails.fxml"));
-        Parent root = loader.load();
-        ArticleDetailsController controller = loader.getController();
-        controller.setArticleDetails(productName, price, imagePath); 
-
-        // Create a new window and display the new scene
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-});*/
     }
 
-    /*
-    private void setChosenArticle(Article article) {
-        NameLabel.setText(article.getTitre());
-        PriceLabel.setText(Front.CURRENCY + article.getPrix());
-        Image image = new Image(getClass().getResourceAsStream(article.getImage()));
-        ImageView imageView = new ImageView(image);
-        imageView.setBlendMode(BlendMode.MULTIPLY);
 
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
-        chosenCard.setStyle("-fx-background-color: #" + article.getColor() + ";\n"
-                + "    -fx-background-radius: 30;");
-        chosenCard.getChildren().clear();
-        chosenCard.getChildren().addAll(imageView, NameLabel, PriceLabel);
-    }*/
     private void setChosenArticle(Article article) {
         selectedArticle = article;
         NameLabel.setText(selectedArticle.getTitre());
@@ -286,8 +254,8 @@ public class ShopController implements Initializable {
 
     @FXML
     private void details(ActionEvent event) throws SQLException, IOException {
-        String query = "SELECT * FROM article";
-
+      String query = "SELECT * FROM article";
+ /* 
         // Execute the query and retrieve the result set
         Statement statement = ds.getCnx().createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -301,20 +269,32 @@ public class ShopController implements Initializable {
         apc.setPrix(PriceLabel.getText());
         apc.setDescription(DescriptionLabel.getText());
 
-        Image image = new Image(getClass().getResourceAsStream(selectedArticle.getImage()));
-        ImageView imageView = new ImageView(image);
+      */
+     // Execute the query and retrieve the result set
+Statement statement = ds.getCnx().createStatement();
+ResultSet resultSet = statement.executeQuery(query);
 
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
-        apc.setImage(image);
-        /* String productName = NameLabel.getText(); // Replace with your actual code to get the product name
-        String imageName = getImageNameFromDatabase(NameLabel.getText());
+FXMLLoader loader = new FXMLLoader(getClass().getResource("ArticleDetails.fxml"));
+Parent root = loader.load();
+NameLabel.getScene().setRoot(root);
 
-        String imagePath = "C:/Users/Nadine/Pidev/public/upload/";
-        Image image = new Image(new File(imagePath).toURI().toString());
-        apc.setImage(image);
+ArticleDetailsController apc = loader.getController();
+apc.setTitre(NameLabel.getText());
+apc.setPrix(PriceLabel.getText());
+apc.setDescription(DescriptionLabel.getText());
 
-         */
+// Retrieve the image name from the database for the selected article
+String imageName = getImageNameFromDatabase(NameLabel.getText());
+
+// Create a file path using the image name and the path of the directory where the images are stored
+String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + imageName;
+
+// Create an Image object from the file path
+Image image = new Image(new File(imagePath).toURI().toString());
+
+// Pass the Image object to the ArticleDetailsController and set it as the image of the article
+apc.setImage(image);
+
 
     }
 
