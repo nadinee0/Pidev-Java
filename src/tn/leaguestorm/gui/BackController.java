@@ -19,6 +19,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 /**
  * FXML Controller class
@@ -48,9 +51,9 @@ public class BackController implements Initializable {
     @FXML
     private Button btnCategory;
     @FXML
-    private Button btnSubCategory;
-    @FXML
     private Button btnArticle;
+  @FXML
+    private Button sendSMSButton;
 
     /**
      * Initializes the controller class.
@@ -76,7 +79,6 @@ public class BackController implements Initializable {
     }
 
 
-    @FXML
     private void subcategory(ActionEvent event) throws IOException {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
             Parent root = loader.load(); // load the new FXML file
@@ -97,5 +99,27 @@ public class BackController implements Initializable {
             Stage stage = (Stage) currentScene.getWindow(); // get the current stage
             stage.setScene(scene); // set the new scene as the content of the stage
     }
+
+    @FXML
+    private void sendSMS(ActionEvent event) {
+    // Initialize the Twilio client with your account SID and auth token
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        // Create a message to send
+        Message message = Message.creator(
+                new PhoneNumber("+21626845683"),  // client's phone number
+                new PhoneNumber(TWILIO_PHONE_NUMBER),
+                "Update on our products! Check out our latest products at https://example.com/products"
+        ).create();
+
+        // Print the message SID for reference
+        System.out.println(message.getSid());  }
     
+    // Your Twilio account SID and auth token
+    public static final String ACCOUNT_SID = "ACace7472778dc6883d3fdaa091bedc3c4";
+    public static final String AUTH_TOKEN = "41933cff190bdbdb5e97966f655ee8f3";
+    // Your Twilio phone number that has been verified with Twilio
+    public static final String TWILIO_PHONE_NUMBER = "+16315291904";
+
+ 
 }
