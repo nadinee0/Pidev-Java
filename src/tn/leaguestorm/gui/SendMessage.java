@@ -45,9 +45,9 @@
 //import com.twilio.type.PhoneNumber;
 //
 //public class SendMessage {
-//    private static final String ACCOUNT_SID = "ACa8be271efbf32879031ed087f2139862";
-//    private static final String AUTH_TOKEN = "01f6b8564931d389597a71168533229f";
-//    private static final String TWILIO_PHONE_NUMBER = "+16812216467";
+//    private static final String ACCOUNT_SID = "";
+//    private static final String AUTH_TOKEN = "";
+//    private static final String TWILIO_PHONE_NUMBER = "";
 //
 //    public static void sendSms(String toPhoneNumber, String message) {
 //        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

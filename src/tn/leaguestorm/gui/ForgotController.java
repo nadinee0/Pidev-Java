@@ -44,7 +44,7 @@ public class ForgotController implements Initializable {
     private TextField tfNumber;
 
     private Alert alert;
-    private static final String TWILIO_PHONE_NUMBER = "+16812216467";
+    private static final String TWILIO_PHONE_NUMBER = "";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,8 +71,8 @@ public class ForgotController implements Initializable {
         String number = tfNumber.getText();
         int code = (int) (Math.random() * 900000) + 100000;
         String formattedCode = String.format("%06d", code);
-        String accountSid = "ACa8be271efbf32879031ed087f2139862";
-        String authToken = "01f6b8564931d389597a71168533229f";
+        String accountSid = "";
+        String authToken = "";
         Twilio.init(accountSid, authToken);
 
         UserService us = new UserService();
