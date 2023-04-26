@@ -44,7 +44,6 @@ public class ForgotController implements Initializable {
     private TextField tfNumber;
 
     private Alert alert;
-    private static final String TWILIO_PHONE_NUMBER = "";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,38 +70,39 @@ public class ForgotController implements Initializable {
         String number = tfNumber.getText();
         int code = (int) (Math.random() * 900000) + 100000;
         String formattedCode = String.format("%06d", code);
-        String accountSid = "";
-        String authToken = "";
-        Twilio.init(accountSid, authToken);
+        String accountSid = System.getenv("TWILIO_ACCOUNT_SID");
+        String authToken = System.getenv("TWILIO_AUTH_TOKEN");
+        String TWILIO_PHONE_NUMBER = System.getenv("TWILIO_PHONE_NUMBER");
 
+        Twilio.init(accountSid, authToken);
         UserService us = new UserService();
 
         Message message = Message.creator(new PhoneNumber(number), new PhoneNumber(TWILIO_PHONE_NUMBER),
                 "Security code: " + formattedCode).create();
 
         if (message.getStatus() == Message.Status.FAILED) {
-    alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("Information Message");
-    alert.setHeaderText(null);
-    alert.setContentText("Message failed with error: " + message.getErrorCode());
-    alert.showAndWait();
-    //System.out.println("Message failed with error: " + message.getErrorMessage());
-} else {
-    alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("Information Message");
-    alert.setHeaderText(null);
-    alert.setContentText("Message sent successfully");
-    alert.showAndWait();
-    //System.out.println("Message sent successfully.");
-    try {
-        us.insCode(number, formattedCode);
-    } catch (SQLException ex) {
-        Logger.getLogger(ForgotController.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    CurrentUser.phoneProcedures = number;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Message failed with error: " + message.getErrorCode());
+            alert.showAndWait();
+            //System.out.println("Message failed with error: " + message.getErrorMessage());
+        } else {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Message sent successfully");
+            alert.showAndWait();
+            //System.out.println("Message sent successfully.");
+            try {
+                us.insCode(number, formattedCode);
+            } catch (SQLException ex) {
+                Logger.getLogger(ForgotController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            CurrentUser.phoneProcedures = number;
 
-    FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ForgotVerif.fxml", "Forgot");
-}
+            FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/ForgotVerif.fxml", "Forgot");
+        }
     }
 
 }
