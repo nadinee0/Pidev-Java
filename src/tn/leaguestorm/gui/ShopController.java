@@ -60,6 +60,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlendMode;
@@ -97,6 +98,9 @@ public class ShopController implements Initializable {
     private Article selectedArticle;
     @FXML
     private Label DescriptionLabel;
+    Article ar;
+    @FXML
+    private Button wishlist;
 
     public void populateGridPane() throws SQLException, FileNotFoundException {
         String query = "SELECT * FROM article";
@@ -111,9 +115,10 @@ public class ShopController implements Initializable {
 
         // Iterate through the result set and add each product to the GridPane
         while (resultSet.next()) {
-            
-             Label Description = new Label(resultSet.getString("description"));
-            
+
+            Label Description = new Label(resultSet.getString("description"));
+            //     grid.add(Description, colIndex, rowIndex + 1);
+
             // Create a new Label for the product name
             Label productName = new Label(resultSet.getString("titre"));
             grid.add(productName, colIndex, rowIndex + 1);
@@ -127,7 +132,7 @@ public class ShopController implements Initializable {
             Image image = new Image(new File(imagePath).toURI().toString());
 
             ImageView imageView = new ImageView(image);
-            imageView.setBlendMode(BlendMode.MULTIPLY);
+            // imageView.setBlendMode(BlendMode.MULTIPLY);
 
             imageView.setFitWidth(200); // Set the width to 200 pixels
             imageView.setFitHeight(200); // Set the height to 200 pixels
@@ -136,7 +141,7 @@ public class ShopController implements Initializable {
             int productId = resultSet.getInt("id"); // Get the product ID from the result set
             imageView.setOnMouseClicked(e -> {
                 // Pass the product ID to the method that will handle the click event
-                handleProductClick(productId, productName.getText(), price.getText(), imagePath);
+                handleProductClick(productId, productName.getText(), Description.getText(), price.getText(), imagePath);
             });
 
             // Add the ImageView to the GridPane
@@ -153,15 +158,14 @@ public class ShopController implements Initializable {
         }
     }
 
-    private void handleProductClick(int productId, String productName, String price, String imagePath) {
+    private void handleProductClick(int productId, String productName, String Description, String price, String imagePath) {
         // Update the UI with the selected product details
         NameLabel.setText(productName);
         PriceLabel.setText(price);
-      //  DescriptionLabel.setText(description);
+        //  DescriptionLabel.setText(description);
         Img.setImage(new Image(new File(imagePath).toURI().toString()));
-        //Img.setBlendMode(BlendMode.MULTIPLY);
         Img.setStyle("-fx-background-color: transparent");
-
+        DescriptionLabel.setText(Description);
         /*     
    btndetails.setOnAction(event -> {
     try {
@@ -203,7 +207,7 @@ public class ShopController implements Initializable {
         PriceLabel.setText(Front.CURRENCY + selectedArticle.getPrix());
         Image image = new Image(getClass().getResourceAsStream(selectedArticle.getImage()));
         ImageView imageView = new ImageView(image);
-        imageView.setBlendMode(BlendMode.MULTIPLY);
+        //  imageView.setBlendMode(BlendMode.MULTIPLY);
 
         imageView.setFitWidth(200);
         imageView.setFitHeight(200);
@@ -212,7 +216,7 @@ public class ShopController implements Initializable {
         chosenCard.getChildren().clear();
         chosenCard.getChildren().addAll(imageView, NameLabel, PriceLabel);
 
-        handleProductClick(selectedArticle.getId(), selectedArticle.getTitre(), Float.toString(selectedArticle.getPrix()), selectedArticle.getImage());
+        handleProductClick(selectedArticle.getId(), selectedArticle.getTitre(), selectedArticle.getDescription(), Float.toString(selectedArticle.getPrix()), selectedArticle.getImage());
     }
 
     @Override
@@ -257,10 +261,36 @@ public class ShopController implements Initializable {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    private String getImageNameFromDatabase(String articleName) {
+        String imageName = null;
+
+        try {
+            PreparedStatement pstmt = ds.getCnx().prepareStatement("SELECT image FROM article WHERE titre = ?");
+            pstmt.setString(1, articleName);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                imageName = rs.getString("image");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return imageName;
     }
 
     @FXML
     private void details(ActionEvent event) throws SQLException, IOException {
+        String query = "SELECT * FROM article";
+
+        // Execute the query and retrieve the result set
+        Statement statement = ds.getCnx().createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ArticleDetails.fxml"));
         Parent root = loader.load();
@@ -270,30 +300,22 @@ public class ShopController implements Initializable {
         apc.setTitre(NameLabel.getText());
         apc.setPrix(PriceLabel.getText());
         apc.setDescription(DescriptionLabel.getText());
-        apc.setImage(Img);
 
- /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/ArticleDetails.fxml"));
-        Parent root = loader.load(); // load the new FXML file
-        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
-        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
-        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
-        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
-        stage.setScene(scene); // set the new scene as the content of the stage 
-     /*    try {
-        // Pass the product details to the controller of the new scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ArticleDetails.fxml"));
-        Parent root = loader.load();
-        ArticleDetailsController controller = loader.getController();
-        controller.setArticleDetails(productName, productId, price, imagePath);
+        Image image = new Image(getClass().getResourceAsStream(selectedArticle.getImage()));
+        ImageView imageView = new ImageView(image);
 
-        // Create a new window and display the new scene
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    } */
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
+        apc.setImage(image);
+        /* String productName = NameLabel.getText(); // Replace with your actual code to get the product name
+        String imageName = getImageNameFromDatabase(NameLabel.getText());
+
+        String imagePath = "C:/Users/Nadine/Pidev/public/upload/";
+        Image image = new Image(new File(imagePath).toURI().toString());
+        apc.setImage(image);
+
+         */
+
     }
 
 }

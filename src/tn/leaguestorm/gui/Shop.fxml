@@ -121,7 +121,7 @@
                         <Label fx:id="DescriptionLabel" prefHeight="21.0" prefWidth="33.0" textFill="TRANSPARENT" />
                         <HBox alignment="CENTER" prefHeight="53.0" prefWidth="335.0">
                            <children>
-                              <Button fx:id="btndetails" mnemonicParsing="false" onAction="#details" prefHeight="40.0" prefWidth="282.0" styleClass="add-btn" stylesheets="@../values/style.css" text="DETAILS" textFill="#828282">
+                              <Button fx:id="btndetails" mnemonicParsing="false" onAction="#details" prefHeight="39.0" prefWidth="267.0" styleClass="add-btn" stylesheets="@../values/style.css" text="DETAILS" textFill="#828282">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>

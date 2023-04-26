@@ -14,6 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +24,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import tn.leaguestorm.entities.Article;
+import tn.leaguestorm.utils.MyConnection;
 
 
 /**
@@ -49,13 +54,15 @@ public class ArticleDetailsController implements Initializable {
     private ImageView img;
     @FXML
     private Button backButton;
+    private Article article;
+    private MyConnection ds = MyConnection.getInstance();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       imageView = new ImageView();
     }    
      public void setArticleDetails(String title, String price, String description, /*String category, */String imagePath) {
     titleLabel.setText(title);
@@ -96,14 +103,19 @@ imageView.setImage(image);*/
     public void setCategory(String category){
         categoryLabel.setText(category);
     }
- public void setImage(Image image){
- image = new Image(getClass().getResourceAsStream("C:/Users/Nadine/Pidev/public/upload/" + imagePath));
-imageView.setImage(image);
-        
-            }
+    
+  
+public void setImage(String imagePath) {
+    if (imageView != null) {
+        Image image = new Image(new File(imagePath).toURI().toString());
+        imageView.setImage(image);
+    }
+} public void setImage(Image image) {
+        imageView.setImage(image);
+    }
 
-    void setImage(ImageView Img) {
-this.imagePath = imagePath;
-    imageView.setImage(new Image(new File(imagePath).toURI().toString()));    }
+
+
+   
 }
 
