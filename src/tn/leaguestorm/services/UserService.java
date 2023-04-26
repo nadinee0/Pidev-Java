@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -134,6 +136,7 @@ public class UserService implements IService<User> {
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 User u = new User();
+                u.setId(rs.getInt("id"));
                 u.setEmail(rs.getString("email"));
                 u.setFirstName(rs.getString("first_name"));
                 u.setLastName(rs.getString("last_name"));
@@ -145,6 +148,30 @@ public class UserService implements IService<User> {
             System.out.println(ex.getMessage());
         }
         return myList;
+    }
+
+    public void banUser(User user) {
+        try {
+            String req = "UPDATE user SET banned = true WHERE id = ?";
+            PreparedStatement ps = cnx.getCnx().prepareStatement(req);
+            ps.setInt(1, user.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public boolean isBanned(String email) throws SQLException {
+        String query = "SELECT banned FROM user WHERE email = ?";
+        PreparedStatement statement = cnx.getCnx().prepareStatement(query);
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getBoolean("banned");
+        } else {
+            return false;
+        }
     }
 
 }

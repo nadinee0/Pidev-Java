@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -116,7 +117,12 @@ public class BackController {
             disableBtn.setAlignment(Pos.TOP_RIGHT);
             disableBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
             disableBtn.setOnAction(e -> {
-                UserService ps = new UserService();
+                UserService uss = new UserService();
+                uss.banUser(u);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Ban hammer");
+                alert.setContentText("User " + u.getFirstName() + " has been banned!");
+                alert.showAndWait();
                 userCards();
             });
             card.getChildren().add(disableBtn);

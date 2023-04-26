@@ -28,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import tn.leaguestorm.utils.MyConnection;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.leaguestorm.entities.User;
+import tn.leaguestorm.services.UserService;
 import tn.leaguestorm.utils.CurrentUser;
 import tn.leaguestorm.utils.FXMLUtils;
 
@@ -52,6 +53,7 @@ public class SigninController implements Initializable {
 
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
+        UserService us = new UserService();
         String selectData = "SELECT * FROM user WHERE email = ?";
         try {
             if (tfEmail.getText().isEmpty() || tfPassword.getText().isEmpty()) {
@@ -59,6 +61,12 @@ public class SigninController implements Initializable {
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else if (us.isBanned(tfEmail.getText())) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("You are banned!");
                 alert.showAndWait();
             } else {
                 PreparedStatement ps = connect.getCnx().prepareStatement(selectData);

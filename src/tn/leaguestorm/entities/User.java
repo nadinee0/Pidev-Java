@@ -17,6 +17,7 @@ public class User {
     private int id, isVerified;
     private String email, password, firstName, lastName, country, profilePictureName, phoneNumber;
     LocalDate birthDate;
+    private boolean banned;
 
     public User() {
     }
@@ -72,6 +73,14 @@ public class User {
         this.isVerified = isVerified;
     }
 
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
     public User(String email, String password, int verified, String firstName, String lastName, LocalDate birthDate, String country, String profilePictureName, String phoneNumber) {
         this.email = email;
         this.password = password;
@@ -103,6 +112,10 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPassword() {
