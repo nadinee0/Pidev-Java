@@ -117,8 +117,6 @@ public class AjouterEventsController implements Initializable {
     private TextField filterfield1;
     @FXML
     private TextField filterfield2;
-    @FXML
-    private Button Stats;
     
 
 
@@ -166,6 +164,15 @@ public class AjouterEventsController implements Initializable {
             Logger.getLogger(AjouterEventsController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tableajout.setItems(dataList);  
+        ServiceEvents perr = new ServiceEvents();
+        filterfield2.textProperty().addListener((obs, oldText, newText) -> {
+            List<Events> ae = null;
+            try {
+                ae = perr.Search1(newText);
+            } catch (SQLException ex) {
+                Logger.getLogger(AjouterEventsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tableajout.getItems().setAll(ae);});
         // TODO
         //tickets
         tableTickets.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -182,7 +189,15 @@ public class AjouterEventsController implements Initializable {
             Logger.getLogger(AjouterEventsController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tableTickets.setItems(dataList2);  
-        
+        ServicesTickets per = new ServicesTickets();
+        filterfield1.textProperty().addListener((obs, oldText, newText) -> {
+            List<Tickets> ae = null;
+            try {
+                ae = per.Search(newText);
+            } catch (SQLException ex) {
+                Logger.getLogger(AjouterEventsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tableTickets.getItems().setAll(ae);});
     }    
      
 
@@ -469,7 +484,6 @@ clean();
         
     }
 
-    @FXML
     private void Stats(ActionEvent event) throws IOException {
          root = FXMLLoader.load(getClass().getResource("Stats.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -495,6 +509,18 @@ clean();
                     .collect(Collectors.toList());
             tableTickets.getItems().clear(); // Clear previous items
             tableTickets.getItems().addAll(sortedList); // Add sorted items
+    }
+
+    @FXML
+    private void chart(ActionEvent event) throws IOException {
+        FXMLLoader loader =new FXMLLoader (getClass().getResource("Stats.fxml"));
+        Parent root= loader.load();
+        Scene scene = new Scene(root);
+Stage stage = new Stage();
+stage.setScene(scene);
+stage.setTitle("Tech Storm");
+stage.show();
+        
     }
  }
         

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import pidev.techstorm.entities.Events;
 import pidev.techstorm.utils.DataSource;
 
@@ -84,4 +85,12 @@ while(rs.next()){
 return events;
 }
     
+    public List<Events> Search1(String t) throws SQLException {
+
+        List<Events> list1 = new ArrayList<>();
+        List<Events> list2 = getAll();
+        list1 = (list2.stream().filter(c -> c.getTitle().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
 }

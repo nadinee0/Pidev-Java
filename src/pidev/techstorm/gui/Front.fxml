@@ -3,7 +3,6 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -18,8 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="810.0" prefWidth="1315.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="pidev.techstorm.gui.FrontController">
+<AnchorPane id="AnchorPane" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.techstorm.gui.FrontController">
    <children>
       <BorderPane layoutX="-1.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -57,17 +55,12 @@
                   <Pane prefHeight="57.0" prefWidth="435.0" VBox.vgrow="ALWAYS" />
                   <VBox fx:id="chosenEventCard" alignment="CENTER" prefHeight="535.0" prefWidth="100.0" styleClass="chosen-fruit-card" stylesheets="@Table.css">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="50.0" right="50.0" />
+                        <Insets bottom="70.0" left="50.0" right="50.0" />
                      </VBox.margin>
                      <children>
                         <HBox prefHeight="78.0" prefWidth="335.0">
                            <children>
-                              <Label fx:id="EventNameLabel" prefHeight="66.0" prefWidth="225.0" text="Peach" textFill="WHITE">
-                                 <font>
-                                    <Font size="36.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="EventPriceLabel" layoutX="10.0" layoutY="10.0" prefHeight="66.0" prefWidth="138.0" text="\$2.99" textFill="WHITE">
+                              <Label fx:id="EventNameLabel" prefHeight="66.0" prefWidth="442.0" text="Title" textFill="WHITE">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -84,25 +77,15 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="60.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="60.0" prefWidth="113.0" text="Kg" textFill="WHITE">
+                              <Label fx:id="EventDescriptionLabel" prefHeight="60.0" prefWidth="315.0" text="Location" textFill="WHITE">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <ComboBox prefWidth="150.0" promptText="1" styleClass="comboBox" stylesheets="@Table.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="367.0" prefHeight="60.0" prefWidth="335.0">
-                           <children>
-                              <Label prefHeight="60.0" prefWidth="113.0" text="Kg" textFill="WHITE">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox prefWidth="150.0" promptText="selected" styleClass="comboBox" stylesheets="@Table.css" />
-                           </children>
-                        </HBox>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@Table.css" text="Add to chart " textFill="#8a8585">
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="367.0" prefHeight="60.0" prefWidth="335.0" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@Table.css" text="View Détails" textFill="#8a8585">
                            <VBox.margin>
                               <Insets bottom="20.0" top="20.0" />
                            </VBox.margin>
@@ -112,6 +95,14 @@
                         </Button>
                      </children>
                   </VBox>
+                  <ImageView fx:id="id_map" fitHeight="71.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="150.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@Google-Maps-Logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </VBox>
          </left>
@@ -211,16 +202,16 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
                         <ScrollPane fx:id="scroll" prefHeight="570.0" prefWidth="785.0" styleClass="transparent" stylesheets="@Table.css">
-                           <content>
-                              <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0">
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                                 </rowConstraints>
-                              </GridPane>
-                           </content>
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
+                           <content>
+                              <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0">
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
                         </ScrollPane>
                      </children>
                   </HBox>

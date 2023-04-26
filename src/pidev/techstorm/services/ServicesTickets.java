@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import pidev.techstorm.entities.Tickets;
 import pidev.techstorm.utils.DataSource;
 
@@ -103,5 +104,14 @@ return tickets;
 //        }
 //    return tickets;
 //}
+    
+    public List<Tickets> Search(String t) throws SQLException {
+
+        List<Tickets> list1 = new ArrayList<>();
+        List<Tickets> list2 = getAll();
+        list1 = (list2.stream().filter(c -> c.getType().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
     
 }

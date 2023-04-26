@@ -11,6 +11,10 @@ and open the template in the editor.
     -fx-background-image: url('japan1.gif');
     -fx-background-size:cover;
 }
+.chatt {
+    -fx-background-image: url('chatbot.gif');
+    -fx-background-size:cover;
+}
 .white-form{
     -fx-background-color: #fff;
     -fx-background-radius: 8px;
