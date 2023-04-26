@@ -31,6 +31,9 @@ public class Badge {
         this.date = date;
     }
 
+    public Badge() {
+    }
+
     public int getId() {
         return id;
     }

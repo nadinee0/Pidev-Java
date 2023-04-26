@@ -24,14 +24,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import tn.leaguestorm.entities.User;
-import tn.leaguestorm.services.UserService;
+import tn.leaguestorm.entities.Badge;
+import tn.leaguestorm.services.BadgeService;
 
 /**
  *
  * @author Bellalouna Iheb
  */
-public class BackController {
+public class BackBadgeController {
 
     @FXML
     private Button btnOverview;
@@ -57,33 +57,34 @@ public class BackController {
     private Pane pnlOverview;
     @FXML
     private VBox pnItems;
-
+    
     @FXML
-    private FlowPane userPane;
-    private ObservableList<User> users;
-
+    private FlowPane badgePane;
+    private ObservableList<Badge> badges;
+    
+    
     @FXML
     private void handleClicks(ActionEvent event) {
     }
 
     public void initialize() {
-        userCards();
+        badgeCards();
     }
 
-    public void userCards() {
-        userPane.getChildren().clear();
-        UserService us = new UserService();
-        ObservableList<User> userList = FXCollections.observableArrayList();
-        userList = us.displayUsers();
+    public void badgeCards() {
+        badgePane.getChildren().clear();
+        BadgeService bs = new BadgeService();
+        ObservableList<Badge> badgeList = FXCollections.observableArrayList();
+        badgeList = bs.displayBadges();
 
-        for (User u : userList) {
+        for (Badge b : badgeList) {
             VBox card = new VBox();
             card.setPrefSize(250, 250);
             card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);");
 
             ImageView imageView;
             try {
-                imageView = new ImageView(new Image(new FileInputStream("C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + u.getProfilePictureName())));
+                imageView = new ImageView(new Image(new FileInputStream("C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\badge\\" + b.getBadgeFileName())));
                 imageView.setFitWidth(150);
                 imageView.setFitHeight(150);
                 imageView.setPreserveRatio(true);
@@ -92,36 +93,36 @@ public class BackController {
                 Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            Label firstNameLabel = new Label(u.getFirstName());
-            Label lastNameLabel = new Label(u.getLastName());
-            Label emailLabel = new Label(u.getEmail());
+            Label logoLabel = new Label(b.getLogo());
+            Label valeurLabel = new Label(Integer.toString(b.getValeur()));
+            Label descriptionLabel = new Label(b.getDescription());
+            
+            logoLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
+            logoLabel.setAlignment(Pos.CENTER);
+            logoLabel.setStyle("-fx-text-fill: gray;");
 
-            firstNameLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
-            firstNameLabel.setAlignment(Pos.CENTER);
-            firstNameLabel.setStyle("-fx-text-fill: gray;");
+            valeurLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
+            valeurLabel.setAlignment(Pos.CENTER);
+            valeurLabel.setStyle("-fx-text-fill: gray;");
 
-            lastNameLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
-            lastNameLabel.setAlignment(Pos.CENTER);
-            lastNameLabel.setStyle("-fx-text-fill: gray;");
+            descriptionLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
+            descriptionLabel.setAlignment(Pos.CENTER);
+            descriptionLabel.setStyle("-fx-text-fill: gray;");
 
-            emailLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
-            emailLabel.setAlignment(Pos.CENTER);
-            emailLabel.setStyle("-fx-text-fill: gray;");
-
-            card.getChildren().add(firstNameLabel);
-            card.getChildren().add(lastNameLabel);
-            card.getChildren().add(emailLabel);
+            card.getChildren().add(logoLabel);
+            card.getChildren().add(valeurLabel);
+            card.getChildren().add(descriptionLabel);
 
             Button disableBtn = new Button("Disable");
             disableBtn.setAlignment(Pos.TOP_RIGHT);
             disableBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
             disableBtn.setOnAction(e -> {
-                UserService ps = new UserService();
-                userCards();
+                BadgeService bss = new BadgeService();
+                badgeCards();
             });
             card.getChildren().add(disableBtn);
-            userPane.getChildren().add(card);
-            userPane.setMargin(card, new Insets(5, 5, 5, 5));
+            badgePane.getChildren().add(card);
+            badgePane.setMargin(card, new Insets(5, 5, 5, 5));
         }
     }
 }

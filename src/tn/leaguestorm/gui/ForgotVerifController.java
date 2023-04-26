@@ -72,7 +72,7 @@ public class ForgotVerifController implements Initializable{
         } catch (IOException ex) {
             Logger.getLogger(ForgotController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } 
 
     @FXML
     private void handleExitImgAction(MouseEvent event) {
@@ -80,8 +80,7 @@ public class ForgotVerifController implements Initializable{
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
+    public void initialize(URL location, ResourceBundle resources) { 
     }
     
 }

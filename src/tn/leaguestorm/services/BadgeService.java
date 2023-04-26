@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import tn.leaguestorm.entities.Badge;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.utils.MyConnection;
@@ -47,7 +49,7 @@ public class BadgeService implements IService<Badge> {
     public List<Badge> getAll() throws SQLException {
         
         List<Badge> list = new ArrayList<>();
-            String req = "Select * from user";
+            String req = "Select * from badge";
             Statement st = cnx.getCnx().createStatement();
             ResultSet rs = st.executeQuery(req);
             while(rs.next()){
@@ -55,6 +57,27 @@ public class BadgeService implements IService<Badge> {
                 list.add(b);
             }
         return list;
+    }
+    
+    public ObservableList<Badge> displayBadges() {
+        ObservableList<Badge> myList = FXCollections.observableArrayList();
+
+        try {
+            String req = "Select * from badge";
+            Statement st = cnx.getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Badge b = new Badge();
+                b.setValeur(rs.getInt("valeur"));
+                b.setLogo(rs.getString("logo"));
+                b.setDescription(rs.getString("description"));
+                b.setBadgeFileName(rs.getString("badge_file_name"));
+                myList.add(b);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return myList;
     }
     
 }
