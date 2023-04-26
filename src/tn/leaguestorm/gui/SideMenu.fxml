@@ -10,7 +10,7 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="504.0" prefWidth="256.0" style="-fx-background-color: #ebe8f9;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.SideMenuController">
    <children>
-      <ImageView fx:id="userProfilePic" fitHeight="208.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+      <ImageView fx:id="userProfilePic"  pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
          <VBox.margin>
             <Insets left="17.0" top="40.0" />
          </VBox.margin>

@@ -14,8 +14,8 @@ import java.time.LocalDate;
 public class Role extends User {
     private String role;
 
-    public Role(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber, String role) {
-        super(email, password, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+    public Role(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String profilePictureName, String phoneNumber, String role) {
+        super(email, password, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber);
         this.role = role;
         //System.out.println("Role: " + role);
     }
@@ -28,19 +28,19 @@ public class Role extends User {
         this.role = role;
     }
 
-    public static Role createUser(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber) {
-        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, phoneNumber, "[\"ROLE_USER\"]");
+    public static Role createUser(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country,  String profilePictureName, String phoneNumber) {
+        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber, "[\"ROLE_USER\"]");
     }
     
-    public static Role createPlayer(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber) {
-        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, phoneNumber,"[\"ROLE_PLAYER\"]");
+    public static Role createPlayer(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country,String profilePictureName, String phoneNumber) {
+        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber,"[\"ROLE_PLAYER\"]");
     }
 
-    public static Role createOrganization(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber) {
-        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, phoneNumber, "[\"ROLE_ORGANIZATION\"]");
+    public static Role createOrganization(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String profilePictureName, String phoneNumber) {
+        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber, "[\"ROLE_ORGANIZATION\"]");
     }
 
-    public static Role createTeam(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber) {
-        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, phoneNumber, "[\"ROLE_TEAM\"]");
+    public static Role createTeam(String email, String password, int isVerified, String firstName, String lastName, LocalDate birthDate, String country, String profilePictureName, String phoneNumber) {
+        return new Role(email, password, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber, "[\"ROLE_TEAM\"]");
     }
 }

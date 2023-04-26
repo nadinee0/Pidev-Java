@@ -45,15 +45,15 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
 public class SendMessage {
-    private static final String ACCOUNT_SID = "AC8eeab75a768689d496979a5bad747646";
-    private static final String AUTH_TOKEN = "5c1d3eb652138bb0449dded09091f9fd";
-    private static final String TWILIO_PHONE_NUMBER = "+16074247097";
+    private static final String ACCOUNT_SID = "ACa8be271efbf32879031ed087f2139862";
+    private static final String AUTH_TOKEN = "01f6b8564931d389597a71168533229f";
+    private static final String TWILIO_PHONE_NUMBER = "+16812216467";
 
     public static void sendSms(String toPhoneNumber, String message) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message.creator(new PhoneNumber(toPhoneNumber), new PhoneNumber(TWILIO_PHONE_NUMBER), message).create();
     }
     public static void main(String[] args) {
-        sendSms("+216 90228814","banned");
+        sendSms("+216 90228814","test");
     }
 }

@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -47,7 +49,7 @@ public class UserService implements IService<User> {
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
     }
-    
+
     public void updateForgottenPassword(String password, String phone) throws SQLException {
         String req = "UPDATE `user` SET `password` = '" + password + "' WHERE `user`.`phone_number` =" + phone;
         Statement st = cnx.getCnx().createStatement();
@@ -80,7 +82,7 @@ public class UserService implements IService<User> {
             alert.showAndWait();
             return false;
         }
-        String req = "INSERT INTO `user` (`email`, `roles`, `password`, `is_verified`, `first_name`, `last_name`, `birth_date`, `country`, `phone_number`) VALUES ('" + u.getEmail() + "', '" + u.getRole() + "', '" + u.getPassword() + "', '" + u.getIsVerified() + "', '" + u.getFirstName().substring(0, 1).toUpperCase() + u.getFirstName().substring(1) + "', '" + u.getLastName().substring(0, 1).toUpperCase() + u.getLastName().substring(1) + "', '" + u.getBirthDate() + "', '" + u.getCountry() + "', '" + u.getPhoneNumber() + "')";
+        String req = "INSERT INTO `user` (`email`, `roles`, `password`, `is_verified`, `first_name`, `last_name`, `birth_date`, `country`, `profile_picture_name`, `phone_number`) VALUES ('" + u.getEmail() + "', '" + u.getRole() + "', '" + u.getPassword() + "', '" + u.getIsVerified() + "', '" + u.getFirstName().substring(0, 1).toUpperCase() + u.getFirstName().substring(1) + "', '" + u.getLastName().substring(0, 1).toUpperCase() + u.getLastName().substring(1) + "', '" + u.getBirthDate() + "', '" + u.getCountry() + "', '" + u.getProfilePictureName() + "', '" + u.getPhoneNumber() + "')";
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -121,6 +123,28 @@ public class UserService implements IService<User> {
             list.add(u);
         }
         return list;
+    }
+
+    public ObservableList<User> displayUsers() {
+        ObservableList<User> myList = FXCollections.observableArrayList();
+
+        try {
+            String req = "Select * from user";
+            Statement st = cnx.getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                User u = new User();
+                u.setEmail(rs.getString("email"));
+                u.setFirstName(rs.getString("first_name"));
+                u.setLastName(rs.getString("last_name"));
+                u.setProfilePictureName(rs.getString("profile_picture_name"));
+
+                myList.add(u);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return myList;
     }
 
 }

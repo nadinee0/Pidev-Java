@@ -18,6 +18,9 @@ public class User {
     private String email, password, firstName, lastName, country, profilePictureName, phoneNumber;
     LocalDate birthDate;
 
+    public User() {
+    }
+
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -69,7 +72,7 @@ public class User {
         this.isVerified = isVerified;
     }
 
-    public User(String email, String password, int verified, String firstName, String lastName, LocalDate birthDate, String country, String phoneNumber) {
+    public User(String email, String password, int verified, String firstName, String lastName, LocalDate birthDate, String country, String profilePictureName, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -77,6 +80,7 @@ public class User {
         this.birthDate = birthDate;
         this.country = country;
         this.phoneNumber = phoneNumber;
+        this.profilePictureName = profilePictureName;
     }
 
     public User(String email, String password, int verified, String firstName, String lastName, String country, String phoneNumber, LocalDate birthDate) {

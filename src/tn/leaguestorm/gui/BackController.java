@@ -5,26 +5,25 @@
  */
 package tn.leaguestorm.gui;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.geometry.Insets;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.UserService;
 
@@ -58,78 +57,71 @@ public class BackController {
     private Pane pnlOverview;
     @FXML
     private VBox pnItems;
-    private TableColumn<User, String> emailColumn;
-    private TableColumn<User, String> firstNameColumn;
-    private TableColumn<User, String> lastNameColumn;
-    private TableColumn<User, Integer> phoneNumberColumn;
-    private TableView<User> tableView;
 
+    @FXML
+    private FlowPane userPane;
     private ObservableList<User> users;
-    @FXML
-    private FlowPane cardPane;
-    @FXML
-    private VBox userContainer;
 
     @FXML
     private void handleClicks(ActionEvent event) {
     }
 
     public void initialize() {
-        UserService userService = new UserService();
-        try {
-            users = FXCollections.observableArrayList(userService.getAll());
-        for (User user : users) {
-             VBox card = new VBox();
-            card.getStyleClass().add("card");
-            card.setPrefWidth(300);
-            card.setSpacing(10);
-            card.setPadding(new Insets(10, 10, 10, 10));
+        refrechpane();
+    }
 
-            HBox userInfo = new HBox();
-            userInfo.getStyleClass().add("user-info");
-            userInfo.setPrefWidth(250);
-            userInfo.setSpacing(10);
+    public void refrechpane() {
+        userPane.getChildren().clear();
+        UserService us = new UserService();
+        ObservableList<User> listuser = FXCollections.observableArrayList();
+        listuser = us.displayUsers();
 
-            // Use a GridPane instead of a VBox for the user information labels
-            GridPane userGrid = new GridPane();
-            userGrid.setHgap(10);
-            userGrid.setVgap(5);
-            userGrid.setPadding(new Insets(5));
+        for (User u : listuser) {
+            VBox card = new VBox();
+            card.setPrefSize(250, 250);
+            card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);");
 
-            Label emailLabel = new Label("Email:");
-            Label emailValue = new Label(user.getEmail());
-            GridPane.setConstraints(emailLabel, 0, 0);
-            GridPane.setConstraints(emailValue, 1, 0);
-
-            Label firstNameLabel = new Label("First Name:");
-            Label firstNameValue = new Label(user.getFirstName());
-            GridPane.setConstraints(firstNameLabel, 0, 1);
-            GridPane.setConstraints(firstNameValue, 1, 1);
-
-            Label lastNameLabel = new Label("Last Name:");
-            Label lastNameValue = new Label(user.getLastName());
-            GridPane.setConstraints(lastNameLabel, 0, 2);
-            GridPane.setConstraints(lastNameValue, 1, 2);
-
-            Label phoneNumberLabel = new Label("Phone Number:");
-            Label phoneNumberValue = new Label(user.getPhoneNumber());
-            GridPane.setConstraints(phoneNumberLabel, 0, 3);
-            GridPane.setConstraints(phoneNumberValue, 1, 3);
-
-            userGrid.getChildren().addAll(
-                emailLabel, emailValue, 
-                firstNameLabel, firstNameValue, 
-                lastNameLabel, lastNameValue, 
-                phoneNumberLabel, phoneNumberValue
-            );
-
-            userInfo.getChildren().addAll(userGrid);
-
-            card.getChildren().addAll(userInfo);
-            userContainer.getChildren().add(card);
+            ImageView imageView;
+            try {
+                imageView = new ImageView(new Image(new FileInputStream("C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + u.getProfilePictureName())));
+                imageView.setFitWidth(150);
+                imageView.setFitHeight(150);
+                imageView.setPreserveRatio(true);
+                card.getChildren().add(imageView);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+
+            Label firstNameLabel = new Label(u.getFirstName());
+            Label lastNameLabel = new Label(u.getLastName());
+            Label emailLabel = new Label(u.getEmail());
+
+            firstNameLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
+            firstNameLabel.setAlignment(Pos.CENTER);
+            firstNameLabel.setStyle("-fx-text-fill: gray;");
+
+            lastNameLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
+            lastNameLabel.setAlignment(Pos.CENTER);
+            lastNameLabel.setStyle("-fx-text-fill: gray;");
+
+            emailLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
+            emailLabel.setAlignment(Pos.CENTER);
+            emailLabel.setStyle("-fx-text-fill: gray;");
+
+            card.getChildren().add(firstNameLabel);
+            card.getChildren().add(lastNameLabel);
+            card.getChildren().add(emailLabel);
+
+            Button disableBtn = new Button("Disable");
+            disableBtn.setAlignment(Pos.TOP_RIGHT);
+            disableBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
+            disableBtn.setOnAction(e -> {
+                UserService ps = new UserService();
+                refrechpane();
+            });
+            card.getChildren().add(disableBtn);
+            userPane.getChildren().add(card);
+            userPane.setMargin(card, new Insets(5, 5, 5, 5));
         }
     }
 }

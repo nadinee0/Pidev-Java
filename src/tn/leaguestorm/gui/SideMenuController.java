@@ -80,8 +80,14 @@ public class SideMenuController implements Initializable{
         
         String userProfilePicPath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\user\\" + currentUser.getProfilePictureName();
         Image userProfilePic = new Image("file:" + userProfilePicPath);
+        double radius = circle.getRadius();
+double diameter = radius * 2;
         this.userProfilePic.setImage(userProfilePic);
-        this.userProfilePic.setClip(circle);
+        
+        this.userProfilePic.setFitWidth(diameter);
+this.userProfilePic.setFitHeight(diameter);
+this.userProfilePic.setClip(circle);
+    
     } else {
             System.out.println("No such user found!");
 }

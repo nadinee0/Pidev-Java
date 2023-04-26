@@ -116,6 +116,7 @@ public class SignupController implements Initializable {
         LocalDate birthDate = birthDatePicker.getValue();
         String role = (String) roleBox.getSelectionModel().getSelectedItem();
         int isVerified = 0;
+        String profilePictureName = "default-profile.jpg";
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(13));
 
@@ -187,22 +188,22 @@ public class SignupController implements Initializable {
         UserService us = new UserService();
 
         if (role.equals("a simple user")) {
-            Role u = Role.createUser(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            Role u = Role.createUser(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber);
             if (!us.ajouter3(u)) {
                 return;
             }
         } else if (role.equals("a player")) {
-            Role u = Role.createPlayer(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            Role u = Role.createPlayer(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber);
             if (!us.ajouter3(u)) {
                 return;
             }
         } else if (role.equals("a team")) {
-            Role u = Role.createTeam(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            Role u = Role.createTeam(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber);
             if (!us.ajouter3(u)) {
                 return;
             }
         } else{
-            Role u = Role.createOrganization(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, phoneNumber);
+            Role u = Role.createOrganization(email, hashedPassword, isVerified, firstName, lastName, birthDate, country, profilePictureName, phoneNumber);
             if (!us.ajouter3(u)) {
                 return;
             }
