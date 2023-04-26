@@ -27,6 +27,48 @@ import javafx.stage.Stage;
 import tn.leaguestorm.entities.Article;
 import tn.leaguestorm.utils.MyConnection;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
+
+
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.Statement;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+
 
 /**
  * FXML Controller class
@@ -56,6 +98,10 @@ public class ArticleDetailsController implements Initializable {
     private Button backButton;
     private Article article;
     private MyConnection ds = MyConnection.getInstance();
+    @FXML
+    private ImageView qrCodeImageView;
+    @FXML
+    private Button QRCODE;
 
     /**
      * Initializes the controller class.
@@ -64,18 +110,7 @@ public class ArticleDetailsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        imageView = new ImageView();
     }    
-     public void setArticleDetails(String title, String price, String description, /*String category, */String imagePath) {
-    titleLabel.setText(title);
-    priceLabel.setText(String.valueOf(price));
-    descriptionLabel.setText(description);
-   // categoryLabel.setText(category.toString());
- /*  this.imagePath = imagePath;
-    imageView.setImage(new Image(new File(imagePath).toURI().toString()));*/
-   /* Image image = new Image(getClass().getResourceAsStream("C:/Users/Nadine/Pidev/public/upload/" + imagePath));
-imageView.setImage(image);*/
-            //Image image = new Image(new File(imagePath).toURI().toString());
-
-}
+   
 
     @FXML
     private void goBack(ActionEvent event) throws IOException {
@@ -107,6 +142,83 @@ imageView.setImage(image);*/
 public void setImage(Image image) {
         img.setImage(image);
     }
+
+
+@FXML
+private void generateQRCode(ActionEvent event) {
+  /*  String qrCodeData = titleLabel.getText(); // Set the data for the QR code to be the product title (or any other data you want to encode)
+    String filePath = "C:/Users/Nadine/Pidev/public/upload/qr_codes/" + titleLabel.getText() + ".png"; // Set the file path and name for the QR code image
+
+    try {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, 350, 350); // Set the size of the QR code image
+
+        // Convert the BitMatrix to a BufferedImage
+        BufferedImage bufferedImage = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < 350; x++) {
+            for (int y = 0; y < 350; y++) {
+                bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? Color.BLACK.getRGB() : Color.WHITE.getRGB());
+            }
+        }
+
+        // Write the BufferedImage to a file
+        File qrCodeFile = new File(filePath);
+        ImageIO.write(bufferedImage, "png", qrCodeFile);
+
+        // Display a success message
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("QR Code Generated");
+        alert.setHeaderText(null);
+        alert.setContentText("The QR code image was generated successfully!");
+        alert.showAndWait();
+    } catch (WriterException | IOException e) {
+        // Display an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("An error occurred while generating the QR code image.");
+        alert.showAndWait();
+    }
+}*/
+String qrCodeData = titleLabel.getText() + " " + priceLabel.getText() + " " + descriptionLabel.getText(); // Set the data for the QR code to be the product title, price, and description
+String filePath = "C:/Users/Nadine/Pidev/public/upload/qr_codes/" + titleLabel.getText() + ".png"; // Set the file path and name for the QR code image
+
+try {
+    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+    BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, 350, 350); // Set the size of the QR code image
+
+    // Convert the BitMatrix to a BufferedImage
+    BufferedImage bufferedImage = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < 350; x++) {
+        for (int y = 0; y < 350; y++) {
+            bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? Color.BLACK.getRGB() : Color.WHITE.getRGB());
+        }
+    }
+
+    // Write the BufferedImage to a file
+    File qrCodeFile = new File(filePath);
+    ImageIO.write(bufferedImage, "png", qrCodeFile);
+
+    // Display a success message
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("QR Code Generated");
+    alert.setHeaderText(null);
+    alert.setContentText("The QR code image was generated successfully!");
+    alert.showAndWait();
+} catch (WriterException | IOException e) {
+    // Display an error message
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText(null);
+    alert.setContentText("An error occurred while generating the QR code image.");
+    alert.showAndWait();
+}
+File qrCodeFile = new File(filePath);
+Image qrCodeImage = new Image(qrCodeFile.toURI().toString());
+qrCodeImageView.setImage(qrCodeImage);
+
+}
+
 
 
 

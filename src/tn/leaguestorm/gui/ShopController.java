@@ -5,7 +5,9 @@
  */
 package tn.leaguestorm.gui;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -49,7 +51,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,6 +70,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.tests.MainClass;
 import tn.leaguestorm.utils.MyConnection;
@@ -85,6 +90,8 @@ public class ShopController implements Initializable {
     private Label NameLabel;
     @FXML
     private Label PriceLabel;
+    @FXML
+    private Label CategoryLabel;
     @FXML
     private ImageView Img;
     Article a = new Article();
@@ -117,7 +124,7 @@ public class ShopController implements Initializable {
         while (resultSet.next()) {
 
             Label Description = new Label(resultSet.getString("description"));
-            //     grid.add(Description, colIndex, rowIndex + 1);
+            Label category = new Label(resultSet.getString("category_id"));
 
             // Create a new Label for the product name
             Label productName = new Label(resultSet.getString("titre"));
@@ -141,7 +148,7 @@ public class ShopController implements Initializable {
             int productId = resultSet.getInt("id"); // Get the product ID from the result set
             imageView.setOnMouseClicked(e -> {
                 // Pass the product ID to the method that will handle the click event
-                handleProductClick(productId, productName.getText(), Description.getText(), price.getText(), imagePath);
+                handleProductClick(productId, productName.getText(), Description.getText(),/* category.getText(),*/price.getText(), imagePath);
             });
 
             // Add the ImageView to the GridPane
@@ -158,7 +165,7 @@ public class ShopController implements Initializable {
         }
     }
 
-    private void handleProductClick(int productId, String productName, String Description, String price, String imagePath) {
+    private void handleProductClick(int productId, String productName, String Description, /*String category,*/String price, String imagePath) {
         // Update the UI with the selected product details
         NameLabel.setText(productName);
         PriceLabel.setText(price);
@@ -166,8 +173,9 @@ public class ShopController implements Initializable {
         Img.setImage(new Image(new File(imagePath).toURI().toString()));
         Img.setStyle("-fx-background-color: transparent");
         DescriptionLabel.setText(Description);
-    }
+       // CategoryLabel.setText(category);
 
+    }
 
     private void setChosenArticle(Article article) {
         selectedArticle = article;
@@ -184,7 +192,7 @@ public class ShopController implements Initializable {
         chosenCard.getChildren().clear();
         chosenCard.getChildren().addAll(imageView, NameLabel, PriceLabel);
 
-        handleProductClick(selectedArticle.getId(), selectedArticle.getTitre(), selectedArticle.getDescription(), Float.toString(selectedArticle.getPrix()), selectedArticle.getImage());
+        handleProductClick(selectedArticle.getId(), selectedArticle.getTitre(), selectedArticle.getDescription(),/*selectedArticle.getCategory().toString(), */Float.toString(selectedArticle.getPrix()), selectedArticle.getImage());
     }
 
     @Override
@@ -254,8 +262,7 @@ public class ShopController implements Initializable {
 
     @FXML
     private void details(ActionEvent event) throws SQLException, IOException {
-      String query = "SELECT * FROM article";
- /* 
+        String query = "SELECT * FROM article";
         // Execute the query and retrieve the result set
         Statement statement = ds.getCnx().createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -268,34 +275,20 @@ public class ShopController implements Initializable {
         apc.setTitre(NameLabel.getText());
         apc.setPrix(PriceLabel.getText());
         apc.setDescription(DescriptionLabel.getText());
-
-      */
-     // Execute the query and retrieve the result set
-Statement statement = ds.getCnx().createStatement();
-ResultSet resultSet = statement.executeQuery(query);
-
-FXMLLoader loader = new FXMLLoader(getClass().getResource("ArticleDetails.fxml"));
-Parent root = loader.load();
-NameLabel.getScene().setRoot(root);
-
-ArticleDetailsController apc = loader.getController();
-apc.setTitre(NameLabel.getText());
-apc.setPrix(PriceLabel.getText());
-apc.setDescription(DescriptionLabel.getText());
+       // apc.setCategory(CategoryLabel.getText());
 
 // Retrieve the image name from the database for the selected article
-String imageName = getImageNameFromDatabase(NameLabel.getText());
+        String imageName = getImageNameFromDatabase(NameLabel.getText());
 
 // Create a file path using the image name and the path of the directory where the images are stored
-String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + imageName;
+        String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + imageName;
 
 // Create an Image object from the file path
-Image image = new Image(new File(imagePath).toURI().toString());
+        Image image = new Image(new File(imagePath).toURI().toString());
 
 // Pass the Image object to the ArticleDetailsController and set it as the image of the article
-apc.setImage(image);
-
-
+        apc.setImage(image);
+        
     }
 
 }
