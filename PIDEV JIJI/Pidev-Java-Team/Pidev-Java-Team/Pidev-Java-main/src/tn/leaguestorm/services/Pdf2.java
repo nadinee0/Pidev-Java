@@ -20,7 +20,7 @@ import tn.leaguestorm.utils.MyConnection;
 
 /**
  *
- * @author Dell
+ * @author asus
  */
 public class Pdf2 {
     

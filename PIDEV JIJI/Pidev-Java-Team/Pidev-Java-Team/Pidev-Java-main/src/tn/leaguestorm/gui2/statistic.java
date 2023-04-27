@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Dell
+ * @author HP
  */
 public class statistic extends Application {
     
@@ -29,7 +29,7 @@ public class statistic extends Application {
           
             Parent root = loader.load(); 
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Stats");
+            primaryStage.setTitle("Statos");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {

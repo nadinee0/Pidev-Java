@@ -39,6 +39,7 @@ import javafx.util.Duration;
  */
 public class StatisticsController implements Initializable {
 
+
     @FXML
     private ImageView GoBackBtn;
     @FXML
@@ -114,7 +115,7 @@ public void displayStatistics() throws SQLException {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Statistique Team(s)");
                 alert.setHeaderText("Taux d'évaluation : " + data.getName());
-                alert.setContentText("Nombre d'équipes avec ce taux d'évaluation : " + total);
+                alert.setContentText("Nombre d'équipe(s) avec ce taux exactement : " + total);
                 alert.showAndWait();
             })
     );
