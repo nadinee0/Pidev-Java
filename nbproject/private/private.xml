@@ -21,7 +21,6 @@
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/services/UserService.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/ForgotConfirmWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/services/IService.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/Signup.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/BackController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/BackBadgeController.java</file>
@@ -30,7 +29,6 @@
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/BackBadgeWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/ForgotVerifWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/Badge.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SideMenu.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/HomeController.java</file>
         </group>
     </open-files>

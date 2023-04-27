@@ -141,6 +141,7 @@ public class UserService implements IService<User> {
                 u.setFirstName(rs.getString("first_name"));
                 u.setLastName(rs.getString("last_name"));
                 u.setProfilePictureName(rs.getString("profile_picture_name"));
+                u.setBanned(rs.getBoolean("banned"));
 
                 myList.add(u);
             }
