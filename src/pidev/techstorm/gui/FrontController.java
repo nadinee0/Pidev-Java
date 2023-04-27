@@ -5,6 +5,8 @@
  */
 package pidev.techstorm.gui;
 
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,11 +20,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlendMode;
@@ -35,8 +42,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javax.mail.MessagingException;
 import pidev.techstorm.entities.Events;
+
 import pidev.techstorm.services.ServiceEvents;
+
 import pidev.techstorm.tests.MyListener;
 import pidev.techstorm.utils.DataSource;
 
@@ -47,12 +57,13 @@ import pidev.techstorm.utils.DataSource;
  */
 public class FrontController implements Initializable {
 
+     private Stage stage;
+     private Scene scene;
+     private Parent root;
     @FXML
     private VBox chosenEventCard;
     @FXML
     private Label EventNameLabel;
-    @FXML
-    private Label EventPriceLabel;
     @FXML
     private ImageView EventImg;
     @FXML
@@ -251,6 +262,18 @@ public class FrontController implements Initializable {
         
         
         // TODO
+
+    @FXML
+    private void ticket(ActionEvent event) throws IOException {
+         root = FXMLLoader.load(getClass().getResource("Ticket.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+   
+    
 
    
         

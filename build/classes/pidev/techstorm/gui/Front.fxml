@@ -85,7 +85,7 @@
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="367.0" prefHeight="60.0" prefWidth="335.0" />
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@Table.css" text="View Détails" textFill="#8a8585">
+                        <Button mnemonicParsing="false" onAction="#ticket" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@Table.css" text="View Tickets" textFill="#8a8585">
                            <VBox.margin>
                               <Insets bottom="20.0" top="20.0" />
                            </VBox.margin>

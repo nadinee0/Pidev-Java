@@ -107,8 +107,7 @@
                                                       <Font name="System Bold" size="30.0" />
                                                    </font>
                                                 </Label>
-                                                <Button layoutX="82.0" layoutY="528.0" mnemonicParsing="false" onAction="#search1" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Rechercher" />
-                                                <TextField fx:id="filterfield1" layoutX="286.0" layoutY="528.0" prefHeight="37.0" prefWidth="183.0" promptText="rechercher..." />
+                                                <TextField fx:id="filterfield1" layoutX="86.0" layoutY="528.0" prefHeight="37.0" prefWidth="383.0" promptText="Entrer le TYPE ici pour rechercher" />
                                                 <Button layoutX="41.0" layoutY="583.0" mnemonicParsing="false" onAction="#chart" prefHeight="37.0" prefWidth="119.0" styleClass="btn" text="Statistique" />
                                                 <Button layoutX="205.0" layoutY="583.0" mnemonicParsing="false" onAction="#tfchatbot" prefHeight="37.0" prefWidth="120.0" styleClass="btn" text="ChatBot" />
                                                 <Button layoutX="368.0" layoutY="583.0" mnemonicParsing="false" onAction="#Trier" prefHeight="37.0" prefWidth="131.0" styleClass="btn" text="Trier" />
@@ -173,10 +172,10 @@
                                                    </image>
                                                 </ImageView>
                                                 <TextField fx:id="tfLOCATION" layoutX="18.0" layoutY="323.0" prefHeight="16.0" prefWidth="223.0" promptText="Entrer votre localisation" />
-                                                <Button layoutX="38.0" layoutY="556.0" mnemonicParsing="false" onAction="#tfModifier" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Modifier" />
-                                                <Button layoutX="38.0" layoutY="504.0" mnemonicParsing="false" onAction="#tfSupprimer" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Supprimer" />
+                                                <Button layoutX="38.0" layoutY="553.0" mnemonicParsing="false" onAction="#tfModifier" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Modifier" />
+                                                <Button layoutX="38.0" layoutY="501.0" mnemonicParsing="false" onAction="#tfSupprimer" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Supprimer" />
                                                 <TextArea fx:id="tfDESC" layoutX="17.0" layoutY="141.0" prefHeight="100.0" prefWidth="221.0" promptText="Entrer votre description" />
-                                                <TextField fx:id="deletefield1" layoutX="34.0" layoutY="451.0" />
+                                                <TextField fx:id="deletefield1" layoutX="34.0" layoutY="448.0" />
                                              </children>
                                           </AnchorPane>
                                           <Separator layoutX="277.0" layoutY="15.0" orientation="VERTICAL" prefHeight="633.0" prefWidth="3.0" />
@@ -207,8 +206,7 @@
                                                 <Font name="System Bold" size="30.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="filterfield2" layoutX="262.0" layoutY="557.0" promptText="rechercher..." />
-                                          <Button layoutX="57.0" layoutY="553.0" mnemonicParsing="false" onAction="#search2" prefHeight="37.0" prefWidth="183.0" styleClass="btn" text="Rechercher" />
+                                          <TextField fx:id="filterfield2" layoutX="59.0" layoutY="557.0" prefHeight="31.0" prefWidth="402.0" promptText="Enter le TITRE ici pour rechercher" />
                                        </children>
                                        <styleClass>
                                           <String fx:value="white-form" />

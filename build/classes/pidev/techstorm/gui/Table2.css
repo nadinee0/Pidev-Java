@@ -122,6 +122,9 @@ and open the template in the editor.
     -fx-text-fill:#e6e6e6;
 }
 
+.white-background {
+    -fx-background-color:#fff;
+}
 
 
 

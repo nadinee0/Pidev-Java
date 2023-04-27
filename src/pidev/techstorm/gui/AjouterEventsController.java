@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,12 +44,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.mail.MessagingException;
 import org.controlsfx.control.Notifications;
 import pidev.techstorm.entities.Events;
 import pidev.techstorm.services.ServiceEvents;
 import org.controlsfx.control.textfield.TextFields;
 import pidev.techstorm.entities.Tickets;
 import pidev.techstorm.services.ServicesTickets;
+
 
 
 /**
@@ -448,7 +451,7 @@ public class AjouterEventsController implements Initializable {
     Integer val = tableTickets.getItems().get(i).getPrix();
     tot += val;
 }
-           notif("Total des revenus","Votre total des prix en dianrs est :\n" +Integer.toString(tot));
+           notif("Total de prix de Tickets","Votre total des prix en dinards est :\n" +Integer.toString(tot));
 
 //        Alert alert=new Alert(Alert.AlertType.INFORMATION);
 //        alert.setTitle("Succès");
@@ -458,31 +461,31 @@ public class AjouterEventsController implements Initializable {
     
     }
 
-    @FXML
-private void search1(ActionEvent event) throws SQLException {
-String type = filterfield1.getText();
-        
-    ServicesTickets so = new ServicesTickets();
-List<Tickets> tickets = so.rechercherTickets(type);
-options.clear();
-options.addAll(tickets);
-tableTickets.setItems(options);
-clean2();
+//    @FXML
+//private void search1(ActionEvent event) throws SQLException {
+//String type = filterfield1.getText();
+//        
+//    ServicesTickets so = new ServicesTickets();
+//List<Tickets> tickets = so.rechercherTickets(type);
+//options.clear();
+//options.addAll(tickets);
+//tableTickets.setItems(options);
+//clean2();
+//
+//    }
 
-    }
-
-    @FXML
-    private void search2(ActionEvent event) throws SQLException {
-        String title = filterfield2.getText();
-        
-    ServiceEvents so = new ServiceEvents();
-List<Events> events = so.rechercherEvents(title);
-options.clear();
-options.addAll(events);
-tableajout.setItems(options);
-clean();
-        
-    }
+//    @FXML
+//    private void search2(ActionEvent event) throws SQLException {
+//        String title = filterfield2.getText();
+//        
+//    ServiceEvents so = new ServiceEvents();
+//List<Events> events = so.rechercherEvents(title);
+//options.clear();
+//options.addAll(events);
+//tableajout.setItems(options);
+//clean();
+//        
+//    }
 
     private void Stats(ActionEvent event) throws IOException {
          root = FXMLLoader.load(getClass().getResource("Stats.fxml"));
@@ -522,6 +525,9 @@ stage.setTitle("Tech Storm");
 stage.show();
         
     }
+
+                        
+
  }
         
 
