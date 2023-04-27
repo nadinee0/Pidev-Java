@@ -60,14 +60,20 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Statement;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.VBox;
+import javafx.stage.Window;
+import tn.leaguestorm.entities.Rating;
 
 
 /**
@@ -102,13 +108,27 @@ public class ArticleDetailsController implements Initializable {
     private ImageView qrCodeImageView;
     @FXML
     private Button QRCODE;
-
+private int currentRating = 0;
+    @FXML
+    private Label ratingLabel;
+    @FXML
+    private Label titreLabel;
+    @FXML
+    private Label authorLabel;
+    @FXML
+    private Label contentLabel;
+    @FXML
+    private Button rateButton;
+    @FXML
+    private Rating ratingSystem;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       imageView = new ImageView();
+      // imageView = new ImageView();
+       
+      
     }    
    
 
@@ -143,43 +163,18 @@ public void setImage(Image image) {
         img.setImage(image);
     }
 
-
+  /* public void setArticle(Article article) {
+        this.article = article;
+        titleLabel.setText(article.getTitre());
+//        authorLabel.setText("Author: " + article.getAuthor());
+        contentLabel.setText(article getContent());
+        initialRating = article.getRating();
+        ratingSystem.setCurrentRating((int) initialRating);
+        ratingLabel.setText(String.format("%.1f", initialRating));
+    }
+   */
 @FXML
 private void generateQRCode(ActionEvent event) {
-  /*  String qrCodeData = titleLabel.getText(); // Set the data for the QR code to be the product title (or any other data you want to encode)
-    String filePath = "C:/Users/Nadine/Pidev/public/upload/qr_codes/" + titleLabel.getText() + ".png"; // Set the file path and name for the QR code image
-
-    try {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, 350, 350); // Set the size of the QR code image
-
-        // Convert the BitMatrix to a BufferedImage
-        BufferedImage bufferedImage = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
-        for (int x = 0; x < 350; x++) {
-            for (int y = 0; y < 350; y++) {
-                bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? Color.BLACK.getRGB() : Color.WHITE.getRGB());
-            }
-        }
-
-        // Write the BufferedImage to a file
-        File qrCodeFile = new File(filePath);
-        ImageIO.write(bufferedImage, "png", qrCodeFile);
-
-        // Display a success message
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("QR Code Generated");
-        alert.setHeaderText(null);
-        alert.setContentText("The QR code image was generated successfully!");
-        alert.showAndWait();
-    } catch (WriterException | IOException e) {
-        // Display an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("An error occurred while generating the QR code image.");
-        alert.showAndWait();
-    }
-}*/
 String qrCodeData = titleLabel.getText() + " " + priceLabel.getText() + " " + descriptionLabel.getText(); // Set the data for the QR code to be the product title, price, and description
 String filePath = "C:/Users/Nadine/Pidev/public/upload/qr_codes/" + titleLabel.getText() + ".png"; // Set the file path and name for the QR code image
 
@@ -219,9 +214,40 @@ qrCodeImageView.setImage(qrCodeImage);
 
 }
 
+/*
 
+ private void showRatingDialog() {
+        Dialog<Rating> dialog = new Dialog<>();
+        dialog.setTitle("Rate Article");
 
+        TextArea commentTextArea = new TextArea();
+        commentTextArea.setPromptText("Enter your comments here");
 
-   
+        Button rateButton = new Button("Rate");
+        rateButton.setOnAction(event -> {
+            Rating ratingResult = new Rating(ratingSystem.getCurrentRating(), commentTextArea.getText());
+            dialog.setResult(ratingResult);
+        });
+
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(event -> dialog.setResult(null));
+
+        dialog.getDialogPane().setContent(new VBox(commentTextArea, ratingSystem, rateButton, cancelButton));
+
+        Window window = root.getScene().getWindow();
+        dialog.initOwner(window);
+
+        Optional<Rating> result = dialog.showAndWait();
+
+        result.ifPresent(ratingResult -> {
+            double newRating = ratingResult.getStars();
+            String comment = ratingResult.getComment();
+            article.setRating(newRating);
+            article.addComment(comment);
+            ratingSystem.setCurrentRating((int) newRating);
+        });
+    }
+*/
 }
+
 

@@ -134,6 +134,10 @@ public class Rating {
         }
         return true;
     }
+
+    public void setCurrentRating(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
    
    
 }

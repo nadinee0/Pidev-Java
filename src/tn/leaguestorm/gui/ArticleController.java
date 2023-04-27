@@ -45,6 +45,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -112,15 +113,12 @@ public class ArticleController implements Initializable {
 
     @FXML
     private ComboBox<String> cbCategory;
-    @FXML
     private ComboBox<String> cbSubcategory;
 
     @FXML
     private Button btnOverview;
     @FXML
     private Button btnCategory;
-    @FXML
-    private Button btnSubCategory;
     @FXML
     private Button btnArticle;
     @FXML
@@ -139,6 +137,10 @@ public class ArticleController implements Initializable {
     private Pane pnlOverview;
     @FXML
     private ImageView imageView;
+    @FXML
+    private Button btnstats;
+    @FXML
+    private Button btnnotif;
 
     /**
      * Initializes the controller class.
@@ -375,7 +377,7 @@ public class ArticleController implements Initializable {
     @FXML
     private void saveArticle(ActionEvent event) throws SQLException, IOException {
         ServiceArticle sa = new ServiceArticle();
-  Import(event);
+        Import(event);
         String title = tfTitle.getText();
         String description = taDescription.getText();
         String priceS = /*Float.valueOf(tfPrice.getText()); */ tfPrice.getText();
@@ -470,33 +472,33 @@ public class ArticleController implements Initializable {
             alert.showAndWait();
             return;
         } else {
-        // try {    
-    String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`) VALUES (?,?,?,?,?,?)";
-PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
-st1.setString(1, a.getTitre());
-if (a.getImage() != null) {
-    st1.setString(2, a.getImage());
-} else {
-    st1.setNull(2, java.sql.Types.NULL);
-}
-st1.setFloat(3, a.getPrix());
-st1.setString(4, a.getDescription());
-st1.setInt(5, a.getStock());
-st1.setInt(6, categoryId);
-st1.executeUpdate();
-System.out.println("Article ajouté avec succès !");
+            // try {    
+            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`) VALUES (?,?,?,?,?,?)";
+            PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
+            st1.setString(1, a.getTitre());
+            if (a.getImage() != null) {
+                st1.setString(2, a.getImage());
+            } else {
+                st1.setNull(2, java.sql.Types.NULL);
+            }
+            st1.setFloat(3, a.getPrix());
+            st1.setString(4, a.getDescription());
+            st1.setInt(5, a.getStock());
+            st1.setInt(6, categoryId);
+            st1.executeUpdate();
+            System.out.println("Article ajouté avec succès !");
             //  sa.ajouter2(a);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
             alert.setContentText("Article Successfully Added !");
             alert.showAndWait();
-/*} catch (SQLException e) {
+            /*} catch (SQLException e) {
         // display an error message if there was a problem inserting the article into the database
         Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ajout de l'article");
         alert.showAndWait();
     }*/
             articleList.refresh();
-            tfTitle.setText("");         
+            tfTitle.setText("");
             taDescription.setText("");
             tfPrice.setText("");
             tfStock.setText("");
@@ -618,17 +620,6 @@ System.out.println("Article ajouté avec succès !");
     }
 
     @FXML
-    private void subcategory(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
-        Parent root = loader.load(); // load the new FXML file
-        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
-        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
-        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
-        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
-        stage.setScene(scene); // set the new scene as the content of the stage
-    }
-
-    @FXML
     private void article(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
         Parent root = loader.load(); // load the new FXML file
@@ -640,7 +631,76 @@ System.out.println("Article ajouté avec succès !");
     }
 
     @FXML
-    private void handleClicks(ActionEvent event) {
+    private void stats(ActionEvent event) {
+        // Retrieve the article statistics data from the database
+        ObservableList<PieChart.Data> pieChartData = getArticleStats();
+
+        // Create the stats popup
+        Stage statsStage = new Stage();
+        statsStage.setTitle("Article Statistics");
+        statsStage.setWidth(600);
+        statsStage.setHeight(600);
+
+        // Create the pie chart and add the data to it
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Article Stock Statistics");
+        chart.setPrefWidth(800);
+        chart.setPrefHeight(800);
+        // Add the chart to the popup
+        VBox statsBox = new VBox(chart);
+        Scene statsScene = new Scene(statsBox);
+        statsStage.setScene(statsScene);
+        statsStage.show();
+    }
+
+    private ObservableList<PieChart.Data> getArticleStats() {
+        // Connect to the database
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+
+            stmt = ds.getCnx().createStatement();
+
+            // Retrieve the article statistics data from the database
+            rs = stmt.executeQuery("SELECT SUM(stock), titre FROM article GROUP BY titre");
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            int totalStock = 0;
+            while (rs.next()) {
+                int stock = rs.getInt(1);
+                String name = rs.getString(2);
+                totalStock += stock;
+                pieChartData.add(new PieChart.Data(name, stock));
+            }
+            // Calculate and set the percentage for each data item
+            for (PieChart.Data data : pieChartData) {
+                double percentage = (data.getPieValue() / totalStock) * 100;
+                data.setName(data.getName() + " (" + String.format("%.2f", percentage) + "%)");
+            }
+            return pieChartData;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        } finally {
+            // Close the database resources
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void notif(ActionEvent event) {
     }
 
 }

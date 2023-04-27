@@ -32,7 +32,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="Overview" textFill="#e7e5e5">
+            <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false"  prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="Overview" textFill="#e7e5e5">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -62,18 +62,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSubCategory" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#subcategory" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="SubCategory">
-               <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Person_32px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Button>
+          
             <Button fx:id="btnArticle" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#article" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="Article">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
@@ -137,7 +126,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-            <ListView fx:id="articleList" layoutX="707.0" layoutY="156.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="837.0" stylesheets="@style_1.css" />
+            <ListView fx:id="articleList" layoutX="708.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="837.0" stylesheets="@style_1.css" />
                   <AnchorPane layoutX="20.0" layoutY="64.0" prefHeight="770.0" prefWidth="544.0">
                      <children>
                         
@@ -160,6 +149,8 @@
             <Button fx:id="btnImport" layoutX="406.0" layoutY="117.0" mnemonicParsing="false" onAction="#Import" stylesheets="@style_1.css" text="Import" />
                      </children>
                   </AnchorPane>
+                  <Button fx:id="btnstats" layoutX="1278.0" layoutY="109.0" mnemonicParsing="false" onAction="#stats" prefHeight="31.0" prefWidth="57.0" stylesheets="@style_1.css" text="Stats" />
+                  <Button fx:id="btnnotif" layoutX="1337.0" layoutY="109.0" mnemonicParsing="false" onAction="#notif" stylesheets="@style_1.css" text="Notifications" />
                </children>
             </Pane>
          </children>
