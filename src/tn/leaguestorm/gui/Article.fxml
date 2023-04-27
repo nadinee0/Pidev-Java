@@ -32,7 +32,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false"  prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="Overview" textFill="#e7e5e5">
+            <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="Overview" textFill="#e7e5e5">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -132,13 +132,13 @@
                         
                                     
                         
-                     <TextField fx:id="tfTitle" layoutX="130.0" layoutY="266.0" prefHeight="31.0" prefWidth="117.0" stylesheets="@style_1.css" />
-            <TextArea fx:id="taDescription" layoutX="166.0" layoutY="346.0" prefHeight="58.0" prefWidth="234.0" />
+                     <TextField fx:id="tfTitle" layoutX="130.0" layoutY="266.0" prefHeight="33.0" prefWidth="357.0" stylesheets="@style_1.css" />
+            <TextArea fx:id="taDescription" layoutX="166.0" layoutY="326.0" prefHeight="78.0" prefWidth="323.0" />
             <TextField fx:id="tfPrice" layoutX="137.0" layoutY="414.0" prefHeight="31.0" prefWidth="117.0" stylesheets="@style_1.css" />
             <TextField fx:id="tfStock" layoutX="165.0" layoutY="468.0" prefHeight="31.0" prefWidth="117.0" stylesheets="@style_1.css" />
             <ComboBox fx:id="cbCategory" layoutX="165.0" layoutY="513.0" prefHeight="21.0" prefWidth="117.0" stylesheets="@style_1.css" />
             <Label layoutX="57.0" layoutY="271.0" prefHeight="21.0" prefWidth="51.0" stylesheets="@style_1.css" text="Title" textFill="WHITE" />
-            <Label layoutX="60.0" layoutY="354.0" prefHeight="42.0" prefWidth="117.0" stylesheets="@style_1.css" text="Description" textFill="WHITE" />
+            <Label layoutX="60.0" layoutY="342.0" prefHeight="42.0" prefWidth="117.0" stylesheets="@style_1.css" text="Description" textFill="WHITE" />
             <Label layoutX="53.0" layoutY="415.0" prefHeight="31.0" prefWidth="51.0" stylesheets="@style_1.css" text="Price" textFill="WHITE" />
             <Label layoutX="106.0" layoutY="471.0" stylesheets="@style_1.css" text="Stock" textFill="WHITE" />
             <Label layoutX="78.0" layoutY="506.0" prefHeight="42.0" prefWidth="86.0" stylesheets="@style_1.css" text="Category" textFill="WHITE" />
@@ -150,7 +150,7 @@
                      </children>
                   </AnchorPane>
                   <Button fx:id="btnstats" layoutX="1278.0" layoutY="109.0" mnemonicParsing="false" onAction="#stats" prefHeight="31.0" prefWidth="57.0" stylesheets="@style_1.css" text="Stats" />
-                  <Button fx:id="btnnotif" layoutX="1337.0" layoutY="109.0" mnemonicParsing="false" onAction="#notif" stylesheets="@style_1.css" text="Notifications" />
+                  <Button fx:id="btnnotif" layoutX="1337.0" layoutY="109.0" mnemonicParsing="false" onAction="#notif" stylesheets="@style_1.css" text="Low Stock" />
                </children>
             </Pane>
          </children>

@@ -51,6 +51,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -63,6 +64,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -80,6 +82,7 @@ import tn.leaguestorm.entities.SubCategory;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.utils.MyConnection;
 
+//import org.controlsfx.control.Notifications;
 /**
  * FXML Controller class
  *
@@ -142,6 +145,9 @@ public class ArticleController implements Initializable {
     @FXML
     private Button btnnotif;
 
+    @FXML
+    private AnchorPane root;
+
     /**
      * Initializes the controller class.
      */
@@ -166,16 +172,6 @@ public class ArticleController implements Initializable {
         cbCategory.setOnMouseClicked(event -> {
             cbCategory.show();
         });
-        /* try {
-            List<String> SubcategoryNames = sa.getAllSubCategoryNames();
-            cbSubcategory.getItems().addAll(SubcategoryNames);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*
-        // Show the combo box when it is clicked
-        cbSubcategory.setOnMouseClicked(event -> {
-            cbSubcategory.show();
-        });*/
 
         // Retrieve the article data using a separate SQL function
         articleList.setItems(articles);
@@ -358,16 +354,14 @@ public class ArticleController implements Initializable {
                 //cbType.setValue(newSelection.getType());
                 tfStock.setText(String.valueOf(newSelection.getStock()));
                 tfPrice.setText(String.valueOf(newSelection.getPrix()));
-                cbSubcategory.setValue(newSelection.getSubcategory().getNomSubCategory());
                 cbCategory.setValue(newSelection.getCategory().getNom());
-
+                //imageView.setImage(newSelection.getImage().);
             } else {
                 tfTitle.setText("");
                 taDescription.setText("");
                 //cbType.setValue(null);
                 tfStock.setText("");
                 tfPrice.setText("");
-                cbSubcategory.setValue(null);
                 cbCategory.setValue(null);
 
             }
@@ -701,6 +695,53 @@ public class ArticleController implements Initializable {
 
     @FXML
     private void notif(ActionEvent event) {
+        // Query the database to retrieve articles with a stock level below 5
+        StringBuilder contentText = new StringBuilder();
+        try (
+                ResultSet rs = ds.getCnx().createStatement().executeQuery("SELECT * FROM article WHERE stock < 10")) {
+            while (rs.next()) {
+                String articleName = rs.getString("titre");
+                int stockLevel = rs.getInt("stock");
+                contentText.append(articleName).append(":   ").append(stockLevel).append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Create a pop-up window with the low stock articles
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Low Stock");
+        alert.setHeaderText("The following articles have a low stock level:");
+        alert.setContentText(contentText.toString());
+
+        // Customize the dialog pane
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setPrefSize(600, 500); // set preferred size to 600x400 pixels
+        dialogPane.getStylesheets().add(getClass().getResource("Notifstyle.css").toExternalForm());
+        dialogPane.getStyleClass().add("low-stock");
+
+
+        // Display the pop-up window
+        alert.showAndWait();
+
+        ///------------API CODE------------------  
+        // Query the database to retrieve articles with a stock level below 5
+        /*      StringBuilder contentText = new StringBuilder();
+        try (
+             ResultSet rs = ds.getCnx().createStatement().executeQuery("SELECT * FROM article WHERE stock < 10")) {
+            while (rs.next()) {
+                String articleName = rs.getString("titre");
+                int stockLevel = rs.getInt("stock");
+                contentText.append(articleName).append(": ").append(stockLevel).append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Create a system tray notification with the low stock articles
+        Notifications.create()
+                .title("Low Stock")
+                .text(contentText.toString());*/
     }
 
 }
