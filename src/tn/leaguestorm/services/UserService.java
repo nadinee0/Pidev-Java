@@ -161,6 +161,17 @@ public class UserService implements IService<User> {
         }
     }
 
+    public void unbanUser(User user) {
+        try {
+            String req = "UPDATE user SET banned = false WHERE id = ?";
+            PreparedStatement ps = cnx.getCnx().prepareStatement(req);
+            ps.setInt(1, user.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public boolean isBanned(String email) throws SQLException {
         String query = "SELECT banned FROM user WHERE email = ?";
         PreparedStatement statement = cnx.getCnx().prepareStatement(query);

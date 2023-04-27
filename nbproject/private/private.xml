@@ -4,25 +4,34 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SigninController.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/services/IService.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/Role.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/BackController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ProfileUpdateController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ChangePasswordController.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SideMenuController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/services/BadgeService.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/SideMenuWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SendMessage.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/ForgotWindow.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/SigninWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SignupController.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotVerifController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/Back.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/BackWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/User.java</file>
-            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SideMenu.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotConfirmController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/SignupWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/services/UserService.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/ForgotConfirmWindow.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/services/IService.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/Signup.fxml</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/BackController.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotController.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/BackBadgeController.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/SideMenuWindow.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ForgotVerifController.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/BackBadgeWindow.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/ForgotVerifWindow.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/Badge.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SideMenu.fxml</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/HomeController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -113,16 +113,24 @@ public class BackController {
             card.getChildren().add(lastNameLabel);
             card.getChildren().add(emailLabel);
 
-            Button disableBtn = new Button("Disable");
+            Button disableBtn = new Button(u.isBanned() ? "Unban" : "Ban");
             disableBtn.setAlignment(Pos.TOP_RIGHT);
             disableBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
             disableBtn.setOnAction(e -> {
                 UserService uss = new UserService();
-                uss.banUser(u);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Ban hammer");
-                alert.setContentText("User " + u.getFirstName() + " has been banned!");
-                alert.showAndWait();
+                if (u.isBanned()) {
+                    uss.unbanUser(u);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Unbanned!");
+                    alert.setContentText("User " + u.getFirstName() + " has been unbanned!");
+                    alert.showAndWait();
+                } else {
+                    uss.banUser(u);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Banned!");
+                    alert.setContentText("User " + u.getFirstName() + " has been banned!");
+                    alert.showAndWait();
+                }
                 userCards();
             });
             card.getChildren().add(disableBtn);
