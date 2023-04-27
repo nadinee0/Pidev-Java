@@ -1,0 +1,32 @@
+#tournamentGridPane {
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+#tournamentGridPane > Label {
+  border: solid red;
+  padding: 10px;
+  text-align: center;
+}
+
+#tournamentGridPane > *:nth-child(5n+1) {
+  -fx-border-left-width: 2;
+}
+
+#tournamentGridPane > *:nth-child(n+6) {
+  -fx-border-top-width: 2;
+}
+
+#tournamentGridPane > *:nth-child(5n+5) {
+  -fx-border-right-width: 2;
+}
+
+#tournamentGridPane > *:nth-last-child(n+6) {
+  -fx-border-bottom-width: 2;
+}
+
+
+#tournamentGridPane > *:hover {
+  background-color: #f5f5f5;
+}

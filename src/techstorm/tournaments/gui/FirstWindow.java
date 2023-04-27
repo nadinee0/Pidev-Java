@@ -10,7 +10,7 @@ public class FirstWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Twitch.fxml"));
 
         Scene scene = new Scene(root, 750, 500);
 
