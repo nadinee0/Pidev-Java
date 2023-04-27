@@ -119,9 +119,7 @@ private int currentRating = 0;
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-      // imageView = new ImageView();
-       
+    public void initialize(URL url, ResourceBundle rb) {       
         System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
   
     }    

@@ -57,6 +57,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -66,6 +67,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.MouseEvent;
@@ -91,8 +93,6 @@ public class ShopController implements Initializable {
     @FXML
     private Label PriceLabel;
     @FXML
-    private Label CategoryLabel;
-    @FXML
     private ImageView Img;
     Article a = new Article();
     private MyConnection ds = MyConnection.getInstance();
@@ -107,7 +107,9 @@ public class ShopController implements Initializable {
     private Label DescriptionLabel;
     Article ar;
     @FXML
-    private Button wishlist;
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
 
     public void populateGridPane() throws SQLException, FileNotFoundException {
         String query = "SELECT * FROM article";
@@ -291,4 +293,48 @@ public class ShopController implements Initializable {
         
     }
 
+    @FXML
+    private void handleSearch(ActionEvent event) {
+// Get the search term from the text field
+String searchTerm = searchField.getText().toLowerCase();
+
+// Filter the list of articles to include only those that contain the search character in the title
+List<Article> filteredArticles = articles.stream()
+        .filter(article -> article.getTitre().toLowerCase().contains(searchTerm))
+        .collect(Collectors.toList());
+
+// Clear the existing items in the GridPane
+grid.getChildren().clear();
+
+// Repopulate the GridPane with the filtered articles
+int colIndex = 0;
+int rowIndex = 0;
+for (Article article : filteredArticles) {
+    // Create the UI elements for the article
+    Label productName = new Label(article.getTitre());
+    Label price = new Label(Float.toString(article.getPrix()));
+    ImageView imageView = new ImageView(new Image(new File(article.getImage()).toURI().toString()));
+
+    // Add the UI elements to the GridPane
+    grid.add(productName, colIndex, rowIndex + 1);
+    grid.add(price, colIndex, rowIndex + 2);
+    grid.add(imageView, colIndex, rowIndex + 3);
+
+    // Increment the column index
+    colIndex++;
+
+    // Move to the next row if the current row is full
+    if (colIndex == 3) {
+        colIndex = 0;
+        rowIndex += 4;
+    }
+}
+
+}
+
+}
+
+   
+    
+    
 }
