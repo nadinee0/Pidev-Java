@@ -110,6 +110,9 @@ public class ShopController implements Initializable {
     private TextField searchField;
     @FXML
     private Button searchButton;
+private List<Article> wishlist = new ArrayList<>();
+    @FXML
+    private Button btnwishlist;
 
     public void populateGridPane() throws SQLException, FileNotFoundException {
         String query = "SELECT * FROM article";
@@ -176,7 +179,8 @@ public class ShopController implements Initializable {
         Img.setStyle("-fx-background-color: transparent");
         DescriptionLabel.setText(Description);
        // CategoryLabel.setText(category);
-
+Article article = new Article(productId, productName, Description, Float.parseFloat(price), imagePath);
+    wishlist.add(article);
     }
 
     private void setChosenArticle(Article article) {
@@ -331,10 +335,71 @@ for (Article article : filteredArticles) {
 }
 
 }
+    
+    
+    private void displayWishlist() {
+    // Clear the GridPane
+    grid.getChildren().clear();
+
+    // Define the column and row indexes for the GridPane
+    int colIndex = 0;
+    int rowIndex = 0;
+
+    // Iterate through the selected articles and add each one to the GridPane
+    for (Article article : wishlist) {
+        // Create a new Label for the article name
+        Label nameLabel = new Label(article.getTitre());
+        grid.add(nameLabel, colIndex, rowIndex);
+
+        // Create a new ImageView for the article image
+        String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + article.getImage(); // Replace this with your own file path
+        Image image = new Image(new File(imagePath).toURI().toString());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(200); // Set the width to 200 pixels
+        imageView.setFitHeight(200); // Set the height to 200 pixels
+        grid.add(imageView, colIndex, rowIndex + 1);
+
+        // Create a new Label for the article price
+        Label priceLabel = new Label(Float.toString(article.getPrix()));
+        grid.add(priceLabel, colIndex, rowIndex + 2);
+
+        // Create a new Button to remove the article from the wishlist
+        Button removeButton = new Button("Remove");
+        int articleId = article.getId();
+        removeButton.setOnAction(e -> {
+            // Remove the selected article from the wishlist
+            for (int i = 0; i < wishlist.size(); i++) {
+                if (wishlist.get(i).getId() == articleId) {
+                    wishlist.remove(i);
+                    break;
+                }
+            }
+
+            // Refresh the wishlist display
+            displayWishlist();
+        });
+        grid.add(removeButton, colIndex, rowIndex + 3);
+
+        // Increment the column index
+        colIndex++;
+
+        // Move to the next row if the current row is full
+        if (colIndex == 3) {
+            colIndex = 0;
+            rowIndex += 4;
+        }
+    }
+}
+
+    @FXML
+    private void onWishlistButtonClicked(ActionEvent event) {
+   displayWishlist();
+    }
+
 
 }
 
    
     
     
-}
+
