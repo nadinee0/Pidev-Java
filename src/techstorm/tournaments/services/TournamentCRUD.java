@@ -10,9 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import techstorm.tournaments.entities.RegisteredPlayer;
 import techstorm.tournaments.entities.Round;
 import techstorm.tournaments.entities.Tournament;
 import techstorm.tournaments.utils.MyConnection;
@@ -159,7 +162,66 @@ public class TournamentCRUD {
         System.err.println(ex.getMessage());
     }
     return tournaments;
+    }
+    
+    
+    public List<RegisteredPlayer> getRegisteredPlayers(Tournament T) {
+        TournamentCRUD tcd = new TournamentCRUD();
+        List<RegisteredPlayer> players = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM registeredplayer WHERE idTournament = ?";
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setInt(1, tcd.getTournament(T.getTid()).getId());
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idp = rs.getInt("idp");
+                String username = rs.getString("username");
+                boolean eliminated = rs.getBoolean("eliminated");
+                RegisteredPlayer player = new RegisteredPlayer(id, idp, username, eliminated);
+                players.add(player);
+            }
+            System.out.println("List of players registered to tournament retrieved!");
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return players;
+    }
+    
+    public List<RegisteredPlayer> getNonEliminatedPlayers(List<RegisteredPlayer> players) {
+    List<RegisteredPlayer> nonEliminatedPlayers = new ArrayList<>();
+    for (RegisteredPlayer player : players) {
+        if (!player.isEliminated()) {
+            nonEliminatedPlayers.add(player);
+        }
+    }
+    return nonEliminatedPlayers;
 }
+
+    public Map<Integer, Integer> getMatchWinnersByNumMatch(Round round) {
+    Map<Integer, Integer> matchWinners = new HashMap<>();
+    try {
+        String query = "SELECT * FROM match WHERE roundId = ?";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setInt(1, round.getNumRound());
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            int numMatch = rs.getInt("numMatch");
+            int winner = rs.getInt("winner");
+            matchWinners.put(numMatch, winner);
+        }
+    } catch (SQLException ex) {
+        System.err.println(ex.getMessage());
+    }
+    return matchWinners;
+}
+
+    
+    public void generatematches(Tournament T, int RoundNumber){
+        
+        
+        
+    }
 
     
     

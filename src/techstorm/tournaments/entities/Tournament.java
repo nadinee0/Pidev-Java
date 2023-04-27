@@ -22,6 +22,7 @@ public class Tournament {
     private static int TidCounter = 0;    
 
     private List<Round> rounds = new ArrayList<>();
+    private List<RegisteredPlayer> players = new ArrayList<>();
 
     public Tournament(int id, int Tid, String name, String startDate, int participantsNumber, String status) {
         this.id = id;

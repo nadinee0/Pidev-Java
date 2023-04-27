@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="750.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="techstorm.tournaments.gui.FXMLController">
-    <stylesheets>
-        <URL value="@fxml.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="750.0" styleClass="mainFxmlClass" stylesheets="@Table1.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="techstorm.tournaments.gui.FXMLController">
    <children>
       <TableView fx:id="tournamentTableView" layoutX="25.0" layoutY="39.0" prefHeight="250.0" prefWidth="700.0">
         <columns>
           <TableColumn fx:id="tidColumn" prefWidth="109.59997177124023" text="Tournament ID" />
-          <TableColumn fx:id="nameColumn" prefWidth="136.8000030517578" text="Tournament Name" />
           <TableColumn fx:id="startDateColumn" prefWidth="129.5999755859375" text="Start Date" />
           <TableColumn fx:id="participantsColumn" prefWidth="100.0" text="Participants Number" />
           <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
