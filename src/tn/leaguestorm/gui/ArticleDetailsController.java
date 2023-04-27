@@ -75,6 +75,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import tn.leaguestorm.entities.Rating;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 
 /**
  * FXML Controller class
@@ -112,15 +114,7 @@ private int currentRating = 0;
     @FXML
     private Label ratingLabel;
     @FXML
-    private Label titreLabel;
-    @FXML
-    private Label authorLabel;
-    @FXML
-    private Label contentLabel;
-    @FXML
-    private Button rateButton;
-    @FXML
-    private Rating ratingSystem;
+    private Button btnhear;
     /**
      * Initializes the controller class.
      */
@@ -128,7 +122,8 @@ private int currentRating = 0;
     public void initialize(URL url, ResourceBundle rb) {
       // imageView = new ImageView();
        
-      
+        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+  
     }    
    
 
@@ -248,6 +243,45 @@ qrCodeImageView.setImage(qrCodeImage);
         });
     }
 */
+
+
+
+   // Define the FreeTTS voice to use
+    private static final String VOICE_NAME = "kevin16";
+    @FXML
+    private void hear(ActionEvent event) {
+     // Get the article description from the text area
+        String description = descriptionLabel.getText();
+
+        // Define a new FreeTTS voice
+        Voice voice = VoiceManager.getInstance().getVoice(VOICE_NAME);
+
+        // Check if the voice was successfully initialized
+        if (voice != null) {
+            voice.allocate();
+
+            // Use the voice to speak the description
+            if (description != null && !description.isEmpty()) {
+                voice.speak(description);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Article Description");
+                alert.setHeaderText("The article description is empty");
+                alert.setContentText("Sorry, the description for this article is not available.");
+                alert.showAndWait();
+            }
+
+            // Deallocate the voice when finished
+            voice.deallocate();
+        } else {
+            // Handle case where the voice is null
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Text-to-Speech Error");
+            alert.setHeaderText("Could not initialize FreeTTS voice");
+            alert.setContentText("Sorry, there was an error initializing the text-to-speech engine.");
+            alert.showAndWait();
+        }
+    }
 }
 
 

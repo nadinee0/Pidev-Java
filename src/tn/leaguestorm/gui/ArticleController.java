@@ -82,6 +82,7 @@ import tn.leaguestorm.entities.SubCategory;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.utils.MyConnection;
 
+
 //import org.controlsfx.control.Notifications;
 /**
  * FXML Controller class
@@ -743,5 +744,6 @@ public class ArticleController implements Initializable {
                 .title("Low Stock")
                 .text(contentText.toString());*/
     }
+    
 
 }
