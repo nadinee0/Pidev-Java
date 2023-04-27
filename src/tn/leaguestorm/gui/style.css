@@ -12,7 +12,8 @@
 }
 
 .scroll-pane {
-    -fx-background-color: #02030A;
+    -fx-background-color: white;
+    
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{
@@ -38,7 +39,7 @@
 }
 
 .scroll-pane > .corner {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
 }
 
 .circular-image {
