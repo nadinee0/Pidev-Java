@@ -32,6 +32,7 @@ public class Window extends Application {
             primaryStage.show();
             
             
+            
         } catch (IOException ex) {
             System.out.println(ex.getMessage());        }
     }

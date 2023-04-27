@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tn.leaguestorm.services;
 
 import com.itextpdf.text.Document;
@@ -11,86 +6,62 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import tn.leaguestorm.utils.MyConnection;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import tn.leaguestorm.utils.MyConnection;
 
-/**
- *
- * @author asus
- */
 public class Pdf2 {
-    
-     
-     
-        Connection cnx;
-        private Statement ste;
-    public Pdf2()  {
-      cnx = MyConnection.getInstance().getCnx();
-          
-    
-}
-    public void add(String file,String N1,String N2 ,String N3,String N4) throws FileNotFoundException, SQLException, DocumentException{
-        
-        /* Create Connection objects */
-//                con = DataBase.getInstance().getConnection();
-                Document my_pdf_report = new Document();
-                PdfWriter.getInstance(my_pdf_report, new FileOutputStream(file));
-                my_pdf_report.open();            
-                //we have four columns in our table
-                PdfPTable my_report_table = new PdfPTable(2);
-                //create a cell object
-                PdfPCell table_cell;
-                                
-                              
-                            
-                               
-                                    table_cell=new PdfPCell(new Phrase("nom abonn"));
-                                my_report_table.addCell(table_cell);
-                                table_cell=new PdfPCell(new Phrase(N1));
-                                my_report_table.addCell(table_cell);
-                               
-                                table_cell=new PdfPCell(new Phrase("type"));
-                                my_report_table.addCell(table_cell);
-                                table_cell=new PdfPCell(new Phrase(N2));
-                                my_report_table.addCell(table_cell);
-                             // hayka mchet haw tw chnzid maaha lprix beh
-                             
-                                table_cell=new PdfPCell(new Phrase("description "));
-                                my_report_table.addCell(table_cell);
-                                table_cell=new PdfPCell(new Phrase(N3));
-                                my_report_table.addCell(table_cell);
-                                
-                            
-                                
-                                
-                                table_cell=new PdfPCell(new Phrase("date"));
-                                my_report_table.addCell(table_cell);
-                                table_cell=new PdfPCell(new Phrase(N4));
-                                my_report_table.addCell(table_cell);
-                                
-                                  
-//                                table_cell=new PdfPCell(new Phrase("numfacture"));
-//                                my_report_table.addCell(table_cell);
-//                                table_cell=new PdfPCell(new Phrase(N5));
-//                                my_report_table.addCell(table_cell);
-//                                
-                                
-                              
-                               
-                                
-                /* Attach report table to PDF */
-                //my_pdf_report.add(my_report_table);                       
-                my_pdf_report.close();
-                
-               /* Close all DB related objects */
 
-        
+    private Connection cnx;
+    private Statement ste;
+
+    public Pdf2() {
+        cnx = MyConnection.getInstance().getCnx();
     }
 
- 
-    
+    public void generatePDF(String filePath, String nomAbonn, String type, String description, String date) throws FileNotFoundException, SQLException, DocumentException {
+        /* Create Connection objects */
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(filePath));
+        document.open();
+
+        // We have four columns in our table
+        PdfPTable table = new PdfPTable(2);
+
+        // Create a cell object
+        PdfPCell cell;
+
+        // Add content to the table
+        cell = new PdfPCell(new Phrase("Nom abonn"));
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(nomAbonn));
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Type"));
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(type));
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Description"));
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(description));
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Date"));
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(date));
+        table.addCell(cell);
+
+        /* Attach report table to PDF */
+        document.add(table);
+
+        document.close();
+
+        /* Close all DB related objects */
+    }
 }
