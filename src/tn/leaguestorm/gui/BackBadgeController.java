@@ -36,8 +36,6 @@ public class BackBadgeController {
     @FXML
     private Button btnOverview;
     @FXML
-    private Button btnOrders;
-    @FXML
     private Button btnCustomers;
     @FXML
     private Button btnMenus;
@@ -46,8 +44,6 @@ public class BackBadgeController {
     @FXML
     private Button btnSettings;
     @FXML
-    private Button btnSignout;
-    @FXML
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
@@ -55,8 +51,6 @@ public class BackBadgeController {
     private Pane pnlMenus;
     @FXML
     private Pane pnlOverview;
-    @FXML
-    private VBox pnItems;
     
     @FXML
     private FlowPane badgePane;
@@ -79,7 +73,10 @@ public class BackBadgeController {
 
         for (Badge b : badgeList) {
             VBox card = new VBox();
+            card.setAlignment(Pos.CENTER);
             card.setPrefSize(250, 250);
+            badgePane.setHgap(70);
+            badgePane.setVgap(20);
             card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);");
 
             ImageView imageView;

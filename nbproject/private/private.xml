@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SigninController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/Role.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/style.css</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ProfileUpdateController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/ChangePasswordController.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SideMenuController.java</file>
@@ -29,6 +30,7 @@
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/BackBadgeWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/tests/ForgotVerifWindow.java</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/entities/Badge.java</file>
+            <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/SideMenu.fxml</file>
             <file>file:/C:/leagueStorm/src/tn/leaguestorm/gui/HomeController.java</file>
         </group>
     </open-files>
