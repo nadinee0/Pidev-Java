@@ -80,6 +80,8 @@ public class BackController {
         for (User u : userList) {
             VBox card = new VBox();
             card.setPrefSize(250, 250);
+            userPane.setHgap(70);
+            userPane.setVgap(20);
             card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);");
 
             ImageView imageView;
