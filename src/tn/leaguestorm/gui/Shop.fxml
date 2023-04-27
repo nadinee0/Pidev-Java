@@ -83,6 +83,7 @@
                               <Insets left="20.0" top="30.0" />
                            </VBox.margin>
                         </HBox>
+                        <Label fx:id="DescriptionLabel" text="description" textFill="TRANSPARENT" />
                         <ImageView fx:id="Img" fitHeight="170.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/9d1f6b855fe91c982153b0b2b9802353.png" />
@@ -110,6 +111,11 @@
                            </VBox.margin>
                            <children>
                               <Separator prefHeight="0.0" prefWidth="118.0" />
+                              <Button fx:id="btnWishlist" mnemonicParsing="false" onAction="#addToWishlist" prefHeight="39.0" prefWidth="266.0" styleClass="add-btn" stylesheets="@../values/style.css" text="ADD TO WISHLIST" textFill="#828282">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
                               <Label alignment="CENTER" prefHeight="45.0" prefWidth="64.0" stylesheets="@../values/style.css" textFill="WHITE">
                                  <font>
                                     <Font name="Cambria" size="24.0" />
@@ -118,16 +124,12 @@
                               <Separator prefHeight="0.0" prefWidth="118.0" />
                            </children>
                         </HBox>
-                        <Button fx:id="btnwishlist" mnemonicParsing="false" onAction="#onWishlistButtonClicked" text="WISHLIST" />
-                        <Label fx:id="DescriptionLabel" prefHeight="21.0" prefWidth="33.0" textFill="TRANSPARENT" />
-                        <HBox alignment="CENTER" prefHeight="53.0" prefWidth="335.0">
-                           <children>
-                              <Button fx:id="btndetails" mnemonicParsing="false" onAction="#details" prefHeight="39.0" prefWidth="267.0" styleClass="add-btn" stylesheets="@../values/style.css" text="DETAILS" textFill="#828282">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                           </children></HBox>
+                        <HBox alignment="CENTER" prefHeight="53.0" prefWidth="335.0" />
+                        <Button fx:id="btndetails" mnemonicParsing="false" onAction="#details" prefHeight="39.0" prefWidth="267.0" styleClass="add-btn" stylesheets="@../values/style.css" text="DETAILS" textFill="#828282">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
                         <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@../values/style.css" text="ADD TO CART" textFill="#828282">
                            <VBox.margin>
                               <Insets bottom="20.0" top="30.0" />
@@ -164,7 +166,10 @@
                               <Font name="Cambria" size="18.0" />
                            </font>
                         </Label>
-                        <Pane prefHeight="65.0" prefWidth="393.0" HBox.hgrow="ALWAYS" />
+                        <Pane prefHeight="65.0" prefWidth="393.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="btnwishlist" layoutX="449.0" layoutY="17.0" mnemonicParsing="false" onAction="#onWishlistButtonClicked" styleClass="add-btn" stylesheets="@../values/style.css" text="WISHLIST" />
+                           </children></Pane>
                         <Label prefHeight="62.0" prefWidth="100.0" stylesheets="@../values/style.css" text="My Account" textFill="#878787">
                            <font>
                               <Font name="Cambria" size="18.0" />

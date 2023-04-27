@@ -73,6 +73,8 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
+import tn.leaguestorm.entities.User;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.tests.MainClass;
 import tn.leaguestorm.utils.MyConnection;
@@ -110,9 +112,11 @@ public class ShopController implements Initializable {
     private TextField searchField;
     @FXML
     private Button searchButton;
-private List<Article> wishlist = new ArrayList<>();
+    private List<Article> wishlist = new ArrayList<>();
     @FXML
     private Button btnwishlist;
+    @FXML
+    private Button btnWishlist;
 
     public void populateGridPane() throws SQLException, FileNotFoundException {
         String query = "SELECT * FROM article";
@@ -153,7 +157,7 @@ private List<Article> wishlist = new ArrayList<>();
             int productId = resultSet.getInt("id"); // Get the product ID from the result set
             imageView.setOnMouseClicked(e -> {
                 // Pass the product ID to the method that will handle the click event
-                handleProductClick(productId, productName.getText(), Description.getText(),/* category.getText(),*/price.getText(), imagePath);
+                handleProductClick(productId, productName.getText(), Description.getText(),/* category.getText(),*/ price.getText(), imagePath);
             });
 
             // Add the ImageView to the GridPane
@@ -170,7 +174,7 @@ private List<Article> wishlist = new ArrayList<>();
         }
     }
 
-    private void handleProductClick(int productId, String productName, String Description, /*String category,*/String price, String imagePath) {
+    private void handleProductClick(int productId, String productName, String Description, /*String category,*/ String price, String imagePath) {
         // Update the UI with the selected product details
         NameLabel.setText(productName);
         PriceLabel.setText(price);
@@ -178,9 +182,9 @@ private List<Article> wishlist = new ArrayList<>();
         Img.setImage(new Image(new File(imagePath).toURI().toString()));
         Img.setStyle("-fx-background-color: transparent");
         DescriptionLabel.setText(Description);
-       // CategoryLabel.setText(category);
-Article article = new Article(productId, productName, Description, Float.parseFloat(price), imagePath);
-    wishlist.add(article);
+        // CategoryLabel.setText(category);
+        Article article = new Article(productId, productName, Description, Float.parseFloat(price), imagePath);
+        wishlist.add(article);
     }
 
     private void setChosenArticle(Article article) {
@@ -198,7 +202,7 @@ Article article = new Article(productId, productName, Description, Float.parseFl
         chosenCard.getChildren().clear();
         chosenCard.getChildren().addAll(imageView, NameLabel, PriceLabel);
 
-        handleProductClick(selectedArticle.getId(), selectedArticle.getTitre(), selectedArticle.getDescription(),/*selectedArticle.getCategory().toString(), */Float.toString(selectedArticle.getPrix()), selectedArticle.getImage());
+        handleProductClick(selectedArticle.getId(), selectedArticle.getTitre(), selectedArticle.getDescription(),/*selectedArticle.getCategory().toString(), */ Float.toString(selectedArticle.getPrix()), selectedArticle.getImage());
     }
 
     @Override
@@ -281,7 +285,7 @@ Article article = new Article(productId, productName, Description, Float.parseFl
         apc.setTitre(NameLabel.getText());
         apc.setPrix(PriceLabel.getText());
         apc.setDescription(DescriptionLabel.getText());
-       // apc.setCategory(CategoryLabel.getText());
+        // apc.setCategory(CategoryLabel.getText());
 
 // Retrieve the image name from the database for the selected article
         String imageName = getImageNameFromDatabase(NameLabel.getText());
@@ -294,112 +298,130 @@ Article article = new Article(productId, productName, Description, Float.parseFl
 
 // Pass the Image object to the ArticleDetailsController and set it as the image of the article
         apc.setImage(image);
-        
+
     }
 
     @FXML
     private void handleSearch(ActionEvent event) {
 // Get the search term from the text field
-String searchTerm = searchField.getText().toLowerCase();
+        String searchTerm = searchField.getText().toLowerCase();
 
 // Filter the list of articles to include only those that contain the search character in the title
-List<Article> filteredArticles = articles.stream()
-        .filter(article -> article.getTitre().toLowerCase().contains(searchTerm))
-        .collect(Collectors.toList());
+        List<Article> filteredArticles = articles.stream()
+                .filter(article -> article.getTitre().toLowerCase().contains(searchTerm))
+                .collect(Collectors.toList());
 
 // Clear the existing items in the GridPane
-grid.getChildren().clear();
+        grid.getChildren().clear();
 
 // Repopulate the GridPane with the filtered articles
-int colIndex = 0;
-int rowIndex = 0;
-for (Article article : filteredArticles) {
-    // Create the UI elements for the article
-    Label productName = new Label(article.getTitre());
-    Label price = new Label(Float.toString(article.getPrix()));
-    ImageView imageView = new ImageView(new Image(new File(article.getImage()).toURI().toString()));
+        int colIndex = 0;
+        int rowIndex = 0;
+        for (Article article : filteredArticles) {
+            // Create the UI elements for the article
+            Label productName = new Label(article.getTitre());
+            Label price = new Label(Float.toString(article.getPrix()));
+            ImageView imageView = new ImageView(new Image(new File(article.getImage()).toURI().toString()));
 
-    // Add the UI elements to the GridPane
-    grid.add(productName, colIndex, rowIndex + 1);
-    grid.add(price, colIndex, rowIndex + 2);
-    grid.add(imageView, colIndex, rowIndex + 3);
+            // Add the UI elements to the GridPane
+            grid.add(productName, colIndex, rowIndex + 1);
+            grid.add(price, colIndex, rowIndex + 2);
+            grid.add(imageView, colIndex, rowIndex + 3);
 
-    // Increment the column index
-    colIndex++;
+            // Increment the column index
+            colIndex++;
 
-    // Move to the next row if the current row is full
-    if (colIndex == 3) {
-        colIndex = 0;
-        rowIndex += 4;
-    }
-}
-
-}
-    
-    
-    private void displayWishlist() {
-    // Clear the GridPane
-    grid.getChildren().clear();
-
-    // Define the column and row indexes for the GridPane
-    int colIndex = 0;
-    int rowIndex = 0;
-
-    // Iterate through the selected articles and add each one to the GridPane
-    for (Article article : wishlist) {
-        // Create a new Label for the article name
-        Label nameLabel = new Label(article.getTitre());
-        grid.add(nameLabel, colIndex, rowIndex);
-
-        // Create a new ImageView for the article image
-        String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + article.getImage(); // Replace this with your own file path
-        Image image = new Image(new File(imagePath).toURI().toString());
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(200); // Set the width to 200 pixels
-        imageView.setFitHeight(200); // Set the height to 200 pixels
-        grid.add(imageView, colIndex, rowIndex + 1);
-
-        // Create a new Label for the article price
-        Label priceLabel = new Label(Float.toString(article.getPrix()));
-        grid.add(priceLabel, colIndex, rowIndex + 2);
-
-        // Create a new Button to remove the article from the wishlist
-        Button removeButton = new Button("Remove");
-        int articleId = article.getId();
-        removeButton.setOnAction(e -> {
-            // Remove the selected article from the wishlist
-            for (int i = 0; i < wishlist.size(); i++) {
-                if (wishlist.get(i).getId() == articleId) {
-                    wishlist.remove(i);
-                    break;
-                }
+            // Move to the next row if the current row is full
+            if (colIndex == 3) {
+                colIndex = 0;
+                rowIndex += 4;
             }
-
-            // Refresh the wishlist display
-            displayWishlist();
-        });
-        grid.add(removeButton, colIndex, rowIndex + 3);
-
-        // Increment the column index
-        colIndex++;
-
-        // Move to the next row if the current row is full
-        if (colIndex == 3) {
-            colIndex = 0;
-            rowIndex += 4;
         }
+
     }
-}
+
+    private void displayWishlist() {
+        // Clear the GridPane
+        grid.getChildren().clear();
+
+        // Define the column and row indexes for the GridPane
+        int colIndex = 0;
+        int rowIndex = 0;
+
+        // Iterate through the selected articles and add each one to the GridPane
+        for (Article article : wishlist) {
+            // Create a new Label for the article name
+            Label nameLabel = new Label(article.getTitre());
+            grid.add(nameLabel, colIndex, rowIndex);
+
+            // Create a new ImageView for the article image
+            String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + article.getImage(); // Replace this with your own file path
+            Image image = new Image(new File(imagePath).toURI().toString());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(200); // Set the width to 200 pixels
+            imageView.setFitHeight(200); // Set the height to 200 pixels
+            grid.add(imageView, colIndex, rowIndex + 1);
+
+            // Create a new Label for the article price
+            Label priceLabel = new Label(Float.toString(article.getPrix()));
+            grid.add(priceLabel, colIndex, rowIndex + 2);
+
+            // Create a new Button to remove the article from the wishlist
+            Button removeButton = new Button("Remove");
+            int articleId = article.getId();
+            removeButton.setOnAction(e -> {
+                // Remove the selected article from the wishlist
+                for (int i = 0; i < wishlist.size(); i++) {
+                    if (wishlist.get(i).getId() == articleId) {
+                        wishlist.remove(i);
+                        break;
+                    }
+                }
+
+                // Refresh the wishlist display
+                displayWishlist();
+            });
+
+            // Increment the column index
+            colIndex++;
+
+            // Move to the next row if the current row is full
+            if (colIndex == 3) {
+                colIndex = 0;
+                rowIndex += 5;
+            }
+        }
+
+    }
 
     @FXML
     private void onWishlistButtonClicked(ActionEvent event) {
-   displayWishlist();
+        displayWishlist();
+
     }
 
+    @FXML
+    private void addToWishlist(ActionEvent event) {
+        for (Article article : wishlist) {
+            int articleId = article.getId();
+            btnWishlist.setOnAction(e -> {
+                // Get the current user
+                // User user = getCurrentUser();
+                int userId = 22;
+                // Add the selected article to the wishlist database for the current user
+                try {
 
-}
+                    PreparedStatement stmt = ds.getCnx().prepareStatement("INSERT INTO user_article (article_id, user_id) VALUES (?, ?)");
+                    stmt.setInt(1, articleId);
+                    stmt.setInt(2, userId);
+                    stmt.executeUpdate();
 
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+             });
+                 }
+
+    }
    
-    
-    
-
+}
