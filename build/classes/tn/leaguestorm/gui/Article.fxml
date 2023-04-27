@@ -130,9 +130,9 @@
                   <AnchorPane layoutX="20.0" layoutY="64.0" prefHeight="770.0" prefWidth="544.0">
                      <children>
                         
-                                    
+                                                
                         
-                     <TextField fx:id="tfTitle" layoutX="130.0" layoutY="266.0" prefHeight="33.0" prefWidth="357.0" stylesheets="@style_1.css" />
+                                 <TextField fx:id="tfTitle" layoutX="130.0" layoutY="266.0" prefHeight="33.0" prefWidth="357.0" stylesheets="@style_1.css" />
             <TextArea fx:id="taDescription" layoutX="166.0" layoutY="326.0" prefHeight="78.0" prefWidth="323.0" />
             <TextField fx:id="tfPrice" layoutX="137.0" layoutY="414.0" prefHeight="31.0" prefWidth="117.0" stylesheets="@style_1.css" />
             <TextField fx:id="tfStock" layoutX="165.0" layoutY="468.0" prefHeight="31.0" prefWidth="117.0" stylesheets="@style_1.css" />
@@ -149,8 +149,11 @@
             <Button fx:id="btnImport" layoutX="406.0" layoutY="117.0" mnemonicParsing="false" onAction="#Import" stylesheets="@style_1.css" text="Import" />
                      </children>
                   </AnchorPane>
-                  <Button fx:id="btnstats" layoutX="1278.0" layoutY="109.0" mnemonicParsing="false" onAction="#stats" prefHeight="31.0" prefWidth="57.0" stylesheets="@style_1.css" text="Stats" />
-                  <Button fx:id="btnnotif" layoutX="1337.0" layoutY="109.0" mnemonicParsing="false" onAction="#notif" stylesheets="@style_1.css" text="Low Stock" />
+                  <Button fx:id="btnstats" layoutX="1099.0" layoutY="127.0" mnemonicParsing="false" onAction="#stats" prefHeight="31.0" prefWidth="57.0" stylesheets="@style_1.css" text="Stats" />
+                  <Button fx:id="btnnotif" layoutX="1162.0" layoutY="127.0" mnemonicParsing="false" onAction="#notif" stylesheets="@style_1.css" text="Low Stock" />
+               
+                           <VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" />
+ <Button layoutX="1003.0" layoutY="127.0" onAction="#sendSMS" stylesheets="@style_1.css" text="Send SMS" />
                </children>
             </Pane>
          </children>

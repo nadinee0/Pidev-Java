@@ -5,6 +5,8 @@
  */
 package tn.leaguestorm.entities;
 
+import java.util.List;
+
 /**
  *
  * @author Bellalouna Iheb
@@ -12,7 +14,8 @@ package tn.leaguestorm.entities;
 public class User {
     private int id, phoneNumber;
     private String email, roles, password, firstName, lastName, country;
-
+ private List<Article> articles;
+   
     public User(int phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -100,6 +103,22 @@ public class User {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+ public void addArticle(Article article) {
+        articles.add(article);
+        article.addUser(this);
+    }
+    
+    public void removeArticle(Article article) {
+        articles.remove(article);
+        article.removeUser(this);
+    }
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     @Override

@@ -5,6 +5,8 @@
  */
 package tn.leaguestorm.gui;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -82,7 +84,6 @@ import tn.leaguestorm.entities.SubCategory;
 import tn.leaguestorm.services.ServiceArticle;
 import tn.leaguestorm.utils.MyConnection;
 
-
 //import org.controlsfx.control.Notifications;
 /**
  * FXML Controller class
@@ -145,9 +146,6 @@ public class ArticleController implements Initializable {
     private Button btnstats;
     @FXML
     private Button btnnotif;
-
-    @FXML
-    private AnchorPane root;
 
     /**
      * Initializes the controller class.
@@ -721,7 +719,6 @@ public class ArticleController implements Initializable {
         dialogPane.getStylesheets().add(getClass().getResource("Notifstyle.css").toExternalForm());
         dialogPane.getStyleClass().add("low-stock");
 
-
         // Display the pop-up window
         alert.showAndWait();
 
@@ -744,6 +741,23 @@ public class ArticleController implements Initializable {
                 .title("Low Stock")
                 .text(contentText.toString());*/
     }
-    
+
+    @FXML
+    private void sendSMS(ActionEvent event) {
+
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new com.twilio.type.PhoneNumber("+21626845683"),
+                new com.twilio.type.PhoneNumber("+16315291904"),
+                "\"Hello,\n"
+                + "We wanted to inform you about our latest products! Check out our new arrivals ! We think you'll love them. Don't forget to visit our application for more information. Thank you for choosing us for your needs. Best regards, Leaguestorm.\""
+        ).create();
+
+        System.out.println(message.getSid());
+    }
+
+    // Your Twilio account SID and auth token
+    public static final String ACCOUNT_SID = "ACace7472778dc6883d3fdaa091bedc3c4";
+    public static final String AUTH_TOKEN = "c0369c26e0d598b9423e0b40ee2e37f7";
 
 }

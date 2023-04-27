@@ -107,32 +107,7 @@ public class BackController implements Initializable {
             stage.setScene(scene); // set the new scene as the content of the stage
     }
 
-  @FXML
-private void sendSMS(ActionEvent event) {
- 
-    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
-    Message message = Message
-      .creator(
-        new PhoneNumber("+16315291904"),
-        new PhoneNumber("+21626845683"),
-        "This is the ship that made the Kessel Run in fourteen parsecs?"
-      )
-      .create();
-
-    System.out.println(message.getSid());
-  
-}
-
-    
-    
-    // Your Twilio account SID and auth token
-    public static final String ACCOUNT_SID = "ACace7472778dc6883d3fdaa091bedc3c4";
-  public static final String AUTH_TOKEN = "41933cff190bdbdb5e97966f655ee8f3";
-    // Your Twilio phone number that has been verified with Twilio
- //   public static final String TWILIO_PHONE_NUMBER = "+16315291904";
-
- 
 
 
 

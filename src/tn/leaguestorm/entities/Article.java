@@ -20,8 +20,10 @@ public class Article {
     
     // relation category ,subcatg ratings locatioin  
     private Category category;
+
+  
     private SubCategory subcategory;
-    private List<Location> location;
+    private List<User> users;
     private List<Rating> rating;
 
     public Article() {
@@ -216,14 +218,16 @@ this.stock = stock;
         return category;
     }
 
-    public SubCategory getSubcategory() {
-        return subcategory;
+
+  public List<User> getUser() {
+        return users;
     }
 
-    public List<Location> getLocation() {
-        return location;
+    public void setUser(List<User> user) {
+        this.users = user;
     }
-
+    
+    
     public List<Rating> getRating() {
         return rating;
     }
@@ -263,18 +267,23 @@ public void setColor(String color) {
         this.category = category;
     }
 
-    public void setSubcategory(SubCategory subcategory) {
-        this.subcategory = subcategory;
-    }
-
-    public void setLocation(List<Location> location) {
-        this.location = location;
-    }
+    
+    
 
     public void setRating(List<Rating> rating) {
         this.rating = rating;
     }
 
+     public void addUser(User user) {
+        users.add(user);
+        user.addArticle(this);
+    }
+    
+    public void removeUser(User user) {
+        users.remove(user);
+        user.removeArticle(this);
+    }
+    
     /*  public void setUser(List<User> user) {
         this.user = user;
     }*/
