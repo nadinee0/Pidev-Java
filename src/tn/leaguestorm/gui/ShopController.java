@@ -394,9 +394,102 @@ public class ShopController implements Initializable {
 
     }
 
+    public void removeArticleFromWishlist(/*int userId,*/int articleId) throws SQLException {
+        // Define the SQL query to remove the article from the user's wishlist
+        String query = "DELETE FROM user_article WHERE user_id = ? AND article_id = ?";
+        int userId = 22;
+        // Prepare the SQL statement with the query and the parameter values
+        PreparedStatement statement = ds.getCnx().prepareStatement(query);
+        statement.setInt(1, userId);
+        statement.setInt(2, articleId);
+
+        // Execute the SQL statement
+        int rowsDeleted = statement.executeUpdate();
+
+        // Check if the article was successfully removed from the user's wishlist
+        if (rowsDeleted > 0) {
+            System.out.println("Article removed from wishlist.");
+        } else {
+            System.out.println("Failed to remove article from wishlist.");
+        }
+    }
+
     @FXML
-    private void onWishlistButtonClicked(ActionEvent event) {
-        displayWishlist();
+    private void onWishlistButtonClicked(ActionEvent event) throws SQLException, FileNotFoundException {
+        String query = "SELECT a.id, a.titre, a.description, a.prix, a.image FROM article a "
+                + "INNER JOIN user_article w ON a.id = w.article_id "
+                + "WHERE w.user_id = 22";
+
+        // Execute the query and retrieve the result set
+        Statement statement = ds.getCnx().createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        // Clear the GridPane before adding new elements
+        grid.getChildren().clear();
+
+        // Define the column and row indexes for the GridPane
+        int colIndex = 0;
+        int rowIndex = 0;
+
+        // Iterate through the result set and add each article to the GridPane
+        while (resultSet.next()) {
+            // Create a new Label for the article name
+            Label nameLabel = new Label(resultSet.getString("titre"));
+            grid.add(nameLabel, colIndex, rowIndex);
+
+            // Create a new ImageView for the article image
+            String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + resultSet.getString("image"); // Replace this with your own file path and column name
+            Image image = new Image(new File(imagePath).toURI().toString());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(200); // Set the width to 200 pixels
+            imageView.setFitHeight(200); // Set the height to 200 pixels
+            grid.add(imageView, colIndex, rowIndex + 1);
+
+            // Create a new Label for the article price
+            Label priceLabel = new Label(resultSet.getString("prix"));
+            grid.add(priceLabel, colIndex, rowIndex + 2);
+
+            // Create a new Button to remove the article from the wishlist
+            Button removeButton = new Button("Remove");
+            int articleId = resultSet.getInt("id");
+            removeButton.setOnAction(e -> {
+                try {
+                    // Remove the selected article from the wishlist
+                    removeArticleFromWishlist(articleId);
+
+                    // Remove the corresponding elements from the GridPane
+                    grid.getChildren().removeAll(nameLabel, imageView, priceLabel, removeButton);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    // Add error handling here
+                }
+            });
+            grid.add(removeButton, colIndex, rowIndex + 3);
+
+            // Increment the column index
+            colIndex++;
+
+            // Move to the next row if the current row is full
+            if (colIndex == 3) {
+                colIndex = 0;
+                rowIndex += 4;
+            }
+        }
+        Button returnButton = new Button("Return");
+        returnButton.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Shop.fxml"));
+                Parent root = loader.load(); // load the new FXML file
+                Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+                Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+                Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+                Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+                stage.setScene(scene); // set the new scene as the content of the stage
+            } catch (IOException ex) {
+                Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        grid.add(returnButton, colIndex+5, rowIndex+5);
 
     }
 
@@ -419,9 +512,9 @@ public class ShopController implements Initializable {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-             });
-                 }
+            });
+        }
 
     }
-   
+
 }
