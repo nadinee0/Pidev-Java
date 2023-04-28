@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import tn.leaguestorm.entities.Badge;
 import tn.leaguestorm.services.BadgeService;
+import tn.leaguestorm.utils.SelectedBadge;
 
 /**
  *
@@ -121,12 +122,9 @@ public class BackBadgeController {
             modifyBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
             modifyBtn.setOnAction(e -> {
                 try {
-        
+                    SelectedBadge.setBadge(b);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("modifyBadgePopup.fxml"));
                     Parent root = loader.load();
-                    
-                    ModifyBadgePopupController controller = loader.getController();
-                    controller.setBadgeInfo(b);
                     
                     Stage modifyStage = new Stage();
                     modifyStage.setScene(new Scene(root));

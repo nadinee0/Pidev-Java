@@ -16,16 +16,17 @@ public class Badge {
     private String logo, badgeFileName, description;
     private Date date;   
 
-    public Badge(int valeur, String logo, String badgeFileName, String description) {
-        this.valeur = valeur;
+    public Badge(int id, String logo, int valeur, String badgeFileName, String description) {
+        this.id = id;
         this.logo = logo;
+        this.valeur = valeur;
         this.badgeFileName = badgeFileName;
         this.description = description;
     }
 
-    public Badge(int valeur, String logo, String badgeFileName, String description, Date date) {
-        this.valeur = valeur;
+    public Badge(String logo, int valeur, String badgeFileName, String description, Date date) {
         this.logo = logo;
+        this.valeur = valeur;
         this.badgeFileName = badgeFileName;
         this.description = description;
         this.date = date;

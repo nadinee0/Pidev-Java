@@ -121,9 +121,9 @@
                                 <Image url="@../images/icons8_Search_52px.png" />
                             </image>
                         </ImageView>
-                        <Label layoutX="274.0" layoutY="14.0" prefHeight="137.0" prefWidth="298.0" text="Badges">
+                        <Label layoutX="273.0" layoutY="6.0" prefHeight="107.0" prefWidth="248.0" text="Badges">
                             <font>
-                                <Font size="93.0" />
+                                <Font size="76.0" />
                             </font>
                             <textFill>
                                 <LinearGradient endX="0.18560609673008774" endY="1.0" startX="0.12878787111152304">
@@ -144,7 +144,7 @@
                         </Label>
                   <ScrollPane layoutY="148.0" prefHeight="428.0" prefWidth="794.0" stylesheets="@style.css">
                      <content>
-                        <FlowPane fx:id="badgePane" prefHeight="426.0" prefWidth="765.0" alignment="CENTER" style="-fx-background-color: white;" />
+                        <FlowPane fx:id="badgePane" alignment="CENTER" prefHeight="426.0" prefWidth="765.0" style="-fx-background-color: white;" />
                      </content>
                   </ScrollPane>
                     </children>

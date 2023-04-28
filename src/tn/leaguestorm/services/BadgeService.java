@@ -24,44 +24,49 @@ import tn.leaguestorm.utils.MyConnection;
  * @author Bellalouna Iheb
  */
 public class BadgeService implements IService<Badge> {
-    
+
     private MyConnection cnx = MyConnection.getInstance();
 
     @Override
     public void ajouter(Badge b) throws SQLException {
-        String req = "INSERT INTO `badge` (`valeur`, `logo`, `badgeFileName`, `description`) VALUES ('" + b.getValeur()+ "', '" + b.getLogo()+ "', '" + b.getBadgeFileName()+ "', '" + b.getDescription()+ "')";
-            Statement st = cnx.getCnx().createStatement();
-            st.executeUpdate(req);
+        String req = "INSERT INTO `badge` (`valeur`, `logo`, `badge_file_name`, `description`) VALUES ('" + b.getValeur() + "', '" + b.getLogo() + "', '" + b.getBadgeFileName() + "', '" + b.getDescription() + "')";
+        Statement st = cnx.getCnx().createStatement();
+        st.executeUpdate(req);
     }
 
     @Override
     public void modifier(Badge b) throws SQLException {
-        String req = "UPDATE `badge` SET `valeur` = '" + b.getValeur()+ "', `logo` = '" + b.getValeur()+ "', `badgeFileName` = '" + b.getBadgeFileName()+ "', `description` = '" + b.getDescription()+ "' WHERE `badge`.`id` = " + b.getId();
-            Statement st = cnx.getCnx().createStatement();
-            st.executeUpdate(req);
+        String req = "UPDATE `badge` SET `logo` = ?, `valeur` = ?, `badge_file_name` = ?, `description` = ? WHERE `id` = ?";
+        PreparedStatement ps = cnx.getCnx().prepareStatement(req);
+        ps.setString(1, b.getLogo());
+        ps.setInt(2, b.getValeur());
+        ps.setString(3, b.getBadgeFileName());
+        ps.setString(4, b.getDescription());
+        ps.setInt(5, b.getId());
+        ps.executeUpdate();
     }
 
     @Override
     public void supprimer(int id) throws SQLException {
-            String req = "DELETE FROM `badge` WHERE id = " + id;
-            Statement st = cnx.getCnx().createStatement();
-            st.executeUpdate(req);
+        String req = "DELETE FROM `badge` WHERE id = " + id;
+        Statement st = cnx.getCnx().createStatement();
+        st.executeUpdate(req);
     }
 
     @Override
     public List<Badge> getAll() throws SQLException {
-        
+
         List<Badge> list = new ArrayList<>();
-            String req = "Select * from badge";
-            Statement st = cnx.getCnx().createStatement();
-            ResultSet rs = st.executeQuery(req);
-            while(rs.next()){
-                Badge b = new Badge(rs.getInt("valeur"), rs.getString("logo"), rs.getString("badgeFileName"), rs.getString("description"));
-                list.add(b);
-            }
+        String req = "Select * from badge";
+        Statement st = cnx.getCnx().createStatement();
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            Badge b = new Badge(rs.getInt("id"), rs.getString("logo"), rs.getInt("valeur"), rs.getString("badge_file_name"), rs.getString("description"));
+            list.add(b);
+        }
         return list;
     }
-    
+
     public ObservableList<Badge> displayBadges() {
         ObservableList<Badge> myList = FXCollections.observableArrayList();
 
@@ -71,10 +76,11 @@ public class BadgeService implements IService<Badge> {
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 Badge b = new Badge();
-                b.setValeur(rs.getInt("valeur"));
+                b.setId(rs.getInt("id"));
                 b.setLogo(rs.getString("logo"));
-                b.setDescription(rs.getString("description"));
+                b.setValeur(rs.getInt("valeur"));
                 b.setBadgeFileName(rs.getString("badge_file_name"));
+                b.setDescription(rs.getString("description"));
                 myList.add(b);
             }
         } catch (SQLException ex) {
@@ -82,5 +88,5 @@ public class BadgeService implements IService<Badge> {
         }
         return myList;
     }
-    
+
 }
