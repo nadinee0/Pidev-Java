@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -51,10 +52,6 @@ public class BackController {
     @FXML
     private Button btnOverview;
     @FXML
-    private Button btnPackages;
-    @FXML
-    private Button btnSettings;
-    @FXML
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
@@ -62,7 +59,7 @@ public class BackController {
     private Pane pnlMenus;
     @FXML
     private Pane pnlOverview;
-
+    
     @FXML
     private FlowPane userPane;
     private ObservableList<User> users;
@@ -70,6 +67,10 @@ public class BackController {
     private Button btnUser;
     @FXML
     private Button btnBadge;
+    @FXML
+    private Button btnAddUsers;
+    @FXML
+    private Button btnAddBadges;
 
     @FXML
     private void handleClicks(ActionEvent event) {
@@ -186,5 +187,11 @@ public class BackController {
     @FXML
     private void badgeAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/BackBadge.fxml", "Forgot");
+    }
+
+
+    @FXML
+    private void addBadgeAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/AddBadgePopup.fxml", "Add Badge");
     }
 }

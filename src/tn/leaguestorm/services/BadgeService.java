@@ -29,7 +29,7 @@ public class BadgeService implements IService<Badge> {
 
     @Override
     public void ajouter(Badge b) throws SQLException {
-        String req = "INSERT INTO `badge` (`valeur`, `logo`, `badge_file_name`, `description`) VALUES ('" + b.getValeur() + "', '" + b.getLogo() + "', '" + b.getBadgeFileName() + "', '" + b.getDescription() + "')";
+        String req = "INSERT INTO `badge` (`logo`, `valeur`, `badge_file_name`, `description`) VALUES ('" + b.getLogo() + "', '" + b.getValeur() + "', '" + b.getBadgeFileName() + "', '" + b.getDescription() + "')";
         Statement st = cnx.getCnx().createStatement();
         st.executeUpdate(req);
     }

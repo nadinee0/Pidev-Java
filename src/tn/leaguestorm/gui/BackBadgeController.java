@@ -45,10 +45,6 @@ public class BackBadgeController {
     @FXML
     private Button btnOverview;
     @FXML
-    private Button btnPackages;
-    @FXML
-    private Button btnSettings;
-    @FXML
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
@@ -64,6 +60,8 @@ public class BackBadgeController {
     private Button btnUser;
     @FXML
     private Button btnBadge;
+    @FXML
+    private Button btnAddBadges;
 
     @FXML
     private void handleClicks(ActionEvent event) {
@@ -154,6 +152,13 @@ public class BackBadgeController {
 
     @FXML
     private void badgeAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/BackBadge.fxml", "Forgot");
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/BackBadge.fxml", "Badges");
     }
+
+
+    @FXML
+    private void addBadgeAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/AddBadgePopup.fxml", "Add Badge");
+    }
+    
 }
