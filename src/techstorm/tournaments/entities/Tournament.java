@@ -19,26 +19,28 @@ public class Tournament {
     private String startDate;
     private int participantsNumber;
     private String status;
+    private String replayID;
     private static int TidCounter = 0;    
 
     private List<Round> rounds = new ArrayList<>();
     private List<RegisteredPlayer> players = new ArrayList<>();
 
-    public Tournament(int id, int Tid, String name, String startDate, int participantsNumber, String status) {
+    public Tournament(int id, int Tid, String name, String startDate, int participantsNumber, String status, String replayID) {
         this.id = id;
         this.Tid = Tid;
         this.name = name;
         this.startDate = startDate;
         this.participantsNumber = participantsNumber;
         this.status = status;
-        
+        this.replayID = replayID; 
     }
 
-    public Tournament(String name, String startDate, int participantsNumber, String status) {
+    public Tournament(String name, String startDate, int participantsNumber, String status, String replayID) {
         this.name = name;
         this.startDate = startDate;
         this.participantsNumber = participantsNumber;
         this.status = status;
+        this.replayID = replayID;
         
     }
 
@@ -116,10 +118,22 @@ public class Tournament {
     public void setRounds(List<Round> rounds) {
         this.rounds = rounds;
     }
-    
-    
-    
-    
+
+    public String getReplayID() {
+        return replayID;
+    }
+
+    public void setReplayID(String replayID) {
+        this.replayID = replayID;
+    }
+
+    public List<RegisteredPlayer> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<RegisteredPlayer> players) {
+        this.players = players;
+    }   
     
     
     

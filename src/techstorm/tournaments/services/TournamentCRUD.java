@@ -32,16 +32,18 @@ public class TournamentCRUD {
     }
     
     public void addTournament(Tournament T){
+    TournamentCRUD tcd = new TournamentCRUD();
     try {
-        T.setTid(Tournament.getTidCounter());
-        String query = " INSERT INTO tournament (Tid, name, startDate, participantsNumber, status)"
-                +"VALUES (?, ?, ?, ?, ?)";
+        T.setTid(tcd.getMaxTid()+1);
+        String query = " INSERT INTO tournament (Tid, name, startDate, participantsNumber, status, replayid)"
+                +"VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement pst= cnx.prepareStatement(query);
         pst.setInt(1, T.getTid());
         pst.setString(2, T.getName());
         pst.setString(3, T.getStartDate());
         pst.setInt(4, T.getParticipantsNumber());
         pst.setString(5, T.getStatus());
+        pst.setString(6, T.getReplayID());
         pst.executeUpdate();
         System.out.println("Tournament added!");
         Tournament.setTidCounter(Tournament.getTidCounter()+1);
@@ -50,7 +52,7 @@ public class TournamentCRUD {
         System.err.println(ex.getMessage());
     }
     int numRounds = (int) Math.ceil(Math.log(T.getParticipantsNumber()) / Math.log(2));
-    TournamentCRUD tcd = new TournamentCRUD();
+    
         for (int i = 1; i <= numRounds; i++) {
         try {
             Round round = new Round(i);
@@ -82,7 +84,8 @@ public class TournamentCRUD {
                         rs.getString("name"),
                         rs.getString("startDate"),
                         rs.getInt("participantsNumber"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("replayid")
                 );                
             }
         } catch (SQLException ex) {
@@ -131,7 +134,8 @@ public class TournamentCRUD {
                     rs.getString("name"),
                     rs.getString("startDate"),
                     rs.getInt("participantsNumber"),
-                    rs.getString("status")
+                    rs.getString("status"),
+                    rs.getString("replayid")
             );
             System.out.println(T);
             }
@@ -154,7 +158,8 @@ public class TournamentCRUD {
                     rs.getString("name"),
                     rs.getString("startDate"),
                     rs.getInt("participantsNumber"),
-                    rs.getString("status")
+                    rs.getString("status"),
+                    rs.getString("replayid")
             );
             tournaments.add(T);
         }
@@ -222,6 +227,26 @@ public class TournamentCRUD {
         
         
     }
+    
+    
+    public int getMaxTid() {
+    int maxTid = 0;
+    try {
+        String query = "SELECT MAX(Tid) AS max_tid FROM tournament";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            maxTid = rs.getInt("max_tid");
+            if (rs.wasNull()) {
+                maxTid = 0;
+            }
+        }
+    } catch (SQLException ex) {
+        System.err.println(ex.getMessage());
+    }
+    return maxTid;
+}
+
 
     
     

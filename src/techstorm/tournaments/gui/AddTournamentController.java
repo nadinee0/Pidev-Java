@@ -9,9 +9,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.stage.Window;
+import techstorm.tournaments.entities.Tournament;
+import techstorm.tournaments.services.TournamentCRUD;
 
 public class AddTournamentController implements Initializable {
 
@@ -52,7 +57,7 @@ public class AddTournamentController implements Initializable {
     private Button addCancelbtn;
 
     @FXML
-    private Button addSavebtn;
+    private Button addConfirmbtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,18 +66,28 @@ public class AddTournamentController implements Initializable {
     }
 
     @FXML
-    private void handleAddCancel() {
-        // Get the current scene and window
-        Scene scene = addCancelbtn.getScene();
-        Window window = scene.getWindow();
-
-        // Close the window
-        window.hide();
-}
+    private void handleCancelAction(ActionEvent event) {
+        // get a reference to the button's stage
+        Stage stage = (Stage) addCancelbtn.getScene().getWindow();
+        // close the window
+        stage.close();
+    }
 
 
     @FXML
-    private void handleAddSave() {
-        // TODO: Handle save button action
+    private void handleConfirmAction(ActionEvent event) {
+        // create a new tournament object with the data from the form
+        String name = addNametf.getText();
+        LocalDate date = addDatedp.getValue();
+        int participantsNumber = Integer.parseInt(addPNcb.getValue());
+        String status = addStatuscb.getValue();
+        String replayID = addReplaytf.getText();
+        Tournament newTournament = new Tournament(name, date.toString(), participantsNumber, status, replayID);
+        TournamentCRUD tcd = new TournamentCRUD();
+        tcd.addTournament(newTournament);
+        // get a reference to the button's stage
+        Stage stage = (Stage) addConfirmbtn.getScene().getWindow();
+        // close the window
+        stage.close();
     }
 }

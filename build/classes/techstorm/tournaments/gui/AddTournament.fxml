@@ -53,7 +53,8 @@
       </TextField>
       <ComboBox fx:id="addPNcb" layoutX="258.0" layoutY="243.0" prefHeight="30.0" prefWidth="187.0" />
       <ComboBox fx:id="addStatuscb" layoutX="258.0" layoutY="317.0" prefHeight="30.0" prefWidth="187.0" />
-      <Button fx:id="addCancelbtn" cancelButton="true" layoutX="139.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" text="Cancel" />
-      <Button fx:id="addSavebtn" defaultButton="true" layoutX="258.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" text="Save" />
+      <Button fx:id="addCancelbtn" cancelButton="true" layoutX="139.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleCancelAction" prefHeight="30.0" prefWidth="90.0" text="Cancel" />
+    <Button fx:id="addConfirmbtn" defaultButton="true" layoutX="258.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleConfirmAction" prefHeight="30.0" prefWidth="90.0" text="Confirm" />
+
    </children>
 </AnchorPane>

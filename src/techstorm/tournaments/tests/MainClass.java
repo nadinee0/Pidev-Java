@@ -74,7 +74,7 @@ public class MainClass {
                 status = scanner.nextLine();
             }
             
-            Tournament t = new Tournament(name, startDateStr, maxPlayers, status);
+            Tournament t = new Tournament(name, startDateStr, maxPlayers, status, "xxx");
             tcd.addTournament(t);
         }
         

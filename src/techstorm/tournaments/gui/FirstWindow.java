@@ -10,9 +10,9 @@ public class FirstWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("AddTournament.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("TournamentHome.fxml"));
 
-        Scene scene = new Scene(root, 750, 500);
+        Scene scene = new Scene(root, 1280, 720);
 
         primaryStage.setTitle("Tournaments");
         primaryStage.setScene(scene);
