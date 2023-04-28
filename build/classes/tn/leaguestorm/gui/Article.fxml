@@ -142,10 +142,10 @@
             <Label layoutX="53.0" layoutY="415.0" prefHeight="31.0" prefWidth="51.0" stylesheets="@style_1.css" text="Price" textFill="WHITE" />
             <Label layoutX="106.0" layoutY="471.0" stylesheets="@style_1.css" text="Stock" textFill="WHITE" />
             <Label layoutX="78.0" layoutY="506.0" prefHeight="42.0" prefWidth="86.0" stylesheets="@style_1.css" text="Category" textFill="WHITE" />
-            <Button fx:id="btnAdd" layoutX="83.0" layoutY="681.0" mnemonicParsing="false" onAction="#saveArticle" prefHeight="31.0" prefWidth="87.0" stylesheets="@style_1.css" text="Add" />
-            <Button fx:id="btnUpdate" layoutX="191.0" layoutY="681.0" mnemonicParsing="false" onAction="#updateArticle" prefHeight="31.0" prefWidth="87.0" stylesheets="@style_1.css" text="Update" />
-            <Button fx:id="btnDelete" layoutX="303.0" layoutY="681.0" mnemonicParsing="false" onAction="#deleteArticle" prefHeight="31.0" prefWidth="87.0" stylesheets="@style_1.css" text="Delete" />
-                        <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="247.0" layoutX="100.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="btnAdd" layoutX="119.0" layoutY="655.0" mnemonicParsing="false" onAction="#saveArticle" prefHeight="31.0" prefWidth="87.0" stylesheets="@style_1.css" text="Add" />
+            <Button fx:id="btnUpdate" layoutX="227.0" layoutY="655.0" mnemonicParsing="false" onAction="#updateArticle" prefHeight="31.0" prefWidth="87.0" stylesheets="@style_1.css" text="Update" />
+            <Button fx:id="btnDelete" layoutX="339.0" layoutY="655.0" mnemonicParsing="false" onAction="#deleteArticle" prefHeight="31.0" prefWidth="87.0" stylesheets="@style_1.css" text="Delete" />
+                        <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="247.0" layoutX="149.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
             <Button fx:id="btnImport" layoutX="406.0" layoutY="117.0" mnemonicParsing="false" onAction="#Import" stylesheets="@style_1.css" text="Import" />
                      </children>
                   </AnchorPane>

@@ -29,6 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -169,12 +171,12 @@ public class ArticleController implements Initializable {
         String catg = cbCategory.getValue();
 
         try {
-            // retrieve the data from the database
+            /*            // retrieve the data from the database
             //  String query = "SELECT titre, image, description, prix, stock  FROM article ";
-        
-String query = "SELECT a.titre, a.image, a.description, a.prix, a.stock, c.nom AS category " +
-               "FROM article a " +
-               "INNER JOIN category c ON a.category_id = c.id";
+            String query = "SELECT a.titre, a.image, a.description, a.prix, a.stock, c.nom AS category "
+                    + "FROM article a "
+                    + "INNER JOIN category c ON a.category_id = c.id";
+
             PreparedStatement stmt = ds.getCnx().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
@@ -186,10 +188,21 @@ String query = "SELECT a.titre, a.image, a.description, a.prix, a.stock, c.nom A
                 float price = rs.getFloat("prix");
                 int stock = rs.getInt("stock");
                 String category = rs.getString("category");
-
+//Category category = new Category(categoryName);
                 // create a new Article object and add it to the list view
                 articleList.getItems().add(new Article(titre, image, price, description, stock, category));
+            }*/
+            List<Article> list = new ArrayList<>();
+
+            String req = "Select * from article";
+            Statement st = ds.getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Article ar = new Article(rs.getString(2), rs.getString(3), rs.getFloat(4), rs.getString(5), rs.getInt(6), rs.getString(8));
+
+                articleList.getItems().add(ar);
             }
+            ;
 
             // set the cell factory to customize the appearance of each cell
             articleList.setCellFactory(new Callback<ListView<Article>, ListCell<Article>>() {
@@ -225,7 +238,7 @@ String query = "SELECT a.titre, a.image, a.description, a.prix, a.stock, c.nom A
                                 descriptionLabel.setText(item.getDescription());
                                 priceLabel.setText(String.format("%.2f", item.getPrix()) + " $");
                                 stockLabel.setText(item.getStock() + " in stock");
-                                categoryLabel.setText(catg);
+//                                categoryLabel.setText(item.getCategory().getNom());
 
                                 // load the image from the database and display it in the cell
                                 try {
@@ -248,32 +261,31 @@ String query = "SELECT a.titre, a.image, a.description, a.prix, a.stock, c.nom A
             e.printStackTrace();
         }
 
-        articleList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                tfTitle.setText(newSelection.getTitre());
-                taDescription.setText(newSelection.getDescription());
-                tfStock.setText(String.valueOf(newSelection.getStock()));
-                tfPrice.setText(String.valueOf(newSelection.getPrix()));
-                cbCategory.setValue(catg);
-
-                // load and display the image
-                try {
-                    String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + newSelection.getImage();
-                    Image image = new Image(new File(imagePath).toURI().toString());
-                    imageView.setImage(image);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        articleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
+            @Override
+            public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
+                if (newValue != null) {
+                    updateUI(newValue);
                 }
-
-            } else {
-                tfTitle.setText("");
-                taDescription.setText("");
-                tfStock.setText("");
-                tfPrice.setText("");
-                cbCategory.setValue(null);
-                imageView.setImage(null);
             }
         });
+    }
+
+    private void updateUI(Article article) {
+        tfTitle.setText(article.getTitre());
+        taDescription.setText(article.getDescription());
+        tfStock.setText(String.valueOf(article.getStock()));
+        tfPrice.setText(String.valueOf(article.getPrix()));
+        cbCategory.setValue(article.getNomcatg());
+
+        // load and display the image
+        try {
+            String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + article.getImage();
+            Image image = new Image(new File(imagePath).toURI().toString());
+            imageView.setImage(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -156,10 +156,7 @@ public class ServiceArticle implements IService<Article> {
             String image = rs.getString("image");   
             float price = rs.getFloat("prix");
             String categoryName = rs.getString("category_name");
-            //String subCategoryName = rs.getString("subcategory_name");
-
             Category category = new Category(categoryName);
-           // SubCategory subCategory = new SubCategory(category, subCategoryName);
 
             Article article = new Article(id, title, image, price, description, stock, category);
 
@@ -215,39 +212,6 @@ public class ServiceArticle implements IService<Article> {
         preparedStatement.setInt(2, categoryID);
         preparedStatement.executeUpdate();
     }
-
-    public List<String> getAllSubCategoryNames() throws SQLException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<String> categoryNames = new ArrayList<>();
-
-        conn = ds.getCnx();
-        String sql = "SELECT nom_sub_category FROM sub_category";
-        stmt = conn.prepareStatement(sql);
-        rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            String SubcategoryName = rs.getString("nom_sub_category");
-            categoryNames.add(SubcategoryName);
-        }
-
-        return categoryNames;
-
-    }
-
-    public int getSubCategoryIDByName(String SubcategoryName) throws SQLException {
-        String query = "SELECT id FROM sub_category WHERE nom_sub_category = ?";
-        PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
-        preparedStatement.setString(1, SubcategoryName);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            return resultSet.getInt("id");
-        } else {
-            throw new SQLException("No category found with name " + SubcategoryName);
-        }
-    }
-    
 
         public List<Article> getAllArticle() throws SQLException {
         List<Article> list = new ArrayList<>();

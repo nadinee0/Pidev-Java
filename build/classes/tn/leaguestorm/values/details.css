@@ -1,0 +1,32 @@
+/* Style the label element */
+.label {
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #000;
+}
+
+/* Style the image element */
+.image-view {
+  -fx-fit-width: 100%;
+  -fx-fit-height: auto;
+  -fx-effect: dropshadow(three-pass-box, rgba(39, 25, 63, 0.464), 10, 0, 0, 0);
+}
+
+/* Style the button element */
+.button {
+  -fx-font-size: 16px;
+  -fx-text-fill: #42544b;
+  -fx-font-weight: bold;
+  -fx-background-color: #6ec9b8;
+    -fx-background-radius: 100;
+}
+
+.button:hover {
+  -fx-background-color: #2ccc99;
+    -fx-background-radius: 100;
+}
+
+.button:pressed {
+  -fx-background-color: #a8c7e5;
+    -fx-background-radius: 100;
+}

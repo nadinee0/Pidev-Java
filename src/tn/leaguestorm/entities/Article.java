@@ -178,6 +178,10 @@ this.stock = stock;
         this.prix = prix;
      this.stock = stock;  
     }
+
+    public String getNomcatg() {
+        return nomcatg;
+    }
     
    
 
