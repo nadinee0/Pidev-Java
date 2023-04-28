@@ -72,10 +72,13 @@ public class HomeController implements Initializable {
     User currentUser = CurrentUser.getUser();
     @FXML
     private FlowPane badgesPane;
+    @FXML
+    private Label scoreLB;
     
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        int score = 0;
         if (currentUser != null) {
             lblEmail.setText(currentUser.getEmail());
             lblCountry.setText(currentUser.getCountry());
@@ -86,16 +89,19 @@ public class HomeController implements Initializable {
         } else {
             System.out.println("No such user found!");
         }
-        userCards();
+        score = userCards();
+        scoreLB.setText(String.valueOf(score));
     }
     
-    public void userCards() {
+    public int userCards() {
         badgesPane.getChildren().clear();
+        badgesPane.setAlignment(Pos.CENTER);
         UserService us = new UserService();
         ObservableList<Badge> badgeList = FXCollections.observableArrayList();
         badgeList = us.displayBadgesForUser();
-
+        int score = 0;
         for (Badge b : badgeList) {
+            score += b.getValeur();
             VBox card = new VBox();
             card.setAlignment(Pos.CENTER);
             card.setPrefSize(75, 75);
@@ -119,6 +125,7 @@ public class HomeController implements Initializable {
             badgesPane.getChildren().add(card);
             badgesPane.setMargin(card, new Insets(5, 5, 5, 5));
         }
+        return score;
     }
     
     

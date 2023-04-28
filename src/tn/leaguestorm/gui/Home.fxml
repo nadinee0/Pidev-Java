@@ -93,6 +93,16 @@
                      </fill>
                   </Text>
                   <FlowPane fx:id="badgesPane" columnHalignment="CENTER" layoutX="6.0" layoutY="340.0" prefHeight="200.0" prefWidth="776.0" />
+                  <Label layoutX="390.0" layoutY="528.0" text="Points">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="scoreLB" layoutX="357.0" layoutY="528.0" prefHeight="17.0" prefWidth="33.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
