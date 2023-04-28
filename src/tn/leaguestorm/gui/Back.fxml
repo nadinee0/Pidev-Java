@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TextField?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -147,6 +148,7 @@
                         <FlowPane fx:id="userPane" alignment="CENTER" prefHeight="426.0" prefWidth="765.0" style="-fx-background-color: white;" />
                      </content>
                   </ScrollPane>
+                  <TextField fx:id="tfSearch" layoutX="596.0" layoutY="48.0" />
                     </children>
                 </Pane>
             </children>

@@ -23,12 +23,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import tn.leaguestorm.entities.Badge;
+import tn.leaguestorm.utils.CurrentUser;
 
 /**
  *
  * @author Bellalouna Iheb
  */
 public class UserService implements IService<User> {
+    
+    User currentUser = CurrentUser.getUser();
 
     private MyConnection cnx = MyConnection.getInstance();
 
@@ -127,6 +131,32 @@ public class UserService implements IService<User> {
         }
         return list;
     }
+
+    public ObservableList<Badge> displayBadgesForUser() {
+        ObservableList<Badge> myList = FXCollections.observableArrayList();
+
+        try {
+            String req = "SELECT b.id, b.logo, b.valeur, b.badge_file_name, b.description FROM badge b INNER JOIN badge_user ub ON b.id = ub.badge_id WHERE ub.user_id = ?";
+        PreparedStatement ps = cnx.getCnx().prepareStatement(req);
+        ps.setInt(1, currentUser.getId());
+        ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Badge b = new Badge();
+                b.setId(rs.getInt("id"));
+                b.setLogo(rs.getString("logo"));
+                b.setValeur(rs.getInt("valeur"));
+                b.setBadgeFileName(rs.getString("badge_file_name"));
+                b.setDescription(rs.getString("description"));
+                
+                myList.add(b);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return myList;
+    }
+    
 
     public ObservableList<User> displayUsers() {
         ObservableList<User> myList = FXCollections.observableArrayList();
