@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -250,21 +251,51 @@ public class TournamentCRUD {
 
 
     public List<Tournament> searchTournaments(String keyword) {
-        TournamentCRUD tcd = new TournamentCRUD();
-        List<Tournament> tournaments = tcd.getAllTournaments();
+    TournamentCRUD tcd = new TournamentCRUD();
+    List<Tournament> tournaments = tcd.getAllTournaments();
     return tournaments.stream()
             .filter(t -> {
-        return t.getName().contains(keyword) || 
-                String.valueOf(t.getTid()).contains(keyword) ||
-                t.getStartDate().contains(keyword) ||
-                t.getStatus().contains(keyword) ||
-                String.valueOf(t.getParticipantsNumber()).contains(keyword) ||
-                t.getReplayID().contains(keyword);
-    })
+                String name = t.getName().toLowerCase();
+                String tid = String.valueOf(t.getTid()).toLowerCase();
+                String startDate = t.getStartDate().toLowerCase();
+                String status = t.getStatus().toLowerCase();
+                String participantsNumber = String.valueOf(t.getParticipantsNumber()).toLowerCase();
+                String replayID = t.getReplayID().toLowerCase();
+                String lowerCaseKeyword = keyword.toLowerCase();
+                return name.contains(lowerCaseKeyword) || 
+                        tid.contains(lowerCaseKeyword) ||
+                        startDate.contains(lowerCaseKeyword) ||
+                        status.contains(lowerCaseKeyword) ||
+                        participantsNumber.contains(lowerCaseKeyword) ||
+                        replayID.contains(lowerCaseKeyword);
+            })
             .collect(Collectors.toList());
 }
 
 
+public List<Tournament> sortTournaments(List<Tournament> tournaments, String attribute) {
+        Comparator<Tournament> comparator;
+        switch(attribute) {
+            case "name":
+                comparator = Comparator.comparing(Tournament::getName);
+                break;
+            case "startDate":
+                comparator = Comparator.comparing(Tournament::getStartDate);
+                break;
+            case "participantsNumber":
+                comparator = Comparator.comparingInt(Tournament::getParticipantsNumber);
+                break;
+            case "status":
+                comparator = Comparator.comparing(Tournament::getStatus);
+                break;
+            case "replayID":
+                comparator = Comparator.comparing(Tournament::getReplayID);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid attribute: " + attribute);
+        }
+        return tournaments.stream().sorted(comparator).collect(Collectors.toList());
+    }
     
 
 

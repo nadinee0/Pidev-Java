@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -29,6 +30,9 @@ public class TournamentHomeController implements Initializable{
     
     @FXML
     private TextField homeSearchtf;
+    
+    @FXML
+    private ComboBox<String> homeSortcb;
 
 
     @Override
@@ -36,6 +40,8 @@ public class TournamentHomeController implements Initializable{
         // Load tournaments from data source
         TournamentCRUD tcd = new TournamentCRUD();
         List<Tournament> tournaments = tcd.getAllTournaments();
+        homeSortcb.getItems().addAll("name", "Tid", "startDate", "participantsNumber", "status", "replayID");
+        homeSortcb.setValue("name");
         updateGridPane(tournaments);        
     }
     
@@ -136,6 +142,16 @@ void handleSearchButton(ActionEvent event) {
     String searchText = homeSearchtf.getText();
     TournamentCRUD tcd = new TournamentCRUD();
     List<Tournament> tournaments = tcd.searchTournaments(searchText);
+    updateGridPane(tournaments);
+}
+
+@FXML
+void handleSortButton(ActionEvent event) {
+    String searchText = homeSearchtf.getText();
+    TournamentCRUD tcd = new TournamentCRUD();
+    List<Tournament> tournaments = tcd.searchTournaments(searchText);
+    String attribute = homeSortcb.getValue();
+    tournaments = tcd.sortTournaments(tournaments, attribute);
     updateGridPane(tournaments);
 }
 
