@@ -72,8 +72,8 @@ public class ServiceArticle implements IService<Article> {
         st.executeUpdate(req);
     }
 
-    public void updateArticle(int articleId, String title, float price, String description, int stock, String newCategory, String newSubCategory) throws SQLException {
-        String query = "UPDATE article SET titre = ?, prix = ?,description = ?,stock = ?,category_id = ?,sub_category_id = ? WHERE id = ?";
+    public void updateArticle(int articleId, String title, float price, String description, int stock, String newCategory) throws SQLException {
+        String query = "UPDATE article SET titre = ?, prix = ?,description = ?,stock = ?,category_id = ? WHERE id = ?";
         PreparedStatement preparedStatement = ds.getCnx().prepareStatement(query);
         preparedStatement.setString(1, title);
        // preparedStatement.setString(2, image);
@@ -81,8 +81,8 @@ public class ServiceArticle implements IService<Article> {
         preparedStatement.setString(3, description);
         preparedStatement.setInt(4, stock);
         preparedStatement.setInt(5, getCategoryIDByName(newCategory));
-        preparedStatement.setInt(6, getSubCategoryIDByName(newSubCategory));
-        preparedStatement.setInt(7, articleId);
+  
+        preparedStatement.setInt(6, articleId);
         preparedStatement.executeUpdate();
     }
 

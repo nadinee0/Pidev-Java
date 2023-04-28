@@ -67,6 +67,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -118,7 +119,6 @@ public class ArticleController implements Initializable {
 
     @FXML
     private ComboBox<String> cbCategory;
-    private ComboBox<String> cbSubcategory;
 
     @FXML
     private Button btnOverview;
@@ -155,12 +155,7 @@ public class ArticleController implements Initializable {
         Article a = new Article();
 // TODO
         ServiceArticle sa = new ServiceArticle();
-        //  cbType.setItems(FXCollections.observableArrayList("For Rent", "For Sale"));
-        try {
-            articles = FXCollections.observableArrayList(sa.getAll());
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         try {
             List<String> categoryNames = sa.getAllCategoryNames();
             cbCategory.getItems().addAll(categoryNames);
@@ -171,200 +166,115 @@ public class ArticleController implements Initializable {
         cbCategory.setOnMouseClicked(event -> {
             cbCategory.show();
         });
+        String catg = cbCategory.getValue();
 
-        // Retrieve the article data using a separate SQL function
-        articleList.setItems(articles);
-
-        /*     catch (SQLException e) {
-            // Handle any SQL exceptions that occur
-            e.printStackTrace();
-        }
-
-         */
- /*    String req = "Select * from article";
-        Statement st = ds.getCnx().createStatement();
-        ResultSet rs = st.executeQuery(req);
-        while (rs.next()) {
-        Article a = new Article(rs.getInt("id"), rs.getString(2), rs.getString(3), rs.getFloat(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
-        //   categories.add(c);
-        //}
-        articleList.getItems().add(a);
-        }*/
-        // Personnalisation de la ListView pour afficher les catégories
-        /*  articleList.setCellFactory(new Callback<ListView<Article>, ListCell<Article>>() {
-        @Override
-        public ListCell<Article> call(ListView<Article> listView) {
-        return new ListCell<Article>() {
-        @Override
-        protected void updateItem(Article article, boolean empty) {
-        super.updateItem(article, empty);
-        if (article == null || empty) {
-        setText(null);
-        } else {
-        // Customize the appearance of the cell here
-        setText(article.getTitre() + " - " + article.getPrix());
-        setGraphic(new ImageView(article.getImage()));
-        }
-        }
-        };
-        }
-        });*/
- /*  articleList.setCellFactory(new Callback<ListView<Article>, ListCell<Article>>() {
-        @Override
-        public ListCell<Article> call(ListView<Article> listView) {
-        return new ListCell<Article>() {
-        private ImageView imageView = new ImageView();
-        
-        @Override
-        protected void updateItem(Article article, boolean empty) {
-        super.updateItem(article, empty);
-        if (article == null || empty) {
-        setText(null);
-        setGraphic(null);
-        } else {
         try {
-        // Set the text of the cell
-        setText(article.getTitre() + " - " + article.getPrix());
+            // retrieve the data from the database
+            //  String query = "SELECT titre, image, description, prix, stock  FROM article ";
         
-        // Set the image of the cell
-        Blob blob = rs.getBlob("image"); // Get the binary data from the "image" column as a Blob object
-        byte[] imageData = blob.getBytes(1, (int) blob.length()); // Convert the Blob object to a byte array
-        Image image = new Image(new ByteArrayInputStream(imageData));
-        
-        //   byte[] imageData = article.getImage(); // Get the image data from the article
-        if (imageData != null) {
-        try (InputStream inputStream = new ByteArrayInputStream(imageData)) {
-        Image image = new Image(inputStream) {
-        };
-        imageView.setImage(image);
-        setGraphic(imageView);
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
-        } else {
-        setGraphic(null);
-        }
-        } catch (SQLException ex) {
-        Logger.getLogger(ArticleController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        }
-        };
-        }
-        });*/// Retrieve the article data from the database
-        /*    Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = ds.getCnx();
-            String sql = "SELECT article.id, article.titre, article.description, article.prix, article.stock, article.type, article.image, category.nom AS category_name, sub_category.nom_sub_category AS subcategory_name FROM article JOIN category ON article.category_id = category.id JOIN sub_category ON article.sub_category_id = sub_category.id WHERE article.id = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, a.getId());
-            rs = stmt.executeQuery();
-            
+String query = "SELECT a.titre, a.image, a.description, a.prix, a.stock, c.nom AS category " +
+               "FROM article a " +
+               "INNER JOIN category c ON a.category_id = c.id";
+            PreparedStatement stmt = ds.getCnx().prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+
+            // populate the list view with the data
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String title = rs.getString("titre");
+                String titre = rs.getString("titre");
+                String image = rs.getString("image");
                 String description = rs.getString("description");
                 float price = rs.getFloat("prix");
                 int stock = rs.getInt("stock");
-                String type = rs.getString("type");
-                byte[] imageData = rs.getBytes("image");
-                String imageS = new String(imageData, StandardCharsets.UTF_8);
-                String categoryName = rs.getString("category_name");
-                String subcategoryName = rs.getString("subcategory_name");
-                
-                // Convert the image data to an Image object
-                Image image = null;
-                if (imageData != null) {
-                    image = new Image(new ByteArrayInputStream(imageData));
-                }
-                
-                // Create the Category and SubCategory objects
-                Category category = new Category(categoryName);
-                SubCategory subCategory = new SubCategory(category, subcategoryName);
-                
-                // Create the Article object and add it to the list
-                Article article = new Article(id, title, imageS, price, description, stock, category, type, subCategory);
-                articles.add(article);
+                String category = rs.getString("category");
+
+                // create a new Article object and add it to the list view
+                articleList.getItems().add(new Article(titre, image, price, description, stock, category));
             }
+
+            // set the cell factory to customize the appearance of each cell
+            articleList.setCellFactory(new Callback<ListView<Article>, ListCell<Article>>() {
+                @Override
+                public ListCell<Article> call(ListView<Article> param) {
+                    return new ListCell<Article>() {
+                        private final ImageView imageView = new ImageView();
+                        private final Label titleLabel = new Label();
+                        private final Label descriptionLabel = new Label();
+                        private final Label priceLabel = new Label();
+                        private final Label stockLabel = new Label();
+                        private final Label categoryLabel = new Label();
+
+                        {
+                            HBox hbox = new HBox(imageView, titleLabel, descriptionLabel, priceLabel, stockLabel, categoryLabel);
+                            hbox.setSpacing(10);
+                            setGraphic(hbox);
+                        }
+
+                        @Override
+                        protected void updateItem(Article item, boolean empty) {
+                            super.updateItem(item, empty);
+
+                            if (empty || item == null) {
+                                titleLabel.setText(null);
+                                descriptionLabel.setText(null);
+                                priceLabel.setText(null);
+                                stockLabel.setText(null);
+                                imageView.setImage(null);
+                                categoryLabel.setText(null);
+                            } else {
+                                titleLabel.setText(item.getTitre());
+                                descriptionLabel.setText(item.getDescription());
+                                priceLabel.setText(String.format("%.2f", item.getPrix()) + " $");
+                                stockLabel.setText(item.getStock() + " in stock");
+                                categoryLabel.setText(catg);
+
+                                // load the image from the database and display it in the cell
+                                try {
+                                    String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + item.getImage();
+
+                                    Image image = new Image(new File(imagePath).toURI().toString());
+                                    imageView.setImage(image);
+                                    imageView.setFitWidth(100);
+                                    imageView.setFitHeight(100);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    };
+                }
+            });
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
-        // Display the article data in the UI
-        articles.forEach(article -> {
-            // Create a new ListView cell for each article
-            ListCell<Article> cell = new ListCell<Article>() {
-                @Override
-                protected void updateItem(Article item, boolean empty) {
-                    super.updateItem(item, empty);
-                    
-                    if (empty || item == null) {
-                        // If the cell is empty, clear the content
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        // If the cell contains an article, display its title, category name, subcategory name, and image (if available)
-                        setText(item.getTitre() + " - " + item.getCategory().getNom() + " - " + item.getSubcategory().getNomSubCategory());
-                        
-                        if (item.getImage() != null) {
-                            ImageView imageView = new ImageView(item.getImage());
-                            imageView.setFitHeight(100);
-                            imageView.setFitWidth(100);
-                            setGraphic(imageView);
-                        } else {
-                            setGraphic(null);
-                        }
-                    }
-                }
-            };
-            
-            // Add the cell to the ListView
-            //   articleList.getItems().add(cell);
-        });
-        /*    articleList.setCellFactory(new Callback<ListView<Article>, ListCell<Article>>() {
-        @Override
-        public ListCell<Article> call(ListView<Article> listView) {
-        return new ArticleListCell();
         }
-        });*/
- /* categoryColumn.setCellValueFactory(new Callback<ListColumn.CellDataFeatures<SubCategory, String>, ObservableValue<String>>() {
-        @Override
-        public ObservableValue<String> call(TableColumn.CellDataFeatures<SubCategory, String> cellData) {
-        String categoryName = cellData.getValue().getCategory().getNom();
-        return new SimpleStringProperty(categoryName);
-        }
-        });
-        
-        
-        // Load the data into the table
-        List<Article> articles;
-        try {
-        articles = sa.getAll();
-        articleList.getItems().setAll(articles);
-        } catch (SQLException ex) {
-        Logger.getLogger(SubCategoryController.class.getName()).log(Level.SEVERE, null, ex);
-        }  */
+
         articleList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 tfTitle.setText(newSelection.getTitre());
-//                tfImage.setText(newSelection.getImage());
                 taDescription.setText(newSelection.getDescription());
-                //cbType.setValue(newSelection.getType());
                 tfStock.setText(String.valueOf(newSelection.getStock()));
                 tfPrice.setText(String.valueOf(newSelection.getPrix()));
-                cbCategory.setValue(newSelection.getCategory().getNom());
-                //imageView.setImage(newSelection.getImage().);
+                cbCategory.setValue(catg);
+
+                // load and display the image
+                try {
+                    String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + newSelection.getImage();
+                    Image image = new Image(new File(imagePath).toURI().toString());
+                    imageView.setImage(image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             } else {
                 tfTitle.setText("");
                 taDescription.setText("");
-                //cbType.setValue(null);
                 tfStock.setText("");
                 tfPrice.setText("");
                 cbCategory.setValue(null);
-
+                imageView.setImage(null);
             }
         });
+
     }
 
     @FXML
@@ -513,8 +423,6 @@ public class ArticleController implements Initializable {
         Integer stock = Integer.valueOf(tfStock.getText());
         String newCategory = cbCategory.getValue();
         int categoryId = sa.getCategoryIDByName(newCategory);
-        String newSubCategory = cbSubcategory.getValue();
-        int subcategoryId = sa.getSubCategoryIDByName(newSubCategory);
 
         Article a = articleList.getSelectionModel().getSelectedItem();
         if (a == null) {
@@ -525,7 +433,7 @@ public class ArticleController implements Initializable {
             return;
         }
 
-        sa.updateArticle(a.getId(), title, price, description, stock, newCategory, newSubCategory);
+        sa.updateArticle(a.getId(), title, price, description, stock, newCategory);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("SUCCESS");
         alert.setContentText("Article Successfully updated !");
@@ -539,7 +447,6 @@ public class ArticleController implements Initializable {
         // cbType.setValue("");
         tfStock.setText("");
         cbCategory.setValue(null);
-        cbSubcategory.setValue(null);
     }
 
     @FXML
@@ -564,17 +471,15 @@ public class ArticleController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
             sa.deleteArticle(a);
-            articles.remove(a);
+//           articles.remove(a);
             //   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
             alert.setContentText("Article Successfully Deleted !");
             alert.showAndWait();
             articleList.refresh();
             tfTitle.setText("");
-//            tfImage.setText("");
             taDescription.setText("");
             tfPrice.setText("");
-            //    cbType.setValue("");
             tfStock.setText("");
         }
 
@@ -716,7 +621,7 @@ public class ArticleController implements Initializable {
         // Customize the dialog pane
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setPrefSize(600, 500); // set preferred size to 600x400 pixels
-        dialogPane.getStylesheets().add(getClass().getResource("Notifstyle.css").toExternalForm());
+        dialogPane.getStylesheets().add(getClass().getResource("/tn/leaguestorm/values/Notifstyle.css").toExternalForm());
         dialogPane.getStyleClass().add("low-stock");
 
         // Display the pop-up window

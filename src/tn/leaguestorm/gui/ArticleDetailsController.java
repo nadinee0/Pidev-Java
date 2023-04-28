@@ -112,9 +112,9 @@ public class ArticleDetailsController implements Initializable {
     private Button QRCODE;
 private int currentRating = 0;
     @FXML
-    private Label ratingLabel;
-    @FXML
     private Button btnhear;
+    @FXML
+    private TextArea descriptiontxt;
     /**
      * Initializes the controller class.
      */
@@ -138,6 +138,8 @@ private int currentRating = 0;
 
   public void setTitre(String titre){
         titleLabel.setText(titre);
+         titleLabel.setStyle("-fx-font-size: 21pt; -fx-font-weight: bold;");
+       
     }
     
     public void setPrix(String prix){
@@ -145,7 +147,11 @@ private int currentRating = 0;
     }
     
  public void setDescription(String description){
-        descriptionLabel.setText(description);
+       // descriptionLabel.setText(description);
+        descriptiontxt.setText(description);
+        descriptiontxt.setEditable(false);
+        descriptiontxt.setWrapText(true);
+        descriptiontxt.setStyle("-fx-font-size: 14pt;");
     }
     
     public void setCategory(String category){
@@ -156,29 +162,19 @@ public void setImage(Image image) {
         img.setImage(image);
     }
 
-  /* public void setArticle(Article article) {
-        this.article = article;
-        titleLabel.setText(article.getTitre());
-//        authorLabel.setText("Author: " + article.getAuthor());
-        contentLabel.setText(article getContent());
-        initialRating = article.getRating();
-        ratingSystem.setCurrentRating((int) initialRating);
-        ratingLabel.setText(String.format("%.1f", initialRating));
-    }
-   */
 @FXML
 private void generateQRCode(ActionEvent event) {
-String qrCodeData = titleLabel.getText() + " " + priceLabel.getText() + " " + descriptionLabel.getText(); // Set the data for the QR code to be the product title, price, and description
+String qrCodeData = titleLabel.getText() + " " + priceLabel.getText() + " " + descriptiontxt.getText(); // Set the data for the QR code to be the product title, price, and description
 String filePath = "C:/Users/Nadine/Pidev/public/upload/qr_codes/" + titleLabel.getText() + ".png"; // Set the file path and name for the QR code image
 
 try {
     QRCodeWriter qrCodeWriter = new QRCodeWriter();
-    BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, 350, 350); // Set the size of the QR code image
+    BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, 400, 400); // Set the size of the QR code image
 
     // Convert the BitMatrix to a BufferedImage
-    BufferedImage bufferedImage = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
-    for (int x = 0; x < 350; x++) {
-        for (int y = 0; y < 350; y++) {
+    BufferedImage bufferedImage = new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < 400; x++) {
+        for (int y = 0; y < 400; y++) {
             bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? Color.BLACK.getRGB() : Color.WHITE.getRGB());
         }
     }
@@ -249,7 +245,7 @@ qrCodeImageView.setImage(qrCodeImage);
     @FXML
     private void hear(ActionEvent event) {
      // Get the article description from the text area
-        String description = descriptionLabel.getText();
+        String description = descriptiontxt.getText();
 
         // Define a new FreeTTS voice
         Voice voice = VoiceManager.getInstance().getVoice(VOICE_NAME);

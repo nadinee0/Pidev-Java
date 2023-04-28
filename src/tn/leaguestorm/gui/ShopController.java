@@ -64,6 +64,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -137,11 +139,8 @@ public class ShopController implements Initializable {
 
             // Create a new Label for the product name
             Label productName = new Label(resultSet.getString("titre"));
-            grid.add(productName, colIndex, rowIndex + 1);
-
-            // Create a new Label for the product price
-            Label price = new Label(resultSet.getString("prix"));
-            grid.add(price, colIndex, rowIndex + 2);
+            productName.setStyle("-fx-font-size: 10pt; -fx-font-weight: bold;");
+            grid.add(productName, colIndex, rowIndex);
 
             // Create a new ImageView for the product image
             String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + resultSet.getString("image"); // Replace this with your own file path and column name
@@ -153,15 +152,19 @@ public class ShopController implements Initializable {
             imageView.setFitWidth(200); // Set the width to 200 pixels
             imageView.setFitHeight(200); // Set the height to 200 pixels
 
+            // Add the ImageView to the GridPane
+            grid.add(imageView, colIndex, rowIndex + 1);
+
+            // Create a new Label for the product price
+            Label price = new Label(resultSet.getString("prix"));
+            grid.add(price, colIndex, rowIndex + 2);
+
             // Add a mouse click event handler to the ImageView
             int productId = resultSet.getInt("id"); // Get the product ID from the result set
             imageView.setOnMouseClicked(e -> {
                 // Pass the product ID to the method that will handle the click event
                 handleProductClick(productId, productName.getText(), Description.getText(),/* category.getText(),*/ price.getText(), imagePath);
             });
-
-            // Add the ImageView to the GridPane
-            grid.add(imageView, colIndex, rowIndex + 3);
 
             // Increment the column index
             colIndex++;
@@ -190,6 +193,7 @@ public class ShopController implements Initializable {
     private void setChosenArticle(Article article) {
         selectedArticle = article;
         NameLabel.setText(selectedArticle.getTitre());
+
         PriceLabel.setText(Front.CURRENCY + selectedArticle.getPrix());
         Image image = new Image(getClass().getResourceAsStream(selectedArticle.getImage()));
         ImageView imageView = new ImageView(image);
@@ -340,60 +344,6 @@ public class ShopController implements Initializable {
 
     }
 
-    private void displayWishlist() {
-        // Clear the GridPane
-        grid.getChildren().clear();
-
-        // Define the column and row indexes for the GridPane
-        int colIndex = 0;
-        int rowIndex = 0;
-
-        // Iterate through the selected articles and add each one to the GridPane
-        for (Article article : wishlist) {
-            // Create a new Label for the article name
-            Label nameLabel = new Label(article.getTitre());
-            grid.add(nameLabel, colIndex, rowIndex);
-
-            // Create a new ImageView for the article image
-            String imagePath = "C:/Users/Nadine/Pidev/public/upload/" + article.getImage(); // Replace this with your own file path
-            Image image = new Image(new File(imagePath).toURI().toString());
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(200); // Set the width to 200 pixels
-            imageView.setFitHeight(200); // Set the height to 200 pixels
-            grid.add(imageView, colIndex, rowIndex + 1);
-
-            // Create a new Label for the article price
-            Label priceLabel = new Label(Float.toString(article.getPrix()));
-            grid.add(priceLabel, colIndex, rowIndex + 2);
-
-            // Create a new Button to remove the article from the wishlist
-            Button removeButton = new Button("Remove");
-            int articleId = article.getId();
-            removeButton.setOnAction(e -> {
-                // Remove the selected article from the wishlist
-                for (int i = 0; i < wishlist.size(); i++) {
-                    if (wishlist.get(i).getId() == articleId) {
-                        wishlist.remove(i);
-                        break;
-                    }
-                }
-
-                // Refresh the wishlist display
-                displayWishlist();
-            });
-
-            // Increment the column index
-            colIndex++;
-
-            // Move to the next row if the current row is full
-            if (colIndex == 3) {
-                colIndex = 0;
-                rowIndex += 5;
-            }
-        }
-
-    }
-
     public void removeArticleFromWishlist(/*int userId,*/int articleId) throws SQLException {
         // Define the SQL query to remove the article from the user's wishlist
         String query = "DELETE FROM user_article WHERE user_id = ? AND article_id = ?";
@@ -475,6 +425,7 @@ public class ShopController implements Initializable {
                 rowIndex += 4;
             }
         }
+
         Button returnButton = new Button("Return");
         returnButton.setOnAction(e -> {
             try {
@@ -489,7 +440,7 @@ public class ShopController implements Initializable {
                 Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        grid.add(returnButton, colIndex+5, rowIndex+5);
+        grid.add(returnButton, colIndex + 5, rowIndex + 5);
 
     }
 
@@ -514,6 +465,11 @@ public class ShopController implements Initializable {
                 }
             });
         }
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("The selected article has been added to your wishlist.");
+        alert.showAndWait();
 
     }
 
