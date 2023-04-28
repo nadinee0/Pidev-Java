@@ -456,20 +456,38 @@ public class TewtController implements Initializable {
     }
 
     @FXML
-private void pdfabonn(ActionEvent event) {
-    try {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Choix de l'action");
-        alert.setHeaderText("Que voulez-vous faire ?");
-        alert.setContentText("Voulez-vous générer un fichier Excel ou choisir une musique ?");
+    private void pdfabonn(ActionEvent event) {
 
-        ButtonType buttonTypeExcel = new ButtonType("Excel");
-        ButtonType buttonTypeAudio = new ButtonType("Audio");
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Choix de l'action");
+            alert.setHeaderText("Que voulez-vous faire ?");
+            alert.setContentText("Voulez-vous passer à l'application ou choisir une musique ?");
 
-        alert.getButtonTypes().setAll(buttonTypeExcel, buttonTypeAudio);
+            ButtonType buttonTypeApp = new ButtonType("Aller à l'application");
+            ButtonType buttonTypeMusic = new ButtonType("Choisir une musique");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeExcel) {
+            alert.getButtonTypes().setAll(buttonTypeApp, buttonTypeMusic);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeApp) {
+                // Faire quelque chose pour passer à l'application
+            } else if (result.get() == buttonTypeMusic) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Sélectionner un fichier audio");
+                File defaultDirectory = new File("C:\\Users\\Dell\\Desktop\\MUSIC");
+                fileChooser.setInitialDirectory(defaultDirectory);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers audio (*.mp3, *.wav, *.flac)", "*.mp3", "*.wav", "*.flac");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File selectedFile = fileChooser.showOpenDialog(null);
+                if (selectedFile != null) {
+                    javafx.scene.media.Media javafxMedia = new javafx.scene.media.Media(selectedFile.toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(javafxMedia);
+                    mediaPlayer.setAutoPlay(true);
+                } else {
+                    System.out.println("Aucun fichier audio sélectionné.");
+                }
+            }
             String filename = "C:\\xampp\\htdocs\\fichierExcelJava\\dataabonn.xls";
             HSSFWorkbook hwb = new HSSFWorkbook();
             HSSFSheet sheet = hwb.createSheet("new sheet");
@@ -485,6 +503,7 @@ private void pdfabonn(ActionEvent event) {
                 row.createCell((short) 0).setCellValue(teams.get(i).getNom_team());
                 row.createCell((short) 1).setCellValue(teams.get(i).getDescription_team());
                 row.createCell((short) 2).setCellValue(teams.get(i).getColor());
+//row.createCell((short) 3).setCellValue((abonnements.get(i).getDate()));
                 i++;
             }
             int i = 1;
@@ -498,27 +517,10 @@ private void pdfabonn(ActionEvent event) {
                     Desktop.getDesktop().open(file);
                 }
             }
-        } else if (result.get() == buttonTypeAudio) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Sélectionner un fichier audio");
-            File defaultDirectory = new File("C:\\Users\\Dell\\Desktop\\MUSIC");
-            fileChooser.setInitialDirectory(defaultDirectory);
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers audio (*.mp3, *.wav, *.flac)", "*.mp3", "*.wav", "*.flac");
-            fileChooser.getExtensionFilters().add(extFilter);
-            File selectedFile = fileChooser.showOpenDialog(null);
-            if (selectedFile != null) {
-                javafx.scene.media.Media javafxMedia = new javafx.scene.media.Media(selectedFile.toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(javafxMedia);
-                mediaPlayer.setAutoPlay(true);
-            } else {
-                System.out.println("Aucun fichier audio sélectionné.");
-            }
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
-    } catch (Exception ex) {
-        System.out.println(ex);
     }
-}
-
 
     private void updateTableView(Team oldTeam, Team newTeam) {
         int index = tableview_crud.getItems().indexOf(oldTeam);

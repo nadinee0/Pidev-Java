@@ -54,16 +54,15 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -73,11 +72,7 @@ import java.util.Comparator;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Pagination;
-
-
-
-
-
+import tn.leaguestorm.services.Pdf2;
 
 /**
  * FXML Controller class
@@ -85,14 +80,15 @@ import javafx.scene.control.Pagination;
  * @author Dell
  */
 public class OrcaController implements Initializable {
-    @FXML
-private Pagination pagination;
 
-private final int ITEMS_PER_PAGE = 1; // nombre d'organismes à afficher par page
-private ObservableList<Organism> observableOrganisms;
+    @FXML
+    private Pagination pagination;
+
+    private final int ITEMS_PER_PAGE = 1; // nombre d'organismes à afficher par page
+    private ObservableList<Organism> observableOrganisms;
     @FXML
     private TextField Ncommercial;
-    
+
     @FXML
     private TextField email;
     @FXML
@@ -113,55 +109,79 @@ private ObservableList<Organism> observableOrganisms;
     private Button supp;
     @FXML
     private Button Update;
-    @FXML
-    private ListView<?> listview_crud;
     private Button Add;
 
     private PreparedStatement ps;
     private Statement st;
     private ResultSet resultat;
     private Alert altert;
-    
+    Pdf2 oo = new Pdf2();
+
     @FXML
-private TextField searchField;
+    private TextField searchField;
 
     @FXML
     private ListView<Organism> organismListView;
+    @FXML
+    private Button pd;
 
-   @Override
-public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
-    ServiceOrganism so = new ServiceOrganism();
-    List<Organism> organisms = so.getAll();
-    ObservableList<Organism> observableOrganisms = FXCollections.observableArrayList(organisms);
+        ServiceOrganism so = new ServiceOrganism();
+        List<Organism> organisms = so.getAll();
+        ObservableList<Organism> observableOrganisms = FXCollections.observableArrayList(organisms);
 
-    // Create a filtered list to hold the filtered organisms
-    FilteredList<Organism> filteredOrganisms = new FilteredList<>(observableOrganisms, p -> true);
+       // Create a filtered list to hold the filtered organisms
+FilteredList<Organism> filteredOrganisms = new FilteredList<>(observableOrganisms, p -> true);
 
-    // Set the filter predicate whenever the search field's text changes
-    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-        filteredOrganisms.setPredicate(organism -> {
-            if (newValue == null || newValue.isEmpty()) {
-                // If the search field is empty, show all organisms
-                return true;
-            }
+// Set the filter predicate whenever the search field's text changes
+searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+    filteredOrganisms.setPredicate(organism -> {
+        if (newValue == null || newValue.isEmpty()) {
+            // If the search field is empty, show all organisms
+            return true;
+        }
 
-            String lowerCaseFilter = newValue.toLowerCase();
+        String lowerCaseFilter = newValue.toLowerCase();
 
-            // Check if the organism's commercial name contains the search criteria
-            if (organism.getNom_commercial().toLowerCase().contains(lowerCaseFilter)) {
-                return true;
-            }
-
-            return false;
-        });
+        // Check if the organism's commercial name contains the search criteria
+        return organism.getNom_commercial().toLowerCase().contains(lowerCaseFilter);
     });
+});
 
-    // Create a sorted list to hold the sorted organisms
-    SortedList<Organism> sortedOrganisms = new SortedList<>(filteredOrganisms);
+// Create a sorted list to hold the sorted organisms
+SortedList<Organism> sortedOrganisms = new SortedList<>(filteredOrganisms);
 
-    // Set the sorted and filtered organisms as the list view items
-    organismListView.setItems(sortedOrganisms);
+// Set the sorted and filtered organisms as the list view items
+organismListView.setItems(sortedOrganisms);
+
+// Set the cell factory for the ListView to display the organism's name
+organismListView.setCellFactory(param -> new ListCell<Organism>() {
+    @Override
+    protected void updateItem(Organism organism, boolean empty) {
+        super.updateItem(organism, empty);
+
+        if (empty || organism == null || organism.getNom_commercial() == null) {
+            setText(null);
+        } else {
+            setText(organism.getNom_commercial());
+        }
+    }
+});
+
+    
+    // Create a Comparator to sort organisms by commercial name
+    Comparator<Organism> organismComparator = Comparator.comparing(Organism::getNom_commercial);
+
+    // Sort the list of organisms by commercial name
+    ObservableList<Organism> observableOrganism = FXCollections.observableArrayList(organisms);
+    observableOrganism = observableOrganism.stream()
+                                             .sorted(organismComparator)
+                                             .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+    // Set the sorted organisms as the list view items
+    organismListView.setItems(observableOrganism);
 
     // Set the cell factory for the ListView to display the organism's name
     organismListView.setCellFactory(param -> new ListCell<Organism>() {
@@ -177,49 +197,52 @@ public void initialize(URL url, ResourceBundle rb) {
         }
     });
 
-    // Add a listener to the ListView to update the labels with the selected organism's properties
-    organismListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null) {
-            // set text of data_nom label to the selected organism's name
-            Ncommercial.setText(newSelection.getNom_commercial());
 
-            // set text of other labels to the selected organism's properties
-            Njuridique.setText(newSelection.getNom_juridique());
 
-            phone.setText(String.valueOf(newSelection.getPhone_organisation()));
-            email.setText(newSelection.getEmail_organisation());
-            ImageOrg.setText(newSelection.getImage());
-            more.setText(newSelection.getMore());
-        } else {
-            // clear text of all labels if no organism is selected
-            Ncommercial.setText("");
-            Njuridique.setText("");
-            phone.setText("");
-            email.setText("");
-            ImageOrg.setText("");
-            more.setText("");
-        }
-    });
 
-    // Create the pagination control
-    Pagination pagination = new Pagination((observableOrganisms.size() / 10 + 1), 0);
-    pagination.setPageFactory(pageIndex -> {
-        int fromIndex = pageIndex * 10;
-        int toIndex = Math.min(fromIndex + 10, observableOrganisms.size());
-        SortedList<Organism> currentOrganisms = new SortedList<>(FXCollections.observableArrayList(filteredOrganisms.subList(fromIndex, toIndex)));
-        organismListView.setItems(currentOrganisms);
-        return organismListView;
-    });
-    pagination.setMaxPageIndicatorCount(5);
-    pagination.setPrefWidth(observableOrganisms.size() > 10 ? 360 : 0);
-    pagination.setVisible(observableOrganisms.size() > 10);
 
-    // Add the pagination control to the UI
-    
+
+
+        // Add a listener to the ListView to update the labels with the selected organism's properties
+        organismListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                // set text of data_nom label to the selected organism's name
+                Ncommercial.setText(newSelection.getNom_commercial());
+
+                // set text of other labels to the selected organism's properties
+                Njuridique.setText(newSelection.getNom_juridique());
+
+                phone.setText(String.valueOf(newSelection.getPhone_organisation()));
+                email.setText(newSelection.getEmail_organisation());
+                ImageOrg.setText(newSelection.getImage());
+                more.setText(newSelection.getMore());
+            } else {
+                // clear text of all labels if no organism is selected
+                Ncommercial.setText("");
+                Njuridique.setText("");
+                phone.setText("");
+                email.setText("");
+                ImageOrg.setText("");
+                more.setText("");
+            }
+        });
+
+       /* // Create the pagination control
+        Pagination pagination = new Pagination((observableOrganism.size() / 10 + 1), 0);
+        pagination.setPageFactory(pageIndex -> {
+            int fromIndex = pageIndex * 10;
+            int toIndex = Math.min(fromIndex + 10, observableOrganism.size());
+            SortedList<Organism> currentOrganisms = new SortedList<>(FXCollections.observableArrayList(filteredOrganisms.subList(fromIndex, toIndex)));
+            organismListView.setItems(currentOrganisms);
+            return organismListView;
+        });
+        pagination.setMaxPageIndicatorCount(5);
+        pagination.setPrefWidth(observableOrganism.size() > 10 ? 360 : 0);
+        pagination.setVisible(observableOrganism.size() > 10);
+
+        // Add the pagination control to the UI
+    */
 }
-
-
-
     @FXML
     private void ajouter(ActionEvent event) throws SQLException, Exception {
 
@@ -437,4 +460,22 @@ public void initialize(URL url, ResourceBundle rb) {
             e.printStackTrace();
         }
     }
+/*
+    @FXML
+    private void pdf(ActionEvent event) {
+        try {
+            Pdf2 pdfGenerator = new Pdf2();
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            String fileName = "report_" + timestamp + ".pdf";
+            String filePath = "C:\\Users\\Dell\\Documents\\pdf" + fileName;
+            String nomAbonn = "John Doe";
+            String type = "Type";
+            String description = "Description";
+            String date = "2023-04-27";
+            pdfGenerator.generatePDF(filePath, nomAbonn, type, description, date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
 }
