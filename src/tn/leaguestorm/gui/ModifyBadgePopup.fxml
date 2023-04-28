@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ModifyBadgePopupController">
+   <children>
+      <Label alignment="CENTER" layoutX="252.0" layoutY="65.0" prefHeight="13.0" prefWidth="112.0" text="Ref Badge" textAlignment="CENTER" textFill="#0000004b">
+         <font>
+            <Font name="Consolas" size="11.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfReference" layoutX="208.0" layoutY="78.0" maxWidth="-Infinity" prefHeight="38.0" prefWidth="197.0" promptText="Reference" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #808080; -fx-border-width: 2px; -fx-padding: 5px;">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Label alignment="CENTER" layoutX="245.0" layoutY="157.0" prefHeight="13.0" prefWidth="112.0" text="Value" textAlignment="CENTER" textFill="#0000004b">
+         <font>
+            <Font name="Consolas" size="11.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfValue" layoutX="209.0" layoutY="179.0" maxWidth="-Infinity" prefHeight="38.0" prefWidth="197.0" promptText="Value" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #808080; -fx-border-width: 2px; -fx-padding: 5px;">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Label alignment="CENTER" layoutX="252.0" layoutY="256.0" prefHeight="13.0" prefWidth="112.0" text="Description" textAlignment="CENTER" textFill="#0000004b">
+         <font>
+            <Font name="Consolas" size="11.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="tfDescription" layoutX="208.0" layoutY="270.0" prefHeight="105.0" prefWidth="200.0" style="-fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #808080; -fx-border-width: 2px; -fx-padding: 5px;" />
+   </children>
+</AnchorPane>

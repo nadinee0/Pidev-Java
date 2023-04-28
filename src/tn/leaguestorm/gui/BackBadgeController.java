@@ -7,6 +7,7 @@ package tn.leaguestorm.gui;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import javafx.geometry.Insets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,6 +28,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import tn.leaguestorm.entities.Badge;
 import tn.leaguestorm.services.BadgeService;
 
@@ -51,12 +58,11 @@ public class BackBadgeController {
     private Pane pnlMenus;
     @FXML
     private Pane pnlOverview;
-    
+
     @FXML
     private FlowPane badgePane;
     private ObservableList<Badge> badges;
-    
-    
+
     @FXML
     private void handleClicks(ActionEvent event) {
     }
@@ -93,7 +99,7 @@ public class BackBadgeController {
             Label logoLabel = new Label(b.getLogo());
             Label valeurLabel = new Label(Integer.toString(b.getValeur()));
             Label descriptionLabel = new Label(b.getDescription());
-            
+
             logoLabel.setFont(Font.font("Verdana", FontPosture.ITALIC, 16));
             logoLabel.setAlignment(Pos.CENTER);
             logoLabel.setStyle("-fx-text-fill: gray;");
@@ -110,14 +116,32 @@ public class BackBadgeController {
             card.getChildren().add(valeurLabel);
             card.getChildren().add(descriptionLabel);
 
-            Button disableBtn = new Button("Disable");
-            disableBtn.setAlignment(Pos.TOP_RIGHT);
-            disableBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
-            disableBtn.setOnAction(e -> {
-                BadgeService bss = new BadgeService();
+            Button modifyBtn = new Button("Modify");
+            modifyBtn.setAlignment(Pos.TOP_RIGHT);
+            modifyBtn.setStyle("-fx-background-color: #1372f4; -fx-background-radius: 25px; -fx-text-fill: white;");
+            modifyBtn.setOnAction(e -> {
+                try {
+        
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("modifyBadgePopup.fxml"));
+                    Parent root = loader.load();
+                    
+                    ModifyBadgePopupController controller = loader.getController();
+                    controller.setBadgeInfo(b);
+                    
+                    Stage modifyStage = new Stage();
+                    modifyStage.setScene(new Scene(root));
+                    modifyStage.setTitle("Modify Badge Information");
+                    modifyStage.initStyle(StageStyle.UNDECORATED);
+                    modifyStage.initModality(Modality.APPLICATION_MODAL);
+                    modifyStage.showAndWait();
+                    
+                    badgeCards();
+                } catch (IOException ex) {
+                    Logger.getLogger(BackBadgeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 badgeCards();
             });
-            card.getChildren().add(disableBtn);
+            card.getChildren().add(modifyBtn);
             badgePane.getChildren().add(card);
             badgePane.setMargin(card, new Insets(5, 5, 5, 5));
         }
