@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -28,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
 import tn.leaguestorm.entities.Badge;
 import tn.leaguestorm.entities.User;
@@ -39,7 +41,7 @@ import tn.leaguestorm.utils.SelectedBadge;
  *
  * @author Bellalouna Iheb
  */
-public class ModifyBadgePopupController implements Initializable{
+public class ModifyBadgePopupController implements Initializable {
 
     private String badgeFileName;
 
@@ -56,11 +58,9 @@ public class ModifyBadgePopupController implements Initializable{
     @FXML
     private Hyperlink cancelHPRL;
 
-    private Alert alert; 
-    
+    private Alert alert;
+
     Badge badge = SelectedBadge.getBadge();
-    
-    
 
     @FXML
     private void choosePictureAction(ActionEvent event) {
@@ -91,7 +91,6 @@ public class ModifyBadgePopupController implements Initializable{
 
     @FXML
     private void applyAction(ActionEvent event) {
-        System.out.println(badge.getId());
         String reference = tfReference.getText();
         int value = Integer.parseInt(tfValue.getText());
         String description = tfDescription.getText();
@@ -108,11 +107,9 @@ public class ModifyBadgePopupController implements Initializable{
             alert.setHeaderText(null);
             alert.setContentText("Updated successfully");
             alert.showAndWait();
-            try {
-                FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/BackBadge.fxml", "Badges");
-            } catch (IOException ex) {
-                Logger.getLogger(ProfileUpdateController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
         } catch (SQLException ex) {
             Logger.getLogger(ProfileUpdateController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,16 +118,21 @@ public class ModifyBadgePopupController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (badge != null) {
-    String badgeImagePath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\badge\\" + badge.getBadgeFileName();
-    Image badgeImage = new Image("file:" + badgeImagePath);
-    this.badgeIMGV.setImage(badgeImage);
-    tfReference.setText(badge.getLogo());
-    tfValue.setText(String.valueOf(badge.getValeur()));
-    tfDescription.setText(badge.getDescription());
-} else {
+            String badgeImagePath = "C:\\leagueStorm\\src\\tn\\leaguestorm\\miscs\\badge\\" + badge.getBadgeFileName();
+            Image badgeImage = new Image("file:" + badgeImagePath);
+            this.badgeIMGV.setImage(badgeImage);
+            tfReference.setText(badge.getLogo());
+            tfValue.setText(String.valueOf(badge.getValeur()));
+            tfDescription.setText(badge.getDescription());
+        } else {
             System.out.println("is null");
-}
+        }
     }
 
+    @FXML
+    private void cancelAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+    }
 
 }

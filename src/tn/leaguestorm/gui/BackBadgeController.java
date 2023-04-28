@@ -126,6 +126,7 @@ public class BackBadgeController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("modifyBadgePopup.fxml"));
                     Parent root = loader.load();
                     
+                    
                     Stage modifyStage = new Stage();
                     modifyStage.setScene(new Scene(root));
                     modifyStage.setTitle("Modify Badge Information");

@@ -55,7 +55,7 @@
             <Font name="Arial Nova Bold" size="22.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="cancelHPRL" layoutX="337.0" layoutY="502.0" text="Cancel">
+      <Hyperlink fx:id="cancelHPRL" layoutX="337.0" layoutY="502.0" onAction="#cancelAction" text="Cancel">
          <font>
             <Font size="23.0" />
          </font>
