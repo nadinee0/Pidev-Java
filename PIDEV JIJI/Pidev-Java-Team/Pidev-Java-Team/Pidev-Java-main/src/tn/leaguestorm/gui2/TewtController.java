@@ -5,137 +5,53 @@
  */
 package tn.leaguestorm.gui2;
 
-import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import tn.leaguestorm.entities.Team;
 import tn.leaguestorm.services.ServiceTeam;
-import tn.leaguestorm.utils.MyConnection;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Optional;
-import javafx.scene.control.ButtonType;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.FileChooser;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import tn.leaguestorm.services.Pdf2;
 import java.awt.Desktop;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.media.MediaPlayer;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import javafx.scene.media.MediaPlayer;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Optional;
-import java.util.UUID;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.canvas.Canvas;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Pagination;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.media.MediaPlayer;
 
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * FXML Controller class
@@ -249,7 +165,7 @@ public class TewtController implements Initializable {
                 // set text of data_nom label to the selected team's name
                 Nom.setText(newSelection.getNom_team());
                 Description.setText(newSelection.getDescription_team());
-                lom.setText(String.valueOf(newSelection.getWins_team()));
+                w_nom.setText(String.valueOf(newSelection.getWins_team()));
                 l_nom.setText(String.valueOf(newSelection.getLosses_team()));
                 r_nom.setText(String.valueOf(newSelection.getRate_team()));
                 Logo.setText(String.valueOf(newSelection.getLogo_team()));
@@ -462,10 +378,10 @@ public class TewtController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Choix de l'action");
             alert.setHeaderText("Que voulez-vous faire ?");
-            alert.setContentText("Voulez-vous passer à l'application ou choisir une musique ?");
+            alert.setContentText("Voulez-vous passer à Excel ou choisir une musique d'abord ?");
 
-            ButtonType buttonTypeApp = new ButtonType("Aller à l'application");
-            ButtonType buttonTypeMusic = new ButtonType("Choisir une musique");
+            ButtonType buttonTypeApp = new ButtonType("Aller à Excel");
+            ButtonType buttonTypeMusic = new ButtonType("Choisir une musique et allez à Excel");
 
             alert.getButtonTypes().setAll(buttonTypeApp, buttonTypeMusic);
 
@@ -497,15 +413,24 @@ public class TewtController implements Initializable {
             rowhead.createCell((short) 2).setCellValue("description ");
             ServiceTeam st = new ServiceTeam();
 
-            List<Team> teams = st.getAll();
-            for (int i = 0; i < teams.size(); i++) {
-                HSSFRow row = sheet.createRow((short) i);
-                row.createCell((short) 0).setCellValue(teams.get(i).getNom_team());
-                row.createCell((short) 1).setCellValue(teams.get(i).getDescription_team());
-                row.createCell((short) 2).setCellValue(teams.get(i).getColor());
-//row.createCell((short) 3).setCellValue((abonnements.get(i).getDate()));
-                i++;
-            }
+           List<Team> teams = st.getAll();
+HSSFRow headerRow = sheet.createRow(0); // Create a new row for the headers
+
+// Set the values for each header cell
+headerRow.createCell(0).setCellValue("Nom team");
+headerRow.createCell(1).setCellValue("Description team");
+headerRow.createCell(2).setCellValue("Color");
+
+for (int i = 0; i < teams.size(); i++) {
+    HSSFRow row = sheet.createRow(i + 1); // Offset the row index by 1 to account for the header row
+    
+    // Set the values for each cell in the row
+    row.createCell(0).setCellValue(teams.get(i).getNom_team());
+    row.createCell(1).setCellValue(teams.get(i).getDescription_team());
+    row.createCell(2).setCellValue(teams.get(i).getColor());
+    //row.createCell(3).setCellValue(abonnements.get(i).getDate());
+}
+
             int i = 1;
             FileOutputStream fileOut = new FileOutputStream(filename);
             hwb.write(fileOut);

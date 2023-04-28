@@ -75,28 +75,28 @@
                   <TextArea fx:id="more" layoutX="18.0" layoutY="456.0" prefHeight="51.0" prefWidth="217.0" promptText="Veuillez donner une description" style="-fx-background-color: ffffff;" />
                   <DatePicker fx:id="dati" layoutX="13.0" layoutY="199.0" prefHeight="26.0" prefWidth="225.0" promptText="Veuillez saisir une date " style="-fx-background-color: ffffff;" />
                   <TextField fx:id="ImageOrg" layoutX="18.0" layoutY="390.0" prefHeight="26.0" prefWidth="218.0" promptText="Veuillez insérer une image" style="-fx-background-color: ffffff;" />
-                  <Button fx:id="aaddorga" layoutX="34.0" layoutY="539.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="37.0" prefWidth="62.0" style="-fx-background-color: ffffff;" text="Add">
+                  <Button fx:id="aaddorga" layoutX="34.0" layoutY="529.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="38.0" prefWidth="99.0" style="-fx-background-color: ffffff;" text="Add">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clear" layoutX="34.0" layoutY="585.0" mnemonicParsing="false" onAction="#nettoyer" prefHeight="37.0" prefWidth="60.0" style="-fx-background-color: ffffff;" text="Clear">
+                  <Button fx:id="clear" layoutX="34.0" layoutY="576.0" mnemonicParsing="false" onAction="#nettoyer" prefHeight="38.0" prefWidth="98.0" style="-fx-background-color: ffffff;" text="Clear">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="supp" layoutX="185.0" layoutY="585.0" mnemonicParsing="false" onAction="#supprimer" style="-fx-background-color: ffffff;" stylesheets="@twt.css" text="Delete">
+                  <Button fx:id="supp" layoutX="145.0" layoutY="577.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="37.0" prefWidth="108.0" style="-fx-background-color: ffffff;" stylesheets="@twt.css" text="Delete">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="Update" layoutX="183.0" layoutY="540.0" mnemonicParsing="false" onAction="#modifier" style="-fx-background-color: ffffff;" text="Update">
+                  <Button fx:id="Update" layoutX="146.0" layoutY="529.0" mnemonicParsing="false" onAction="#modifier" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: ffffff;" text="Update">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
                    <TextField fx:id="searchField" layoutX="249.0" layoutY="55.0" prefHeight="30.0" prefWidth="135.0" promptText="Recherche" style="-fx-background-color: ffffff;" />
-                  <Button fx:id="pd" layoutX="95.0" layoutY="640.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="98.0" text="PDF" />
+                  <Button fx:id="pd" layoutX="34.0" layoutY="630.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="218.0" text="PDF" />
                </children>
                <styleClass>
                   <String fx:value="other-form" />

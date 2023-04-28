@@ -128,11 +128,11 @@ public class OrcaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        ServiceOrganism so = new ServiceOrganism();
-        List<Organism> organisms = so.getAll();
-        ObservableList<Organism> observableOrganisms = FXCollections.observableArrayList(organisms);
+     ServiceOrganism so = new ServiceOrganism();
+List<Organism> organisms = so.getAll();
+ObservableList<Organism> observableOrganisms = FXCollections.observableArrayList(organisms);
 
-       // Create a filtered list to hold the filtered organisms
+// Create a filtered list to hold the filtered organisms
 FilteredList<Organism> filteredOrganisms = new FilteredList<>(observableOrganisms, p -> true);
 
 // Set the filter predicate whenever the search field's text changes
@@ -150,8 +150,11 @@ searchField.textProperty().addListener((observable, oldValue, newValue) -> {
     });
 });
 
+// Create a Comparator to sort organisms by commercial name
+Comparator<Organism> organismComparator = Comparator.comparing(Organism::getNom_commercial);
+
 // Create a sorted list to hold the sorted organisms
-SortedList<Organism> sortedOrganisms = new SortedList<>(filteredOrganisms);
+SortedList<Organism> sortedOrganisms = new SortedList<>(filteredOrganisms, organismComparator);
 
 // Set the sorted and filtered organisms as the list view items
 organismListView.setItems(sortedOrganisms);
@@ -170,33 +173,7 @@ organismListView.setCellFactory(param -> new ListCell<Organism>() {
     }
 });
 
-    
-    // Create a Comparator to sort organisms by commercial name
-    Comparator<Organism> organismComparator = Comparator.comparing(Organism::getNom_commercial);
-
-    // Sort the list of organisms by commercial name
-    ObservableList<Organism> observableOrganism = FXCollections.observableArrayList(organisms);
-    observableOrganism = observableOrganism.stream()
-                                             .sorted(organismComparator)
-                                             .collect(Collectors.toCollection(FXCollections::observableArrayList));
-
-    // Set the sorted organisms as the list view items
-    organismListView.setItems(observableOrganism);
-
-    // Set the cell factory for the ListView to display the organism's name
-    organismListView.setCellFactory(param -> new ListCell<Organism>() {
-        @Override
-        protected void updateItem(Organism organism, boolean empty) {
-            super.updateItem(organism, empty);
-
-            if (empty || organism == null || organism.getNom_commercial() == null) {
-                setText(null);
-            } else {
-                setText(organism.getNom_commercial());
-            }
-        }
-    }); 
-    pd.setOnAction(event -> {
+pd.setOnAction(event -> {
     try {
         Pdf2 pdfGenerator = new Pdf2();
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
@@ -211,11 +188,6 @@ organismListView.setCellFactory(param -> new ListCell<Organism>() {
         e.printStackTrace();
     }
 });
-
-
-
-
-
 
 
 

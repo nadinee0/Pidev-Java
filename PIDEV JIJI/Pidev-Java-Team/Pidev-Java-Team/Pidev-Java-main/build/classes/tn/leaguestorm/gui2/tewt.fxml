@@ -65,7 +65,10 @@
                   <TextField fx:id="Logo" layoutX="9.0" layoutY="460.0" prefHeight="26.0" prefWidth="254.0" promptText="veuillez choisir un logo" />
                   <ColorPicker fx:id="color" layoutX="9.0" layoutY="528.0" prefHeight="28.0" prefWidth="254.0" />
                   <Button fx:id="Add" layoutX="14.0" layoutY="567.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #5A3375;" styleClass="btn" stylesheets="@style.css" text="Add" />
-                  <Button layoutX="238.0" layoutY="571.0" mnemonicParsing="false" onAction="#pdfabonn" prefHeight="85.0" prefWidth="87.0" style="-fx-background-color: #5A3375;" text="Audio/Excel" textFill="WHITE" />
+                  <Button layoutX="223.0" layoutY="570.0" mnemonicParsing="false" onAction="#pdfabonn" prefHeight="80.0" prefWidth="142.0" style="-fx-background-color: #5A3375;" text="Audio/Excel" textFill="WHITE">
+                     <font>
+                        <Font size="21.0" />
+                     </font></Button>
                   <Button fx:id="Clear" layoutX="15.0" layoutY="617.0" mnemonicParsing="false" onAction="#nettoyer" prefHeight="38.0" prefWidth="84.0" style="-fx-background-color: #5A3375;" styleClass="btn" stylesheets="@style.css" text="Clear" />
                   <Button fx:id="Delete" layoutX="128.0" layoutY="616.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #5A3375;" styleClass="btn" stylesheets="@style.css" text="Delete" />
                   <Button fx:id="Update" layoutX="126.0" layoutY="567.0" mnemonicParsing="false" onAction="#modifier" prefHeight="38.0" prefWidth="87.0" style="-fx-background-color: #5A3375;" styleClass="btn" stylesheets="@style.css" text="Update" AnchorPane.leftAnchor="126.0" />
