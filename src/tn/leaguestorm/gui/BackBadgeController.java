@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import tn.leaguestorm.entities.Badge;
 import tn.leaguestorm.services.BadgeService;
+import tn.leaguestorm.utils.FXMLUtils;
 import tn.leaguestorm.utils.SelectedBadge;
 
 /**
@@ -43,10 +44,6 @@ public class BackBadgeController {
 
     @FXML
     private Button btnOverview;
-    @FXML
-    private Button btnCustomers;
-    @FXML
-    private Button btnMenus;
     @FXML
     private Button btnPackages;
     @FXML
@@ -63,6 +60,10 @@ public class BackBadgeController {
     @FXML
     private FlowPane badgePane;
     private ObservableList<Badge> badges;
+    @FXML
+    private Button btnUser;
+    @FXML
+    private Button btnBadge;
 
     @FXML
     private void handleClicks(ActionEvent event) {
@@ -123,13 +124,13 @@ public class BackBadgeController {
             modifyBtn.setOnAction(e -> {
                 try {
                     SelectedBadge.setBadge(b);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("modifyBadgePopup.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyBadgePopup.fxml"));
                     Parent root = loader.load();
                     
                     
                     Stage modifyStage = new Stage();
                     modifyStage.setScene(new Scene(root));
-                    modifyStage.setTitle("Modify Badge Information");
+                    modifyStage.setTitle("Modify Badge Informations");
                     modifyStage.initStyle(StageStyle.UNDECORATED);
                     modifyStage.initModality(Modality.APPLICATION_MODAL);
                     modifyStage.showAndWait();
@@ -144,5 +145,15 @@ public class BackBadgeController {
             badgePane.getChildren().add(card);
             badgePane.setMargin(card, new Insets(5, 5, 5, 5));
         }
+    }
+
+    @FXML
+    private void userAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Back.fxml", "User");
+    }
+
+    @FXML
+    private void badgeAction(ActionEvent event) throws IOException {
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/BackBadge.fxml", "Forgot");
     }
 }

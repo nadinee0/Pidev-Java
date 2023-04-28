@@ -28,4 +28,18 @@ public class CurrentUser {
     public static void endSession() {
         currentUser = null;
     }
+    
+    
+    
+    
+    
+    private static User selectedUser;
+    
+    public static void setSelecUser(User u) {
+        selectedUser = u;
+    }
+    
+    public static User getSelecUser() {
+        return selectedUser;
+    }
 }

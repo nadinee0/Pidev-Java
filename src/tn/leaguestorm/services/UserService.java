@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -140,6 +141,9 @@ public class UserService implements IService<User> {
                 u.setEmail(rs.getString("email"));
                 u.setFirstName(rs.getString("first_name"));
                 u.setLastName(rs.getString("last_name"));
+                u.setBirthDate(LocalDate.parse(rs.getString("birth_date")));
+                u.setCountry(rs.getString("country"));
+                u.setPhoneNumber(rs.getString("phone_number"));
                 u.setProfilePictureName(rs.getString("profile_picture_name"));
                 u.setBanned(rs.getBoolean("banned"));
 
