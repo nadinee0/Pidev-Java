@@ -77,6 +77,8 @@ import tn.leaguestorm.entities.Rating;
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * FXML Controller class
@@ -93,8 +95,6 @@ public class ArticleDetailsController implements Initializable {
     @FXML
     private Label priceLabel;
 
-    @FXML
-    private Label descriptionLabel;
 
     @FXML
     private Label categoryLabel;
@@ -115,7 +115,13 @@ private int currentRating = 0;
     private Button btnhear;
     @FXML
     private TextArea descriptiontxt;
-    /**
+    @FXML
+    private Button QRCODE1;
+    @FXML
+    private Button btnwishlist;
+    
+        private List<Article> wishlist = new ArrayList<>();
+/**
      * Initializes the controller class.
      */
     @Override
@@ -275,6 +281,34 @@ qrCodeImageView.setImage(qrCodeImage);
             alert.setContentText("Sorry, there was an error initializing the text-to-speech engine.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void addToWishlist(ActionEvent event) {
+      for (Article article : wishlist) {
+            int articleId = article.getId();
+            btnwishlist.setOnAction(e -> {
+                // Get the current user
+                // User user = getCurrentUser();
+                int userId = 22;
+                // Add the selected article to the wishlist database for the current user
+                try {
+
+                    PreparedStatement stmt = ds.getCnx().prepareStatement("INSERT INTO user_article (article_id, user_id) VALUES (?, ?)");
+                    stmt.setInt(1, articleId);
+                    stmt.setInt(2, userId);
+                    stmt.executeUpdate();
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            });
+      Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("The selected article has been added to your wishlist.");
+        alert.showAndWait();  }
+        
     }
 }
 

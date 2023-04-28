@@ -51,4 +51,16 @@
          <String fx:value="details-description" />
          <String fx:value="label" />
       </styleClass></TextArea>
+   <Button fx:id="QRCODE1" layoutX="477.0" layoutY="424.0" mnemonicParsing="false" onAction="#generateQRCode" stylesheets="@../values/details.css" text="ADD TO CART">
+      <styleClass>
+         <String fx:value="add-btn" />
+         <String fx:value="button" />
+      </styleClass>
+   </Button>
+   <Button fx:id="btnwishlist" layoutX="627.0" layoutY="424.0" mnemonicParsing="false" onAction="#addToWishlist" stylesheets="@../values/details.css" text="ADD TO WISHLIST">
+      <styleClass>
+         <String fx:value="add-btn" />
+         <String fx:value="button" />
+      </styleClass>
+   </Button>
 </AnchorPane>

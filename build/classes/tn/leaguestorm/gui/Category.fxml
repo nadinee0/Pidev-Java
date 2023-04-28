@@ -60,18 +60,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSubCategory" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#subcategory" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="SubCategory">
-               <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Person_32px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Button>
+
             <Button fx:id="btnArticle" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#article" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="Article">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
@@ -85,37 +74,16 @@
                </padding>
             </Button>
             <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="">
-               <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Box_32px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Button>
             <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text="">
-               <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Slider__32px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Button>
             <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style_1.css" text=" ">
-               <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Sign_Out_32px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
                <padding>
                   <Insets left="50.0" />
                </padding>
