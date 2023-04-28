@@ -37,12 +37,12 @@ public class Pdf2 {
         PdfPCell cell;
 
         // Add content to the table
-        cell = new PdfPCell(new Phrase("Nom abonn"));
+        cell = new PdfPCell(new Phrase("Nom Commercial Organisme"));
         table.addCell(cell);
         cell = new PdfPCell(new Phrase(nomAbonn));
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Type"));
+        cell = new PdfPCell(new Phrase("Nom Juridique Organisme"));
         table.addCell(cell);
         cell = new PdfPCell(new Phrase(type));
         table.addCell(cell);

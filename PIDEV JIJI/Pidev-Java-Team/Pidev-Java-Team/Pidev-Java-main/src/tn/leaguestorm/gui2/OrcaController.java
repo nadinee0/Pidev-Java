@@ -195,7 +195,23 @@ organismListView.setCellFactory(param -> new ListCell<Organism>() {
                 setText(organism.getNom_commercial());
             }
         }
-    });
+    }); 
+    pd.setOnAction(event -> {
+    try {
+        Pdf2 pdfGenerator = new Pdf2();
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String fileName = "report_" + timestamp + ".pdf";
+        String filePath = "C:\\Users\\Dell\\Documents\\pdf\\" + fileName;
+        String nomAbonn = "Crypto.com";
+        String type = "ISI";
+        String description = "Crypto.com fournit une plateforme permettant aux utilisateurs d'échanger des cryptomonnaies, de rassembler des NFT (Non-Fungible Token) et de visualiser les mesures d'échange telles que le volume et les mouvements de prix.";
+        String date = "2023-04-28";
+        pdfGenerator.generatePDF(filePath, nomAbonn, type, description, date);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+});
+
 
 
 
