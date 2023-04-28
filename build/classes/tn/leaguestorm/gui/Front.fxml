@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
@@ -21,52 +20,24 @@
          <children>
             <VBox layoutY="160.0" prefHeight="356.0" prefWidth="262.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="160.0">
                <children>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" text="Ben Affleck" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/ben-affleck.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" textFill="WHITE">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                      <padding>
                         <Insets left="40.0" />
                      </padding></Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" text="Jimmy Mason" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/ic_usr.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" textFill="WHITE">
                      <padding>
                         <Insets left="40.0" />
                      </padding>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" text="Alex Mainman" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/profile-adam-levine.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" textFill="WHITE">
                      <padding>
                         <Insets left="40.0" />
                      </padding>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" text="Rob Damien" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/profile-james-marsden.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../values/fullpackstyling.css" textFill="WHITE">
                      <padding>
                         <Insets left="40.0" />
                      </padding>
@@ -112,7 +83,7 @@
                         <Image url="@../img/icons8_Block_50px_1.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="-6.0" layoutY="146.0" prefHeight="17.0" prefWidth="174.0" text="General" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="-6.0" layoutY="146.0" prefHeight="17.0" prefWidth="174.0" text="Home" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Label>
@@ -144,13 +115,13 @@
                         <Image url="@../img/icons8_Car_52px_2.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Transport" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Events" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Label>
                </children>
             </Pane>
-            <Pane layoutX="71.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
+            <Pane layoutX="558.0" layoutY="347.0" prefHeight="202.0" prefWidth="179.0">
                <children>
                   <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../values/fullpackstyling.css" />
                   <Circle layoutX="84.0" layoutY="87.0" radius="50.0" strokeType="INSIDE">
@@ -176,57 +147,7 @@
                         <Image url="@../img/icons8_Shopping_Cart_50px_2.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="3.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Shopping" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="13.0" />
-                     </font></Label>
-               </children>
-            </Pane>
-            <Pane layoutX="316.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
-               <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../values/fullpackstyling.css" />
-                  <Circle layoutX="84.0" layoutY="87.0" radius="50.0" stroke="#ff924f" strokeType="INSIDE">
-                     <fill>
-                        <LinearGradient endX="1.0" endY="1.0" startY="0.4952380952380952">
-                           <stops>
-                              <Stop color="#ff934f" />
-                              <Stop color="WHITE" offset="0.9961685823754789" />
-                              <Stop color="WHITE" offset="1.0" />
-                           </stops>
-                        </LinearGradient>
-                     </fill>
-                  </Circle>
-                  <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Bill_50px_2.png" />
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Bill" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="13.0" />
-                     </font></Label>
-               </children>
-            </Pane>
-            <Pane layoutX="559.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
-               <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../values/fullpackstyling.css" />
-                  <Circle layoutX="84.0" layoutY="87.0" radius="50.0" strokeType="INSIDE">
-                     <fill>
-                        <LinearGradient endX="1.0" endY="1.0" startY="0.4952380952380952">
-                           <stops>
-                              <Stop color="#34e063" />
-                              <Stop color="WHITE" offset="0.9961685823754789" />
-                              <Stop color="WHITE" offset="1.0" />
-                           </stops>
-                        </LinearGradient>
-                     </fill>
-                  </Circle>
-                  <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Broccoli_64px_2.png" />
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Grocery" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="3.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Shopping Cart" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Label>
@@ -251,10 +172,62 @@
                         <Image url="@../img/icons8_Play_Button_50px.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Entertainment" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Tournaments" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Label>
+               </children>
+            </Pane>
+            <Pane layoutX="316.0" layoutY="347.0" prefHeight="202.0" prefWidth="179.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#shop" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../values/fullpackstyling.css" />
+                  <Circle layoutX="84.0" layoutY="87.0" radius="50.0" strokeType="INSIDE">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0" startY="0.4952380952380952">
+                           <stops>
+                              <Stop color="#34e063" />
+                              <Stop color="WHITE" offset="0.9961685823754789" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/shop.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Shop" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="74.0" layoutY="347.0" prefHeight="202.0" prefWidth="179.0">
+               <children>
+                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../values/fullpackstyling.css" />
+                  <Circle layoutX="84.0" layoutY="87.0" radius="50.0" stroke="#ff924f" strokeType="INSIDE">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0" startY="0.4952380952380952">
+                           <stops>
+                              <Stop color="#ff934f" />
+                              <Stop color="WHITE" offset="0.9961685823754789" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/icons8_Bill_50px_2.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Teams" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
