@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
@@ -54,9 +55,9 @@ public class AddBadgePopupController implements Initializable {
     private Button btnApply;
     @FXML
     private Hyperlink cancelHPRL;
-    
+
     private Alert alert;
-    
+
     Badge badge = new Badge();
 
     /**
@@ -65,7 +66,7 @@ public class AddBadgePopupController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void choosePictureAction(ActionEvent event) {
@@ -103,7 +104,7 @@ public class AddBadgePopupController implements Initializable {
         badge.setLogo(reference);
         badge.setValeur(value);
         badge.setDescription(description);
-        
+
         BadgeService bs = new BadgeService();
         try {
             bs.ajouter(badge);
@@ -124,5 +125,5 @@ public class AddBadgePopupController implements Initializable {
     private void cancelAction(ActionEvent event) throws IOException {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/BackBadge.fxml", "Badges");
     }
-    
+
 }
