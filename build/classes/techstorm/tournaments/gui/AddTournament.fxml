@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="techstorm.tournaments.gui.AddTournamentController">
+   <children>
+      <Label fx:id="addTitle" layoutX="128.0" layoutY="32.0" prefHeight="45.0" prefWidth="244.0" text="Add Tournament">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="addNameLabel" layoutX="52.0" layoutY="118.0" prefHeight="30.0" prefWidth="187.0" text="Name :">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="addNametf" layoutX="258.0" layoutY="118.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <DatePicker fx:id="addDatedp" layoutX="258.0" layoutY="183.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label fx:id="addDateLabel" layoutX="52.0" layoutY="183.0" prefHeight="30.0" prefWidth="187.0" text="Start date:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="addPNLabel" layoutX="45.0" layoutY="245.0" prefHeight="30.0" prefWidth="187.0" text="Participants number:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="addStatusLabel" layoutX="52.0" layoutY="317.0" prefHeight="30.0" prefWidth="187.0" text="Status:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="addReplayLabel" layoutX="52.0" layoutY="377.0" prefHeight="30.0" prefWidth="187.0" text="Replay ID:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="addReplaytf" layoutX="258.0" layoutY="377.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="addPNcb" layoutX="258.0" layoutY="243.0" prefHeight="30.0" prefWidth="187.0" />
+      <ComboBox fx:id="addStatuscb" layoutX="258.0" layoutY="317.0" prefHeight="30.0" prefWidth="187.0" />
+      <Button fx:id="addCancelbtn" cancelButton="true" layoutX="139.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" text="Cancel" />
+      <Button fx:id="addSavebtn" defaultButton="true" layoutX="258.0" layoutY="488.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="68.0" text="Save" />
+   </children>
+</AnchorPane>

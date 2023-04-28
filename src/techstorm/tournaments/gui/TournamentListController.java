@@ -23,22 +23,23 @@ public class TournamentListController implements Initializable {
         // Populate the GridPane with the tournaments
         int rowIndex = 1; // start at row 1 to skip the header row
         for (Tournament tournament : tournaments) {
-            Label nameLabel = new Label(tournament.getName());
+            Label nameLabel =   new Label(tournament.getName());
+            nameLabel.setFont(Font.font(16));
             tournamentGridPane.add(nameLabel, 0, rowIndex);
+                    Label tidLabel = new Label(String.valueOf(tournament.getTid()));
+        tournamentGridPane.add(tidLabel, 1, rowIndex);
 
-            Label tidLabel = new Label("Tid: " + tournament.getTid());
-            tournamentGridPane.add(tidLabel, 1, rowIndex);
+        Label startDateLabel = new Label(tournament.getStartDate());
+        tournamentGridPane.add(startDateLabel, 2, rowIndex);
 
-            Label startDateLabel = new Label("Start Date: " + tournament.getStartDate());
-            tournamentGridPane.add(startDateLabel, 2, rowIndex);
+        Label participantsNumberLabel = new Label(String.valueOf(tournament.getParticipantsNumber()));
+        tournamentGridPane.add(participantsNumberLabel, 3, rowIndex);
 
-            Label participantsNumberLabel = new Label("Participants Number: " + tournament.getParticipantsNumber());
-            tournamentGridPane.add(participantsNumberLabel, 3, rowIndex);
+        Label statusLabel = new Label(tournament.getStatus());
+        tournamentGridPane.add(statusLabel, 4, rowIndex);
 
-            Label statusLabel = new Label("Status: " + tournament.getStatus());
-            tournamentGridPane.add(statusLabel, 4, rowIndex);
-
-            rowIndex++;
-        }
+        rowIndex++;
     }
 }
+}
+ 
