@@ -138,7 +138,7 @@ private int currentRating = 0;
 
   public void setTitre(String titre){
         titleLabel.setText(titre);
-         titleLabel.setStyle("-fx-font-size: 21pt; -fx-font-weight: bold;");
+         titleLabel.setStyle("-fx-font-size: 22pt; -fx-font-weight: bold;");
        
     }
     
