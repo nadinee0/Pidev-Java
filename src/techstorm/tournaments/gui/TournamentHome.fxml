@@ -19,7 +19,6 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="121.0" minHeight="0.0" percentHeight="10.0" prefHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -30,7 +29,7 @@
             <RowConstraints maxHeight="85.0" minHeight="10.0" percentHeight="18.0" prefHeight="85.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="homeNamelabel" prefHeight="20.0" prefWidth="80.0" text="Name" GridPane.columnIndex="0"  />
+            <Label fx:id="homeNamelabel" prefHeight="20.0" prefWidth="80.0" text="Name" GridPane.columnIndex="0" />
             <Label fx:id="homeTidlabel" prefHeight="20.0" prefWidth="80.0" text="Tid" GridPane.columnIndex="1" />
             <Label fx:id="homeDatelabel" prefHeight="20.0" prefWidth="80.0" text="Start Date" GridPane.columnIndex="2" />
             <Label fx:id="homePNlabel" prefHeight="20.0" prefWidth="140.0" text="Participants number" GridPane.columnIndex="3" />
@@ -42,9 +41,9 @@
       <Button layoutX="163.0" layoutY="627.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Update" />
       <Button layoutX="274.0" layoutY="627.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Delete" />
       <Button layoutX="389.0" layoutY="627.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Details" />
-      <TextField layoutX="927.0" layoutY="567.0" prefHeight="40.0" prefWidth="160.0" />
-      <ComboBox layoutX="927.0" layoutY="648.0" prefHeight="40.0" prefWidth="160.0" />
-      <Button layoutX="1130.0" layoutY="567.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Search" />
-      <Button layoutX="1130.0" layoutY="648.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Sort" />
+      <TextField fx:id="homeSearchtf" layoutX="927.0" layoutY="567.0" prefHeight="40.0" prefWidth="160.0" promptText="Search..." />
+      <ComboBox fx:id="homeSortcb" layoutX="927.0" layoutY="648.0" prefHeight="40.0" prefWidth="160.0" />
+      <Button fx:id="homeSearchbtn" layoutX="1130.0" layoutY="567.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" onAction="#handleSearchButton" text="Search" />
+      <Button fx:id="homeSortbtn" layoutX="1130.0" layoutY="648.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Sort" />
    </children>
 </AnchorPane>

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import techstorm.tournaments.entities.RegisteredPlayer;
 import techstorm.tournaments.entities.Round;
 import techstorm.tournaments.entities.Tournament;
@@ -248,7 +249,22 @@ public class TournamentCRUD {
 }
 
 
-    
+    public List<Tournament> searchTournaments(String keyword) {
+        TournamentCRUD tcd = new TournamentCRUD();
+        List<Tournament> tournaments = tcd.getAllTournaments();
+    return tournaments.stream()
+            .filter(t -> {
+        return t.getName().contains(keyword) || 
+                String.valueOf(t.getTid()).contains(keyword) ||
+                t.getStartDate().contains(keyword) ||
+                t.getStatus().contains(keyword) ||
+                String.valueOf(t.getParticipantsNumber()).contains(keyword) ||
+                t.getReplayID().contains(keyword);
+    })
+            .collect(Collectors.toList());
+}
+
+
     
 
 

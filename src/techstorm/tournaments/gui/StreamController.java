@@ -25,7 +25,7 @@ public class StreamController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         WebEngine webEngine = webView.getEngine();
-        webEngine.load("https://www.youtube.com/embed/pgz-qd9LFjo?autoplay=1&fs=1");
+        webEngine.load("https://www.youtube.com/embed/2IU7zaot30s?autoplay=1&fs=1");
     }
 }
 
