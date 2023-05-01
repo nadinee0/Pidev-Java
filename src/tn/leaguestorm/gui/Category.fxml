@@ -96,31 +96,22 @@
             <Pane fx:id="pnlOverview" prefHeight="675.0" prefWidth="793.0">
                 
                <children>
-                  <TextField layoutX="35.0" layoutY="97.0" prefHeight="27.0" prefWidth="183.0" promptText="search" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-                  <Label layoutX="20.0" layoutY="44.0" text=" CATEGORY" textFill="#e7e5e5">
+                  <Label layoutX="24.0" layoutY="18.0" text=" CATEGORY" textFill="#e7e5e5">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                 
-  
-     
-          
-                 
-                  <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="183.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/icons8_Search_52px.png" />
-                     </image>
-                  </ImageView>
                   
- <Button fx:id="btnAdd" layoutX="51.0" layoutY="389.0" mnemonicParsing="false" onAction="#saveCategory" prefHeight="25.0" prefWidth="73.0" stylesheets="@style_1.css" text="Add" />
-      <Label layoutX="39.0" layoutY="253.0" text="Category Name" textFill="#cdbebe" />
-      <Label layoutX="39.0" layoutY="298.0" prefHeight="45.0" prefWidth="102.0" text="Image" textFill="#cdbebe" />
-      <TextField fx:id="tfNom" layoutX="154.0" layoutY="249.0" prefHeight="31.0" prefWidth="149.0" stylesheets="@style.css" />
-      <TextField fx:id="tfImage" layoutX="154.0" layoutY="308.0" prefHeight="31.0" prefWidth="149.0" stylesheets="@style.css" />
-      <Button fx:id="btnUpdate" layoutX="136.0" layoutY="389.0" mnemonicParsing="false" onAction="#UpdateCategory" prefHeight="25.0" prefWidth="73.0" stylesheets="@style_1.css" text="Update" />
-      <Button fx:id="btnDelete" layoutX="221.0" layoutY="389.0" mnemonicParsing="false" onAction="#DeleteCategory" prefHeight="25.0" prefWidth="73.0" stylesheets="@style_1.css" text="Delete" />
+ <Button fx:id="btnAdd" layoutX="51.0" layoutY="439.0" mnemonicParsing="false" onAction="#saveCategory" prefHeight="25.0" prefWidth="73.0" stylesheets="@style_1.css" text="Add" />
+      <Label layoutX="22.0" layoutY="316.0" text="Category Name" textFill="#cdbebe" />
+      <Label layoutX="30.0" layoutY="367.0" prefHeight="45.0" prefWidth="102.0" text="Image" textFill="#cdbebe" />
+      <TextField fx:id="tfNom" layoutX="168.0" layoutY="316.0" prefHeight="31.0" prefWidth="149.0" stylesheets="@style.css" />
+      <TextField fx:id="tfImage" layoutX="168.0" layoutY="375.0" prefHeight="31.0" prefWidth="149.0" stylesheets="@style.css" />
+      <Button fx:id="btnUpdate" layoutX="136.0" layoutY="439.0" mnemonicParsing="false" onAction="#UpdateCategory" prefHeight="25.0" prefWidth="73.0" stylesheets="@style_1.css" text="Update" />
+      <Button fx:id="btnDelete" layoutX="221.0" layoutY="439.0" mnemonicParsing="false" onAction="#DeleteCategory" prefHeight="25.0" prefWidth="73.0" stylesheets="@style_1.css" text="Delete" />
       <ListView fx:id="categoryList" layoutX="354.0" layoutY="18.0" onEditStart="#categories" onKeyPressed="#categories" prefHeight="545.0" prefWidth="434.0" stylesheets="@style_1.css" />
+                  <ImageView fx:id="img" fitHeight="193.0" fitWidth="218.0" layoutX="64.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="btnimport" layoutX="136.0" layoutY="257.0" mnemonicParsing="false" onAction="#onimport" text="Import" />
        
                </children>
             </Pane>

@@ -27,7 +27,7 @@
          <left>
            
                 <!-- Content of sidebar.fxml goes here -->
-                <fx:include source="sidebar.fxml"/>
+                <fx:include source="sidebar.fxml" />
          
             <VBox prefHeight="200.0" prefWidth="435.0" styleClass="right-bar" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
                <children>
@@ -149,7 +149,10 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </VBox>
-                  <Pane prefHeight="57.0" prefWidth="435.0" VBox.vgrow="ALWAYS" />
+                  <Pane prefHeight="57.0" prefWidth="435.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button layoutX="3.0" layoutY="6.0" mnemonicParsing="false" onAction="#back" prefHeight="41.0" prefWidth="41.0" styleClass="add-btn" stylesheets="@style.css" />
+                     </children></Pane>
                </children>
             </VBox>
          </left>
@@ -173,12 +176,13 @@
                         </Label>
                         <Pane prefHeight="65.0" prefWidth="393.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Button fx:id="btnwishlist" layoutX="626.0" layoutY="2.0" mnemonicParsing="false" onAction="#onWishlistButtonClicked" prefHeight="62.0" prefWidth="75.0" styleClass="add-btn" stylesheets="@../values/style.css" text="❤" />
-                              <Label layoutX="526.0" layoutY="2.0" prefHeight="62.0" prefWidth="100.0" stylesheets="@../values/style.css" text="My Account" textFill="#878787">
+                              <Button fx:id="btnwishlist" layoutX="633.0" layoutY="13.0" mnemonicParsing="false" onAction="#onWishlistButtonClicked" prefHeight="40.0" prefWidth="53.0" styleClass="add-btn" stylesheets="@../values/style.css" text="❤" />
+                              <Label layoutX="444.0" layoutY="2.0" prefHeight="62.0" prefWidth="100.0" stylesheets="@../values/style.css" text="My Account" textFill="#878787">
                                  <font>
                                     <Font name="Cambria" size="18.0" />
                                  </font>
                               </Label>
+                              <Button layoutX="558.0" layoutY="14.0" mnemonicParsing="false" onAction="#help" prefHeight="39.0" prefWidth="58.0" styleClass="add-btn" stylesheets="@../values/style.css" text="Help" />
                            </children></Pane>
                         <ImageView fitHeight="50.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                            <image>

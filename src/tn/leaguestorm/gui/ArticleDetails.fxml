@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="719.0" prefWidth="1142.0" styleClass="image-view" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ArticleDetailsController">
+<AnchorPane prefHeight="719.0" prefWidth="1054.0" styleClass="image-view" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.leaguestorm.gui.ArticleDetailsController">
     <ImageView fx:id="img" fitHeight="383.0" fitWidth="393.0" layoutX="44.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" styleClass="details-image" />
     <Label fx:id="titleLabel" layoutX="444.0" layoutY="25.0" prefHeight="64.0" prefWidth="734.0" stylesheets="@../values/details.css" text="Title" textFill="#0d0d0d">
         <font>
@@ -23,11 +23,6 @@
       <font>
          <Font size="17.0" />
       </font></Label>
-    <Label fx:id="categoryLabel" layoutX="444.0" layoutY="117.0" prefHeight="26.0" prefWidth="195.0" text="Category" textFill="#0d0d0d">
-        <font>
-            <Font name="System Bold" size="18.0" />
-        </font>
-    </Label>
     
     <Button fx:id="backButton" layoutX="15.0" layoutY="666.0" mnemonicParsing="false" onAction="#goBack" stylesheets="@../values/details.css" text="Back">
       <styleClass>
@@ -45,19 +40,19 @@
          <String fx:value="add-btn" />
          <String fx:value="button" />
       </styleClass></Button>
-   <Button fx:id="btnhear" layoutX="1076.0" layoutY="144.0" mnemonicParsing="false" onAction="#hear" styleClass="add-btn" stylesheets="@../values/details.css" text="Hear" />
-   <TextArea fx:id="descriptiontxt" layoutX="444.0" layoutY="193.0" prefHeight="199.0" prefWidth="690.0" stylesheets="@../values/details.css">
+   <Button fx:id="btnhear" layoutX="1076.0" layoutY="123.0" mnemonicParsing="false" onAction="#hear" styleClass="add-btn" stylesheets="@../values/details.css" text="Hear" />
+   <TextArea fx:id="descriptiontxt" layoutX="444.0" layoutY="172.0" prefHeight="199.0" prefWidth="690.0" stylesheets="@../values/details.css">
       <styleClass>
          <String fx:value="details-description" />
          <String fx:value="label" />
       </styleClass></TextArea>
-   <Button fx:id="QRCODE1" layoutX="477.0" layoutY="424.0" mnemonicParsing="false" onAction="#generateQRCode" stylesheets="@../values/details.css" text="ADD TO CART">
+   <Button fx:id="QRCODE1" layoutX="346.0" layoutY="449.0" mnemonicParsing="false" onAction="#generateQRCode" stylesheets="@../values/details.css" text="ADD TO CART">
       <styleClass>
          <String fx:value="add-btn" />
          <String fx:value="button" />
       </styleClass>
    </Button>
-   <Button fx:id="btnwishlist" layoutX="627.0" layoutY="424.0" mnemonicParsing="false" onAction="#addToWishlist" stylesheets="@../values/details.css" text="ADD TO WISHLIST">
+   <Button fx:id="btnwishlist" layoutX="496.0" layoutY="449.0" mnemonicParsing="false" onAction="#addToWishlist" stylesheets="@../values/details.css" text="ADD TO WISHLIST">
       <styleClass>
          <String fx:value="add-btn" />
          <String fx:value="button" />

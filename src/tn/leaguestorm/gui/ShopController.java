@@ -347,7 +347,7 @@ public class ShopController implements Initializable {
     public void removeArticleFromWishlist(/*int userId,*/int articleId) throws SQLException {
         // Define the SQL query to remove the article from the user's wishlist
         String query = "DELETE FROM user_article WHERE user_id = ? AND article_id = ?";
-        int userId = 22;
+        int userId = 23;
         // Prepare the SQL statement with the query and the parameter values
         PreparedStatement statement = ds.getCnx().prepareStatement(query);
         statement.setInt(1, userId);
@@ -368,7 +368,7 @@ public class ShopController implements Initializable {
     private void onWishlistButtonClicked(ActionEvent event) throws SQLException, FileNotFoundException {
         String query = "SELECT a.id, a.titre, a.description, a.prix, a.image FROM article a "
                 + "INNER JOIN user_article w ON a.id = w.article_id "
-                + "WHERE w.user_id = 22";
+                + "WHERE w.user_id = 23";
 
         // Execute the query and retrieve the result set
         Statement statement = ds.getCnx().createStatement();
@@ -446,12 +446,13 @@ public class ShopController implements Initializable {
 
     @FXML
     private void addToWishlist(ActionEvent event) {
+
         for (Article article : wishlist) {
             int articleId = article.getId();
             btnWishlist.setOnAction(e -> {
                 // Get the current user
                 // User user = getCurrentUser();
-                int userId = 22;
+                int userId = 23;
                 // Add the selected article to the wishlist database for the current user
                 try {
 
@@ -460,18 +461,37 @@ public class ShopController implements Initializable {
                     stmt.setInt(2, userId);
                     stmt.executeUpdate();
 
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("The selected article has been added to your wishlist.");
+                    alert.showAndWait();
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             });
         }
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText("The selected article has been added to your wishlist.");
-        alert.showAndWait();
 
     }
 
-    
+    @FXML
+    private void back(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Home.fxml"));
+        Parent root = loader.load(); // load the new FXML file
+        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+        stage.setScene(scene); // set the new scene as the content of the stage
+
+    }
+
+    @FXML
+    private void help(ActionEvent event) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder("java", "-cp", ".", "Chatbot");
+        pb.start();
+
+    }
+
 }

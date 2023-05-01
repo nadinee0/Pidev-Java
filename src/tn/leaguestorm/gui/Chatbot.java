@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import tn.leaguestorm.entities.Article;
 import tn.leaguestorm.utils.MyConnection;
+import tn.leaguestorm.gui.Chatbot;
 
 import java.sql.*;
 

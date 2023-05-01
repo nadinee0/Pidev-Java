@@ -9,8 +9,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import static java.awt.PageAttributes.MediaType.C;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,10 +44,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
@@ -81,8 +88,6 @@ public class CategoryController implements Initializable {
     @FXML
     private Button btnCategory;
     @FXML
-    private Button btnSubCategory;
-    @FXML
     private Button btnArticle;
     @FXML
     private Button btnPackages;
@@ -91,16 +96,12 @@ public class CategoryController implements Initializable {
     @FXML
     private Button btnSignout;
     @FXML
-    private Pane pnlCustomer;
-    @FXML
-    private Pane pnlOrders;
-    @FXML
-    private Pane pnlMenus;
-    @FXML
     private Pane pnlOverview;
     @FXML
-    private VBox pnItems;
-
+    private ImageView img;
+    @FXML
+    private Button btnimport;
+Category c;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -133,6 +134,7 @@ public class CategoryController implements Initializable {
                     // Update the labels with the data from the selected Category object
                     tfNom.setText(newSelection.getNom());
                     tfImage.setText(newSelection.getImg());
+   
                 } else {
                     // Clear the labels if no row is selected
                     tfNom.setText("");
@@ -350,17 +352,6 @@ public class CategoryController implements Initializable {
     }
 
     @FXML
-    private void subcategory(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
-        Parent root = loader.load(); // load the new FXML file
-        Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
-        Node sourceNode = (Node) event.getSource(); // get the source node of the current event
-        Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
-        Stage stage = (Stage) currentScene.getWindow(); // get the current stage
-        stage.setScene(scene); // set the new scene as the content of the stage
-    }
-
-    @FXML
     private void article(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
         Parent root = loader.load(); // load the new FXML file
@@ -378,6 +369,25 @@ public class CategoryController implements Initializable {
 
     @FXML
     private void categories(ListView.EditEvent<Category> event) {
+    }
+
+    @FXML
+    private void onimport(ActionEvent event) {
+           FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            // User has selected a file, do something with it
+            Path sourcePath = selectedFile.toPath();
+            Path targetPath = Paths.get("C:/Users/Nadine/Pidev/public/img"); // replace with the desired path to save the image
+            try {
+                Files.copy(sourcePath, targetPath.resolve(selectedFile.getName()), StandardCopyOption.REPLACE_EXISTING);
+                Image image = new Image(selectedFile.toURI().toString());
+                img.setImage(image);
+            } catch (IOException e) {
+                // handle the exception
+            }
+        }
+
     }
 
 }

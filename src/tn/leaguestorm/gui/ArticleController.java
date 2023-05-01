@@ -675,6 +675,6 @@ public class ArticleController implements Initializable {
 
     // Your Twilio account SID and auth token
     public static final String ACCOUNT_SID = "ACace7472778dc6883d3fdaa091bedc3c4";
-    public static final String AUTH_TOKEN = "c0369c26e0d598b9423e0b40ee2e37f7";
+    public static final String AUTH_TOKEN = "c1adab7885252aa3546b0e6e8156db03";
 
 }
