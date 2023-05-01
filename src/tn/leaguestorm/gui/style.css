@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 .search-box{
     -fx-background-color:#FFFFFF;
@@ -50,3 +51,67 @@
     -fx-background-color: #FFFFFF;
         -fx-background-radius: 30;
 }
+=======
+.button
+{
+-fx-background-color : #05071F;
+-fx-text-fill : #e7e5e5;
+}
+.button:hover{
+-fx-background-color : #10165F;
+}
+.button:pressed
+{
+-fx-background-color : #1620A1;
+}
+
+.scroll-pane {
+    -fx-background-color: white;
+    
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #10165F;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+.circular-image {
+  -fx-border-radius: 50% !important;;
+  -fx-background-radius: 50%;
+  -fx-background-color: white;
+}
+
+.card {
+    -fx-background-color: grey;
+    -fx-padding: 10px;
+    -fx-border-width: 1px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.3) , 10, 0.0 , 0 , 5 );
+}
+
+.user-info {
+    -fx-spacing: 10px;
+}
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b

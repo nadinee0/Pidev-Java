@@ -6,6 +6,7 @@
 package tn.leaguestorm.tests;
 
 import java.sql.SQLException;
+<<<<<<< HEAD
 import tn.leaguestorm.entities.Article;
 import tn.leaguestorm.entities.Category;
 import tn.leaguestorm.entities.SubCategory;
@@ -17,12 +18,18 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import tn.leaguestorm.entities.Location;
 import tn.leaguestorm.services.ServiceLocation;
+=======
+import tn.leaguestorm.entities.User;
+import tn.leaguestorm.services.UserService;
+import tn.leaguestorm.utils.MyConnection;
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 
 /**
  *
  * @author Nadine
  */
 public class MainClass {
+<<<<<<< HEAD
 
     /**
      * @param args the command line arguments
@@ -107,6 +114,15 @@ public class MainClass {
             System.out.println(ex.getMessage());
         }
     }   
+=======
+    public static void main(String[] args) throws SQLException {
+        
+//    UserService us = new UserService(); 
+//    User u = new User ("test", "test", "test", 1, "test");
+//    us.ajouter3(u);
+        
+    }
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 }
     
 
