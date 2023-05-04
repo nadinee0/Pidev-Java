@@ -95,7 +95,7 @@ public class SigninController implements Initializable {
                         alert.setContentText("Successfully Logged In");
                         alert.showAndWait();
 
-                        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Home");
+                        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Profile.fxml", "Profile");
 
                     } else {
                         alert = new Alert(AlertType.INFORMATION);

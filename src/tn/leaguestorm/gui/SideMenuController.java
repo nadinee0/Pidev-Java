@@ -50,7 +50,7 @@ public class SideMenuController implements Initializable {
 
     @FXML
     private void handleProfileLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Profile");
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Profile.fxml", "Profile");
     }
 
     @FXML
