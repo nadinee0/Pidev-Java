@@ -16,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tn.leaguestorm.entities.User;
-import tn.leaguestorm.gui.HomeController;
+import tn.leaguestorm.gui.ProfileController;
 
 /**
  *

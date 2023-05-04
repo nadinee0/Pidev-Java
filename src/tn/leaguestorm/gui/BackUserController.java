@@ -47,7 +47,7 @@ import tn.leaguestorm.utils.SelectedBadge;
  *
  * @author Bellalouna Iheb
  */
-public class BackController {
+public class BackUserController {
 
     @FXML
     private Button btnOverview;
@@ -129,7 +129,7 @@ public class BackController {
                 imageView.setPreserveRatio(true);
                 card.getChildren().add(imageView);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BackUserController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             Label firstAndLastNameLabel = new Label(u.getLastName() + "." + u.getFirstName());

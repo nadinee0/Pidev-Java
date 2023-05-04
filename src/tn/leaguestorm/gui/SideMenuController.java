@@ -50,7 +50,7 @@ public class SideMenuController implements Initializable {
 
     @FXML
     private void handleProfileLinkAction(ActionEvent event) throws IOException {
-        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Home.fxml", "Profile");
+        FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Profile.fxml", "Profile");
     }
 
     @FXML
@@ -69,7 +69,7 @@ public class SideMenuController implements Initializable {
         try {
             FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/Signin.fxml", "Sign in");
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
