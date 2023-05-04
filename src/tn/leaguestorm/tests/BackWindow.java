@@ -15,7 +15,7 @@ public class BackWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-        Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Back.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/BackUser.fxml"));
         primaryStage.setScene(new Scene(root));
 
         primaryStage.initStyle(StageStyle.UNDECORATED);

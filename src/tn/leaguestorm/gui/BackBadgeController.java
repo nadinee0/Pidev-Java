@@ -93,7 +93,7 @@ public class BackBadgeController {
                 imageView.setPreserveRatio(true);
                 card.getChildren().add(imageView);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BackUserController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             Label logoLabel = new Label(b.getLogo());

@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-        Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui/Profile.fxml"));
         primaryStage.setScene(new Scene(root));
 
         primaryStage.initStyle(StageStyle.UNDECORATED);

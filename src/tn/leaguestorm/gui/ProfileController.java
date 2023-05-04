@@ -53,7 +53,7 @@ import tn.leaguestorm.utils.CurrentUser;
 import tn.leaguestorm.utils.FXMLUtils;
 import tn.leaguestorm.utils.MyConnection;
 
-public class HomeController implements Initializable {
+public class ProfileController implements Initializable {
     private MyConnection cnx = MyConnection.getInstance();
 
 
@@ -119,7 +119,7 @@ public class HomeController implements Initializable {
                 imageView.setPreserveRatio(true);
                 card.getChildren().add(imageView);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BackUserController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             badgesPane.getChildren().add(card);
