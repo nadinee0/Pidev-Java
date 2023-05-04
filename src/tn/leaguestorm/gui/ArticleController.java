@@ -95,7 +95,7 @@ import tn.leaguestorm.utils.MyConnection;
  */
 public class ArticleController implements Initializable {
 
-    Article a = new Article();
+    String imgUrl;
     @FXML
     private TextField tfTitle;
     private TextField tfImage;
@@ -154,7 +154,7 @@ public class ArticleController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Article a = new Article();
+        //   Article a = new Article();
 // TODO
         ServiceArticle sa = new ServiceArticle();
 
@@ -292,7 +292,7 @@ public class ArticleController implements Initializable {
     @FXML
     private void saveArticle(ActionEvent event) throws SQLException, IOException {
         ServiceArticle sa = new ServiceArticle();
-        Import(event);
+        // Import(event);
         String title = tfTitle.getText();
         String description = taDescription.getText();
         String priceS = /*Float.valueOf(tfPrice.getText()); */ tfPrice.getText();
@@ -302,7 +302,7 @@ public class ArticleController implements Initializable {
         String category = cbCategory.getValue();
         int categoryId = sa.getCategoryIDByName(category);
 
-        //   Article a = new Article(title, price, description, stock, categoryId subcategoryId);
+        //  Article a = new Article(title, price, description, stock, categoryId);
         try {
             if (title.isEmpty() && description.isEmpty() && priceS.isEmpty() && stockS.isEmpty() && category.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -376,33 +376,30 @@ public class ArticleController implements Initializable {
 
         String req = "SELECT id FROM `article` WHERE titre=?";
         PreparedStatement st = ds.getCnx().prepareStatement(req);
-        st.setString(1, a.getTitre());
+        st.setString(1, title);
         ResultSet rs = st.executeQuery();
+
         if (rs.next()) {
             // The article name already exists
             System.out.println("This Article Already Exists ! ");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle(" Exsiting Article ");
-            alert.setContentText(a.getTitre() + " Article Already Exists !!");
+            alert.setContentText(title + " Article Already Exists !!");
             alert.showAndWait();
             return;
         } else {
             // try {    
-            String req1 = "INSERT INTO `article` (`titre`, `image`,`prix`,`description`,`stock`,`category_id`) VALUES (?,?,?,?,?,?)";
+            String req1 = "INSERT INTO `article` (`titre`,`image`,`prix`,`description`,`stock`,`category_id`) VALUES (?,?,?,?,?,?)";
             PreparedStatement st1 = ds.getCnx().prepareStatement(req1);
-            st1.setString(1, a.getTitre());
-            if (a.getImage() != null) {
-                st1.setString(2, a.getImage());
-            } else {
-                st1.setNull(2, java.sql.Types.NULL);
-            }
-            st1.setFloat(3, a.getPrix());
-            st1.setString(4, a.getDescription());
-            st1.setInt(5, a.getStock());
+            st1.setString(1, title);
+            st1.setString(2, imgUrl);
+            st1.setFloat(3, price);
+            st1.setString(4, description);
+            st1.setInt(5, stock);
             st1.setInt(6, categoryId);
             st1.executeUpdate();
             System.out.println("Article ajouté avec succès !");
-            //  sa.ajouter2(a);
+            ///sa.ajouter2(a);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("SUCCESS");
             alert.setContentText("Article Successfully Added !");
@@ -431,7 +428,6 @@ public class ArticleController implements Initializable {
 //        String image = tfImage.getText();
         String description = taDescription.getText();
         Float price = Float.valueOf(tfPrice.getText());
-        // String type = cbType.getValue();
         Integer stock = Integer.valueOf(tfStock.getText());
         String newCategory = cbCategory.getValue();
         int categoryId = sa.getCategoryIDByName(newCategory);
@@ -456,7 +452,6 @@ public class ArticleController implements Initializable {
         // tfImage.setText("");
         taDescription.setText("");
         tfPrice.setText("");
-        // cbType.setValue("");
         tfStock.setText("");
         cbCategory.setValue(null);
     }
@@ -505,6 +500,7 @@ public class ArticleController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             // User has selected a file, do something with it
+            imgUrl=selectedFile.toString();
             Path sourcePath = selectedFile.toPath();
             Path targetPath = Paths.get("C:/Users/Nadine/Pidev/public/img"); // replace with the desired path to save the image
             try {

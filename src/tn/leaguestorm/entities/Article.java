@@ -4,12 +4,9 @@
  * and open the template in the editor.
  */
 package tn.leaguestorm.entities;
-<<<<<<< HEAD
 
 import java.util.List;
 import javafx.scene.image.Image;
-=======
->>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 
 /**
  *
@@ -18,13 +15,12 @@ import javafx.scene.image.Image;
 public class Article {
 
     private int id, stock, idcatg, idsubcatg;
-    private String titre, image, description, type,nomcatg, nomsubcatg,color;
+    private String titre, image, description, type, nomcatg, nomsubcatg, color;
     private float prix;
-    
+
     // relation category ,subcatg ratings locatioin  
     private Category category;
 
-  
     private SubCategory subcategory;
     private List<User> users;
     private List<Rating> rating;
@@ -51,8 +47,6 @@ public class Article {
         this.type = type;
     }
 
-   
-
     public Article(String title, float price, String description, int stock) {
         this.stock = stock;
         this.titre = titre;
@@ -61,7 +55,7 @@ public class Article {
         this.type = type;
     }
 
-    public Article(String title, float price, String description, int stock,  int categoryId, int subcategoryId) {
+    public Article(String title, float price, String description, int stock, int categoryId, int subcategoryId) {
         this.stock = stock;
         this.titre = titre;
         this.description = description;
@@ -72,7 +66,7 @@ public class Article {
     }
 
     public Article(int articleId, String articleTitle, String articleImage, double articlePrice, String articleDescription, int articleStock, Category category, SubCategory subCategory) {
-  this.stock = stock;
+        this.stock = stock;
         this.titre = titre;
         this.description = description;
         this.prix = prix;
@@ -80,7 +74,8 @@ public class Article {
         this.category = category;
         this.subcategory = subCategory;
     }
- public Article(int id, String titre, String image, float prix, String description,  int stock, Category category) {
+
+    public Article(int id, String titre, String image, float prix, String description, int stock, Category category) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -92,7 +87,7 @@ public class Article {
         this.subcategory = subcategory;
     }
 
-    public Article(int id , String titre, String image, float prix, String description, int stock, int idcatg) {
+    public Article(int id, String titre, String image, float prix, String description, int stock, int idcatg) {
         this.id = id;
         this.stock = stock;
         this.titre = titre;
@@ -101,10 +96,10 @@ public class Article {
         this.type = type;
         this.prix = prix;
         this.idcatg = idcatg;
-        this.idsubcatg = idsubcatg;    
+        this.idsubcatg = idsubcatg;
     }
 
-  /*public Article(int id, String title, String image, float price, String description, int stock, Category category) {
+    /*public Article(int id, String title, String image, float price, String description, int stock, Category category) {
        this.id = id;
     this.titre = title;
     this.image = image;
@@ -114,9 +109,9 @@ public class Article {
     this.category = category;
     this.type = type;
     this.subcategory = subCategory;}
-*/
+     */
 
-  /*public Article( String titre, float prix, String description, int stock, int idcatg, int idsubcatg) {
+ /*public Article( String titre, float prix, String description, int stock, int idcatg, int idsubcatg) {
         this.stock = stock;
         this.titre = titre;
         this.image = image;
@@ -126,73 +121,81 @@ public class Article {
         this.idcatg = idcatg;
         this.idsubcatg = idsubcatg;    
     }
-*/
+     */
     public Article(String title, String category) {
         this.titre = title;
-        this.nomcatg=category;
+        this.nomcatg = category;
     }
 
     public Article(String title, String image, float price, String description, int stock, Category category) {
-   this.stock = stock;
+        this.stock = stock;
         this.titre = titre;
         this.image = image;
         this.description = description;
         this.type = type;
         this.prix = prix;
         this.category = category;
-     
+
     }
 
     public Article(int id, String title, String image, float prix, String description, int stock, String category) {
-this.stock = stock;
+        this.stock = stock;
         this.titre = titre;
         this.image = image;
         this.description = description;
         this.type = type;
         this.prix = prix;
         this.nomcatg = category;
-       
+
     }
 
     public Article(String title, String image, float prix) {
-      this.titre = titre;
+        this.titre = titre;
         this.image = image;
         this.prix = prix;
-             //   this.id = id;
+        //   this.id = id;
 
     }
 
     public Article(int id, String titre, String image, float prix, String description/*, String category*/) {
-     this.id = id;
+        this.id = id;
 
         this.titre = titre;
         this.image = image;
         this.description = description;
         this.type = type;
         this.prix = prix;
-      //  this.nomcatg = category;  
+        //  this.nomcatg = category;  
     }
+
     public Article(String titre, String image, float prix, String description, int stock) {
-     this.id = id;
+        this.id = id;
 
         this.titre = titre;
         this.image = image;
-        this.description = description;    
+        this.description = description;
         this.prix = prix;
-     this.stock = stock;  
+        this.stock = stock;
+    }
+
+    public Article(String title, float price, String description, Integer stock, int categoryId) {
+        this.titre = titre;
+       // this.image = image;
+        this.description = description;
+        this.prix = prix;
+        this.stock = stock;
+        this.idcatg = categoryId;
+
     }
 
     public String getNomcatg() {
         return nomcatg;
     }
-    
-   
 
-  
- public int getId() {
+    public int getId() {
         return id;
     }
-  
+
     public int getStock() {
         return stock;
     }
@@ -217,24 +220,22 @@ this.stock = stock;
         return type;
     }
 
-      public String getColor() {
+    public String getColor() {
         return color;
     }
-      
+
     public Category getCategory() {
         return category;
     }
 
-
-  public List<User> getUser() {
+    public List<User> getUser() {
         return users;
     }
 
     public void setUser(List<User> user) {
         this.users = user;
     }
-    
-    
+
     public List<Rating> getRating() {
         return rating;
     }
@@ -247,9 +248,11 @@ this.stock = stock;
         this.stock = stock;
 
     }
-public void setColor(String color) {
+
+    public void setColor(String color) {
         this.color = color;
     }
+
     public void setTitre(String titre) {
         this.titre = titre;
     }
@@ -274,23 +277,20 @@ public void setColor(String color) {
         this.category = category;
     }
 
-    
-    
-
     public void setRating(List<Rating> rating) {
         this.rating = rating;
     }
 
-     public void addUser(User user) {
+    public void addUser(User user) {
         users.add(user);
         user.addArticle(this);
     }
-    
+
     public void removeUser(User user) {
         users.remove(user);
         user.removeArticle(this);
     }
-    
+
     /*  public void setUser(List<User> user) {
         this.user = user;
     }*/

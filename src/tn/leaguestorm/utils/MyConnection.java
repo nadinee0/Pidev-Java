@@ -5,18 +5,9 @@
  */
 package tn.leaguestorm.utils;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import tn.leaguestorm.entities.User;
-import tn.leaguestorm.gui.HomeController;
 
 /**
  *
@@ -50,6 +41,5 @@ public class MyConnection {
     public Connection getCnx() {
         return cnx;
     }
-    
     
 }

@@ -4,12 +4,9 @@
  * and open the template in the editor.
  */
 package tn.leaguestorm.entities;
-<<<<<<< HEAD
 
 import java.util.List;
 import javafx.scene.image.Image;
-=======
->>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 
 /**
  *
