@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 package tn.leaguestorm.entities;
+<<<<<<< HEAD
+
+import java.util.List;
+import javafx.scene.image.Image;
+=======
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 
 /**
  *
@@ -11,8 +17,11 @@ package tn.leaguestorm.entities;
  */
 public class Category {
     
-    private int id;
+     private int id;
     private String nom, img;
+    private List<Article> articles;
+    private List<SubCategory> subcategory;
+
 
     public Category() {
     }
@@ -22,10 +31,29 @@ public class Category {
         this.img = img;
     }
 
+      public Category(int id, String nom) {
+        this.nom = nom;
+        this.id = id;
+    }
+      
     public Category(int id, String nom, String img) {
         this.id = id;
         this.nom = nom;
         this.img = img;
+    }
+
+    public Category(int categoryId) {
+        this.id = categoryId;
+    }
+
+
+
+    public Category(String categoryName) {
+        this.nom = categoryName;
+    }
+
+    public Category(int id, String name, Image image) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getId() {
@@ -40,6 +68,14 @@ public class Category {
         return img;
     }
 
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public List<SubCategory> getSubcategory() {
+        return subcategory;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -51,6 +87,15 @@ public class Category {
     public void setImg(String img) {
         this.img = img;
     }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public void setSubcategory(List<SubCategory> subcategory) {
+        this.subcategory = subcategory;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -76,10 +121,10 @@ public class Category {
         return true;
     }
 
-    @Override
+   @Override
     public String toString() {
         return "Category{" + "nom=" + nom + ", img=" + img + '}';
     }
-    
+     
     
 }

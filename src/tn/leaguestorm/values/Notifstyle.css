@@ -1,0 +1,18 @@
+.low-stock {
+    -fx-background-color: #fffacd;
+    -fx-border-color: #ffd700;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
+
+.low-stock .article-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #4169e1;
+}
+
+.low-stock .stock-level {
+    -fx-font-size: 20px;
+}

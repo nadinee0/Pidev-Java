@@ -20,16 +20,17 @@ import tn.leaguestorm.gui.ProfileController;
 
 /**
  *
- * @author Bellalouna Iheb
+ * @author Nadine
  */
 public class MyConnection {
     
-    private final String URL="jdbc:mysql://localhost:3306/leaguestorm";
+    private Connection cnx;
+    private static MyConnection instance;
+    
+    private final String URL="jdbc:mysql://localhost:3306/pidev";
     private final String LOGIN="root";
     private final String PWD="";
     
-    private Connection cnx;
-    private static MyConnection instance;
     
         private MyConnection() {
         try {

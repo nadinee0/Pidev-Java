@@ -5,14 +5,25 @@
  */
 package tn.leaguestorm.entities;
 
+<<<<<<< HEAD
+import java.util.List;
+=======
 import java.time.LocalDate;
 import java.util.Date;
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 
 /**
  *
  * @author Bellalouna Iheb
  */
 public class User {
+<<<<<<< HEAD
+    private int id, phoneNumber;
+    private String email, roles, password, firstName, lastName, country;
+ private List<Article> articles;
+   
+    public User(int phoneNumber, String email, String roles, String password, String firstName, String lastName, String country) {
+=======
 
     private int id, isVerified;
     private String email, password, firstName, lastName, country, profilePictureName, phoneNumber;
@@ -31,6 +42,7 @@ public class User {
     }
 
     public User(String phoneNumber, String email, String password, String firstName, String lastName, String country) {
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
@@ -164,6 +176,22 @@ public class User {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+ public void addArticle(Article article) {
+        articles.add(article);
+        article.addUser(this);
+    }
+    
+    public void removeArticle(Article article) {
+        articles.remove(article);
+        article.removeUser(this);
+    }
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     @Override

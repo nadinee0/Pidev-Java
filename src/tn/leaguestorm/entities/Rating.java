@@ -16,6 +16,9 @@ public class Rating {
    private String comment;
    private Date created_at;
    //relation article - user 
+    private Article article;
+    //private User user;
+
 
     public Rating() {
     }
@@ -33,6 +36,26 @@ public class Rating {
         this.created_at = created_at;
     }
 
+    /*
+    public Rating(int stars, String comment, Date created_at, Article article, User user) {
+        this.stars = stars;
+        this.comment = comment;
+        this.created_at = created_at;
+        this.article = article;
+        this.user = user;
+    }
+
+    public Rating(int id, int stars, String comment, Date created_at, Article article, User user) {
+        this.id = id;
+        this.stars = stars;
+        this.comment = comment;
+        this.created_at = created_at;
+        this.article = article;
+        this.user = user;
+    }
+*/
+    
+    
     public int getId() {
         return id;
     }
@@ -48,6 +71,24 @@ public class Rating {
     public Date getCreated_at() {
         return created_at;
     }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+   /* public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }*/
+    
+    
 
     public void setId(int id) {
         this.id = id;
@@ -93,5 +134,10 @@ public class Rating {
         }
         return true;
     }
+
+    public void setCurrentRating(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   
    
 }

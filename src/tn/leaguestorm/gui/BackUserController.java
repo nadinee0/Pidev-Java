@@ -5,6 +5,39 @@
  */
 package tn.leaguestorm.gui;
 
+<<<<<<< HEAD
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
+
+import com.twilio.converter.Promoter;
+
+
+import java.net.URI;
+import java.math.BigDecimal;
+
+/**
+ * FXML Controller class
+ *
+ * @author Nadine
+ */
+public class BackController implements Initializable {
+=======
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,11 +80,25 @@ import tn.leaguestorm.utils.SelectedBadge;
  *
  * @author Bellalouna Iheb
  */
+<<<<<<< HEAD:src/tn/leaguestorm/gui/BackUserController.java
 public class BackUserController {
+=======
+public class BackController {
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
+>>>>>>> a71ebd50920334330c6dfc9349061a717b037b6f:src/tn/leaguestorm/gui/BackController.java
 
     @FXML
     private Button btnOverview;
     @FXML
+<<<<<<< HEAD
+    private Button btnPackages;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button btnSignout;
+    @FXML
+=======
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
@@ -59,6 +106,24 @@ public class BackUserController {
     private Pane pnlMenus;
     @FXML
     private Pane pnlOverview;
+<<<<<<< HEAD
+    @FXML
+    private VBox pnItems;
+    @FXML
+    private Button btnCategory;
+    @FXML
+    private Button btnArticle;
+  @FXML
+    private Button sendSMSButton;
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+=======
     
     @FXML
     private FlowPane userPane;
@@ -71,11 +136,56 @@ public class BackUserController {
     private Button btnAddUsers;
     @FXML
     private Button btnAddBadges;
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
 
     @FXML
     private void handleClicks(ActionEvent event) {
     }
 
+<<<<<<< HEAD
+    @FXML
+    private void category(ActionEvent event) throws IOException {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Category.fxml"));
+            Parent root = loader.load(); // load the new FXML file
+            Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+            Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+            Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+            Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+            stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+
+    private void subcategory(ActionEvent event) throws IOException {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/SubCategory.fxml"));
+            Parent root = loader.load(); // load the new FXML file
+            Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+            Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+            Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+            Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+            stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+    @FXML
+    private void article(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/leaguestorm/gui/Article.fxml"));
+            Parent root = loader.load(); // load the new FXML file
+            Scene scene = new Scene(root); // create a new scene with the new FXML file as its content
+            Node sourceNode = (Node) event.getSource(); // get the source node of the current event
+            Scene currentScene = sourceNode.getScene(); // get the current scene from the source node
+            Stage stage = (Stage) currentScene.getWindow(); // get the current stage
+            stage.setScene(scene); // set the new scene as the content of the stage
+    }
+
+
+
+
+
+
+    
+  }
+
+
+=======
     public void initialize() {
         userCards();
     }
@@ -195,3 +305,4 @@ public class BackUserController {
         FXMLUtils.changeScene(event, "/tn/leaguestorm/gui/AddBadgePopup.fxml", "Add Badge");
     }
 }
+>>>>>>> cf43fd36fd744e570acaf47d9c781454e930fc1b
