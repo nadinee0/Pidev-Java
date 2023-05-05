@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="LeagueStorm.jnlp">
+  <information>
+    <title>LeagueStorm</title>
+    <vendor>azizo</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="LeagueStorm.jar" size="23735250" download="eager" />
+    <jar href="lib\commons-io-2.11.0.jar" size="327135" download="eager" />
+    <jar href="lib\fontawesomefx-8.9.jar" size="571068" download="eager" />
+    <jar href="lib\fontbox-2.0.28.jar" size="1567583" download="eager" />
+    <jar href="lib\gson-2.10.1.jar" size="283367" download="eager" />
+    <jar href="lib\itextpdf-5.5.9.jar" size="2287148" download="eager" />
+    <jar href="lib\jakarta.activation-2.0.1.jar" size="62154" download="eager" />
+    <jar href="lib\jakarta.mail-2.0.1.jar" size="689294" download="eager" />
+    <jar href="lib\jbcrypt-0.4.jar" size="17429" download="eager" />
+    <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />
+    <jar href="lib\pdfbox-2.0.28.jar" size="2777916" download="eager" />
+    <jar href="lib\slf4j-api-1.7.30.jar" size="41472" download="eager" />
+    <jar href="lib\slf4j-simple-1.7.30.jar" size="15239" download="eager" />
+    <jar href="lib\stripe-java-22.16.0.jar" size="7561306" download="eager" />
+    <jar href="lib\twilio-9.5.0.jar" size="4924532" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="LeagueStorm" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="tn.leaguestorm.gui.LeagueStorm"  name="LeagueStorm" />
+  <update check="always"/>
+</jnlp>
