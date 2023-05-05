@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  *
  * @author HP
  */
-public class statistic extends Application {
+public class Statistic extends Application {
     
     @Override
     public void start(Stage primaryStage) {

@@ -8,7 +8,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -97,7 +96,6 @@
                         <String fx:value="tableview_crud" />
                         <String fx:value="root" />
                      </styleClass></ListView>
-                  <Pagination fx:id="pagination" layoutX="138.0" layoutY="609.0" opacity="0.63" />
                </children>
                <styleClass>
                   <String fx:value="root" />

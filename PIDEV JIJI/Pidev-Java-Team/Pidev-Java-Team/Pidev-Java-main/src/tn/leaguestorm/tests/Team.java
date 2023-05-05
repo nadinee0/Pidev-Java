@@ -7,32 +7,33 @@ package tn.leaguestorm.tests;
 
 import java.io.IOException;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Dell
  */
-public class Door extends Application {
-    
-   
-    
-    @Override
+public class Team extends Application {
+ @Override
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui2/Tewt.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui2/Team.fxml"));
 
             
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("Teams");
+            primaryStage.setTitle("Organisme");
             primaryStage.setScene(scene);
             primaryStage.show();
+            
             
             
         } catch (IOException ex) {

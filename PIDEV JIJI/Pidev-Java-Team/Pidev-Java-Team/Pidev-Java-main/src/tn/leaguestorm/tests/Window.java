@@ -22,7 +22,7 @@ public class Window extends Application {
     public void start(Stage primaryStage) {
        
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui2/orca.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/tn/leaguestorm/gui2/Orca.fxml"));
 
             
             Scene scene = new Scene(root);

@@ -111,10 +111,6 @@ public class TewtController implements Initializable {
     @FXML
     private Pagination pagination;
 
-     
-
-
-
     public class TeamListCell extends ListCell<Team> {
 
         @Override
@@ -148,7 +144,13 @@ public class TewtController implements Initializable {
 
         Clear.setOnAction(event -> nettoyer(event));
         Delete.setOnAction(event -> supprimer(event));
-        Update.setOnAction(event -> modifier(event));
+        Update.setOnAction(event -> {
+            try {
+                modifier(event);
+            } catch (Exception ex) {
+                Logger.getLogger(TewtController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         ServiceTeam st = new ServiceTeam();
         List<Team> teams = null;
@@ -236,7 +238,7 @@ public class TewtController implements Initializable {
             }
 
             if (logo == null) {
-           
+
                 throw new IllegalArgumentException("Please select a logo for the team.");
             }
 
@@ -329,47 +331,117 @@ public class TewtController implements Initializable {
     }
 
     @FXML
-    private void modifier(ActionEvent event) {
-        Team selectedTeam = tableview_crud.getSelectionModel().getSelectedItem();
-        if (selectedTeam == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Avertissement");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez sélectionner une équipe à modifier.");
-            alert.showAndWait();
-        } else {
-            try {
-                String nom = Nom.getText();
-                String description = Description.getText();
-                int wins = Wins.getValue();
-                int losses = Losses.getValue();
-                double rate = Double.parseDouble(Rate.getText());
-                LocalDate date = dato.getValue();
-                String logo = Logo.getText();
-                String color = this.color.getValue().toString();
+    private void modifier(ActionEvent event) throws Exception {
 
-                if (nom.isEmpty() || description.isEmpty() || logo.isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Avertissement");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Veuillez remplir tous les champs.");
-                    alert.showAndWait();
+        String nom = Nom.getText().trim();
+        String description = Description.getText().trim();
+        int wins = Wins.getValue();
+        int losses = Losses.getValue();
+        float rate = Float.parseFloat(Rate.getText().trim());
+        String colorValue = color.getValue().toString().trim();
+        String logo = Logo.getText();
+        Date date = java.sql.Date.valueOf(dato.getValue());
+
+        try {
+            // Validate input fields
+            if (nom.isEmpty()) {
+                throw new IllegalArgumentException("Please enter a name for the team.");
+            }
+
+            if (description.isEmpty()) {
+                throw new IllegalArgumentException("Please enter a description for the team.");
+            }
+
+            if (color.getValue() == null) {
+                throw new Exception("Please select a color for the team.");
+            }
+
+            if (logo.isEmpty()) {
+                throw new IllegalArgumentException("Please select a logo for the team.");
+            }
+
+            if (nom.length() < 2 || nom.length() > 32) {
+                throw new IllegalArgumentException("Name length should be between 2 and 32 characters.");
+            }
+
+            if (description.length() < 10 || description.length() > 1000) {
+                throw new IllegalArgumentException("Description length should be between 10 and 1000 characters.");
+            }
+
+            if (wins < 0 || losses < 0 || rate < 0 || rate > 1.0f) {
+                throw new IllegalArgumentException("Wins, losses and rate should be positive and rate should be between 0 and 1.");
+            }
+
+            LocalDate creationDate = dato.getValue();
+            if (creationDate == null) {
+                throw new NullPointerException("Please select a creation date.");
+            }
+
+            if (creationDate.isAfter(LocalDate.now())) {
+                throw new IllegalArgumentException("Creation date should be before current date.");
+            }
+
+            if (logo == null) {
+                throw new IllegalArgumentException("Please select a logo for the team.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("An error occurred: " + e.getMessage());
+            alert.showAndWait();
+            return;
+        }
+
+        Team t = new Team(nom, description, wins, losses, rate, colorValue, logo, date);
+        ServiceTeam st = new ServiceTeam();
+        st.modifier(t);
+
+        int rowsAffected = 0;
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/techstorm_3a39", "root", "")) {
+            String req = "UPDATE `team` SET `nom_team` = ?, `description_team` = ?, `wins_team` = ?, `losses_team` = ?, `rate_team` = ?, `color` = ?, `logo_team` = ?, `date_de_creation_team` = ? WHERE `id` = ?";
+            PreparedStatement statement = connection.prepareStatement(req);
+            statement.setString(1, t.getNom_team());
+            statement.setString(2, t.getDescription_team());
+            statement.setInt(3, t.getWins_team());
+            statement.setInt(4, t.getLosses_team());
+            statement.setFloat(5, t.getRate_team());
+            statement.setString(6, t.getColor());
+            statement.setString(7, t.getLogo_team());
+            statement.setDate(8, new java.sql.Date(t.getDate_de_creation_team().getTime()));
+            statement.setInt(9, t.getId());
+
+            
+       
+                if (rowsAffected == 1) {
+                    Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                    successAlert.setTitle("Success");
+                    successAlert.setContentText("L'Team a été mis à jour avec succès.");
+                    successAlert.showAndWait();
                 } else {
-                    ServiceTeam st = new ServiceTeam();
-                    Team team = new Team(nom, description, wins, losses, rate, date, logo, color);
-                    st.modifier(team);
-                    updateTableView(selectedTeam, team);
-                    nettoyer(event);
-                }
-            } catch (NumberFormatException ex) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Avertissement");
-                alert.setHeaderText(null);
-                alert.setContentText("Veuillez saisir une valeur numérique pour le taux de victoire.");
-                alert.showAndWait();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Erreur");
+                    errorAlert.setContentText("Echec de la mise à jour de TEAM.");
+                    errorAlert.showAndWait();
+                }    // close the statement and connection
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setContentText("Echec de la mise à jour de l'Team: " + e.getMessage());
+                errorAlert.showAndWait();
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setContentText(e.getMessage());
+                errorAlert.showAndWait();
             }
         }
-    }
+    
+
 
     @FXML
     private void pdfabonn(ActionEvent event) {
@@ -413,23 +485,23 @@ public class TewtController implements Initializable {
             rowhead.createCell((short) 2).setCellValue("description ");
             ServiceTeam st = new ServiceTeam();
 
-           List<Team> teams = st.getAll();
-HSSFRow headerRow = sheet.createRow(0); // Create a new row for the headers
+            List<Team> teams = st.getAll();
+            HSSFRow headerRow = sheet.createRow(0); // Create a new row for the headers
 
 // Set the values for each header cell
-headerRow.createCell(0).setCellValue("Nom team");
-headerRow.createCell(1).setCellValue("Description team");
-headerRow.createCell(2).setCellValue("Color");
+            headerRow.createCell(0).setCellValue("Nom team");
+            headerRow.createCell(1).setCellValue("Description team");
+            headerRow.createCell(2).setCellValue("Color");
 
-for (int i = 0; i < teams.size(); i++) {
-    HSSFRow row = sheet.createRow(i + 1); // Offset the row index by 1 to account for the header row
-    
-    // Set the values for each cell in the row
-    row.createCell(0).setCellValue(teams.get(i).getNom_team());
-    row.createCell(1).setCellValue(teams.get(i).getDescription_team());
-    row.createCell(2).setCellValue(teams.get(i).getColor());
-    //row.createCell(3).setCellValue(abonnements.get(i).getDate());
-}
+            for (int i = 0; i < teams.size(); i++) {
+                HSSFRow row = sheet.createRow(i + 1); // Offset the row index by 1 to account for the header row
+
+                // Set the values for each cell in the row
+                row.createCell(0).setCellValue(teams.get(i).getNom_team());
+                row.createCell(1).setCellValue(teams.get(i).getDescription_team());
+                row.createCell(2).setCellValue(teams.get(i).getColor());
+                //row.createCell(3).setCellValue(abonnements.get(i).getDate());
+            }
 
             int i = 1;
             FileOutputStream fileOut = new FileOutputStream(filename);

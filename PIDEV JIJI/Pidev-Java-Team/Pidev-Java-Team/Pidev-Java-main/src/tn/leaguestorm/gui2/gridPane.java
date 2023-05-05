@@ -9,6 +9,6 @@ package tn.leaguestorm.gui2;
  *
  * @author Motaz
  */
-class gridPane {
+class GridPane {
     
 }
